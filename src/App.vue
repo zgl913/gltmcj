@@ -5,7 +5,8 @@
 <!--      <router-link to="/about">About</router-link>-->
 <!--    </div>-->
 <!--    <router-view />-->
-    <index></index>
+<!--    <index></index>-->
+    <router-view/>
   </div>
 </template>
 
@@ -20,10 +21,11 @@
 
 </style>
 <script>
-import Index from "@/views/index";
+// import Index from "@/views/index";
+// import Login from "@/views/firstmenu/Login";
 import '@/css/global.css';
 
 export default {
-  components: {Index}
+  components: {}
 }
 </script>

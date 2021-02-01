@@ -4,12 +4,15 @@
 <!--    <HelloWorld msg="Welcome to Your Vue.js App" />-->
     <div class="bigsquare">
       <div style="height: 100%">
-        <Button @click="showdata">1111</Button>
-        <div>{{namejx}}</div>
+<!--        <Button @click="showdata">1111</Button>-->
+<!--        <div>{{namejx}}</div>-->
         <diamond></diamond>
         <div class="layout">
           <Bar></Bar>
-          <Map></Map>
+          <div style="height:100%;width: 50%;position: relative;">
+            <Map></Map>
+          </div>
+
           <!--        <Map></Map>-->
         </div>
       </div>
@@ -28,7 +31,7 @@
           </div>
         </div>
         <Divider type="vertical"/>
-        <div style="width: 1500px">
+        <div style="width: 85%">
           <div style="float:right;">
             <Input placeholder="请输入服务站" style="width: 50%"/>
             <Button style="margin: 0 10px">查询</Button>
@@ -36,7 +39,7 @@
           </div>
 <!--          <Carousel></Carousel>-->
 <!--          <Swiper></Swiper>-->
-          <div style="clear:both;margin-top: 100px;">
+          <div style="clear:both;margin-top: 50px;width:80%;float: right">
             <Swiperone></Swiperone>
           </div>
 
@@ -61,7 +64,9 @@ import Swiperone from "@/components/firstcomponents/Swiperone";
 // import Map from "@/components/firstcomponents/Map";
 // @ is an alias to /src
 // import Bar from "@/components/Bar";
-import {getdata} from "@/api/api";
+// import {getdata} from "@/api/api";
+// import {getdata1} from "@/api/api";
+// import {getbardata} from "@/api/api";
 
 export default {
   name: "Home",
@@ -71,6 +76,10 @@ export default {
       namejx: '123',
       name:1,
       age:2,
+
+      barxdata:[],
+      barydata:[],
+
     }
   },
   components: {
@@ -90,25 +99,43 @@ export default {
     }
   },
   mounted () {
-    getdata(this.name,this.age).then(res => {
-      this.namejx = res.result_msg
-    }).catch(error => {
-      console.log(error);
-    });
+    // getdata(this.name,this.age).then(res => {
+    //   this.namejx = res.result_msg
+    // }).catch(error => {
+    //   console.log(error);
+    // });
+    // getdata1().then((res)=>{
+    //   // console.log(res)
+    // }).catch(error => {
+    //   console.log(error);
+    // });
+    // getbardata().then((res) =>{
+    //   // console.log(res)
+    //   // res.data.xdata.forEach((item) => {
+    //   //   this.barxdata.push(item)
+    //   // })
+    //   // res.data.ydata.forEach((item) => {
+    //   //   this.barydata.push(item)
+    //   // })
+    //   // console.log(this.barxdata)
+    // }).catch(error => {
+    //   console.log(error);
+    // });
   }
 };
 </script>
 <style scoped>
   .layout {
     width: 100%;
-    height: 80%;
+    height: 50%;
     display: flex;
+    margin-top:30px;
     justify-content: space-between;
-
+    overflow: hidden;
   }
   .homebottom {
-    width: 90%;
-    height: 30%;
+    /*width: 90%;*/
+    height: 25%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -120,7 +147,7 @@ export default {
     height: 100%;
   }
   .bigsquare {
-    height: 60%;
+    height: 100%;
   }
   .ivu-divider {
     height: 70%;

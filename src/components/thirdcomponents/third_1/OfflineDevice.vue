@@ -1,10 +1,16 @@
 <template>
-  <div>离线设备</div>
+  <div>
+    <DualAxesEcharts></DualAxesEcharts>
+  </div>
 </template>
 
 <script>
+import DualAxesEcharts from "@/components/thirdcomponents/third_1/DualAxesEcharts";
 export default {
-name: "OfflineDevice"
+  name: "OfflineDevice",
+  components: {
+    DualAxesEcharts,
+  }
 }
 </script>
 

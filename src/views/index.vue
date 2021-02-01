@@ -67,9 +67,9 @@
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
 <!--          <div class="layout-logo"></div>-->
-          <Button @click="showlogin">登录</Button>
+          <Button @click="showlogin" v-if="buttonloginshow2">登录</Button>
           <Avatar icon="ios-person" size="large"/>
-          <router-link to="/personcenter"><div style="margin-left:10px;color:red">Jay.Liu</div></router-link>
+          <router-link to="/personcenter"><div style="margin-left:10px;color:red">{{username1}}</div></router-link>
 
 <!--          <div class="layout-nav">-->
 <!--            <MenuItem name="1">-->
@@ -91,8 +91,8 @@
 <!--          </div>-->
         </Menu>
       </Header>
-      <div v-show="loginwindow" style="border:1px solid black;background-color: white;width: 300px;height: 300px;position: absolute;left:50%;top:50%;z-index: 333">
-        <Login @ifshowlogin="showlogin1"></Login></div>
+      <div v-if="loginwindow" style="border:1px solid black;background-color: white;width: 50%;height: 50%;position: absolute;left:25%;top:25%;z-index: 333">
+        <Login @ifshowlogin="showlogin1" @ifshowlogin1="showlogin2"></Login></div>
 <!--      <Layout>-->
 <!--        <Sider hide-trigger :style="{background: '#fff'}">-->
 <!--          <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">-->
@@ -188,6 +188,9 @@ export default {
   data() {
     return {
       loginwindow: false,
+      buttonloginshow2: true,
+      username1:'',
+      zhujichangifshow: true,
     }
   },
   // components: {
@@ -216,7 +219,16 @@ export default {
     },
     showlogin1(msg) {
       this.loginwindow=msg;
+      // this.buttonloginshow2=msg;
+    },
+    showlogin2(msg) {
+      this.loginwindow = msg;
+      this.buttonloginshow2 = msg;
     }
+  },
+  mounted() {
+    this.username1 = this.$route.query.username
+    this.zhujichangifshow = this.$route.query.zhujichangshow
   }
 }
 </script>

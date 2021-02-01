@@ -52,7 +52,7 @@
             <Button @click="handleSave(index)">保存</Button>
             <Button @click="editIndex = -1">取消</Button>
           </div>
-          <div v-else style="display: flex">
+          <div v-else style="display: flex" class="tablebutton">
             <Button @click="addrow()">新增</Button>
             <Button @click="handleEdit(row, index)">编辑</Button>
             <Button @click="remove(index)">删除</Button>
@@ -219,3 +219,9 @@ export default {
   }
 }
 </script>
+<style>
+ .tablebutton .ivu-btn {
+  width: 48px;
+  padding: 5px 1px 6px !important;
+}
+</style>

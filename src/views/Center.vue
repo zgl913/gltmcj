@@ -51,26 +51,42 @@
             </template>
             <router-link to="/admitor"><MenuItem name="4-1">用户管理</MenuItem></router-link>
             <router-link to="/shebei"><MenuItem name="4-2">设备管理</MenuItem></router-link>
+<!--            <router-link to="/jingxiaoshang"><MenuItem name="4-3">经销商管理</MenuItem></router-link>-->
           </Submenu>
           <Submenu name="5">
             <template slot="title">
               <Icon type="md-desktop" />
               主机厂管理
             </template>
-            <Submenu name="5-1" StaticEnableDefaultPopOutImage = "false">
-              <template slot="title">
-                广三
-              </template>
-              <router-link to="/stores"><MenuItem name="5-1-1">店1</MenuItem></router-link>
-              <router-link to="/stores"><MenuItem name="5-1-2">店2</MenuItem></router-link>
+            <Submenu  StaticEnableDefaultPopOutImage = "false" v-for="(item,i) in hostgroup" :key="item.group_id" :name="i">
+                <template slot="title">
+                  <keep-alive>
+                  <router-link :to="{path:'/jingxiaoshang',query:{key_code:item.group_code,key_id:item.group_id}}">
+                    <div>{{item.group_name}}</div>
+<!--                    {{item.group_name}}-->
+                  </router-link>
+                  </keep-alive>
+                </template>
+                <div v-for="(items) in jiejue[i]" :key="items">
+                  <router-link :to="{path:'/stores',query:{key_id:items.dealer_id,group_code:item.group_code,key_code:items.dealer_code}}">
+                    <MenuItem :name="items">
+                      {{items.dealer_name}}
+                    </MenuItem>
+                  </router-link>
+                </div>
+
+
+
+
+<!--              <router-link to="/stores"><MenuItem name="1">店2</MenuItem></router-link>-->
             </Submenu>
-            <Submenu name="5-2" StaticEnableDefaultPopOutImage = "false">
-              <template slot="title">
-                长安
-              </template>
-              <router-link to="/stores"><MenuItem name="5-2-1">长安店1</MenuItem></router-link>
-              <router-link to="/stores"><MenuItem name="5-2-2">长安店2</MenuItem></router-link>
-            </Submenu>
+<!--            <Submenu name="5-2" StaticEnableDefaultPopOutImage = "false">-->
+<!--              <template slot="title">-->
+<!--                长安-->
+<!--              </template>-->
+<!--              <router-link to="/stores"><MenuItem name="5-2-1">长安店1</MenuItem></router-link>-->
+<!--              <router-link to="/stores"><MenuItem name="5-2-2">长安店2</MenuItem></router-link>-->
+<!--            </Submenu>-->
           </Submenu>
           <router-link to="/personcenter"><MenuItem name="6"><Icon type="ios-person-outline" />个人中心</MenuItem></router-link>
         </Menu>
@@ -104,39 +120,208 @@
 </template>
 
 <script>
+
+
+import {getGroupList,
+  // getGroupItem,
+  getDealerList
+} from "@/api/api"
 export default {
   name: "center",
-  data () {
+  data() {
     return {
-      list: []
+      list: [],
+      hostgroup: [],
+
+      hostid: '',
+      hostcode: [],
+      jiejue: [],
+      // hostcontent:[["长安店","11","22"],["1"]],
+
+      // showjing:'true'
     }
   },
-  watch:{
-    $route(){   // 监听路由变化
+  methods: {
+    // showjxs(group_code) {
+    //   return new Promise(() =>{
+    //     getDealerList(group_code).then(res => {
+    //       var jingxiaoshanglist=[];
+    //       //     console.log(res)
+    //       res.data.result_content.forEach((item)=> {
+    //         jingxiaoshanglist.push(item.dealer_name)
+    //       })
+    //       //     // this.jingxiaoshanglist.push(res.data.result_content)
+    //       // console.log(this.jingxiaoshanglist)
+    //       //   },).catch(error => {
+    //       //     console.log(error)
+    //       //   })
+    //       // })
+    //       console.log(jingxiaoshanglist)
+    //       return jingxiaoshanglist
+    //     }).then(msg => {
+    //
+    //       this.jiejue.push(msg)
+    //       console.log(JSON.stringify(this.jiejue))
+    //     })
+    //         .catch(error => {
+    //           console.log(error)
+    //         })
+    //   })
+    //   // if(this.showjing) {
+    // },
+    // async add(group) {
+    //   for (let i = 0, len = group.length; i < len; i++) {
+    //     await this.showjxs(group[i])
+    //   }
+    // }
+  },
+  computed: {
+    // showjxs:function (items) {
+    //   getDealerList(items).then(res=> {
+    //     // console.log(res)
+    //     // this.hostcontent = JSON.parse(JSON.stringify(res.data.result_content))
+    //     // console.log(this.hostcontent+'11')
+    //     res.data.result_content.forEach(item => {
+    //       this.jingxiaoshanglist.push(item.dealer_name)
+    //     })
+    //     // this.jingxiaoshanglist=JSON.parse(JSON.stringify(this.jingxiaoshanglist))
+    //     // this.jingxiaoshanglist.push(res.data.result_content)
+    //
+    //   },).catch(error => {
+    //     console.log(error)
+    //   })
+    //   return this.jingxiaoshanglist
+    // }
+  },
+  watch: {
+    $route() {   // 监听路由变化
       this.list = []
       this.list = this.$route.matched
+      // this.jingxiaoshanglist =
     }
   },
+  created() {
+
+  },
   mounted() {
-    this.list = this.$route.matched
+    // var arr1 = ['n1', 'n2', 'n3'];
+    // var arr2 = ['n4', 'n5', 'n6'];
+    // var arr = [];
+    // arr.push(arr1);
+    // arr.push(arr2);
+// document.getElementById("test").innerHTML = arr;
+//     document.getElementById("test").innerHTML = JSON.stringify(arr);
+//     console.log(JSON.stringify(arr) + '111');
+    this.list = this.$route.matched;
+    getGroupList().then(res => {
+      // console.log(res)
+      this.hostgroup = res.data.result_content
+      console.log(this.hostgroup)
+      this.hostgroup.forEach(item => {
+        this.hostcode.push(item.group_code)
+      })
+      // this.hostid = res.data.result_content.group_id
+      // console.log(res.data.result_content.group_code)
+      // this.hostcode.push((res.data).result_content.group_code)
+      // console.log(this.hostcode)
+      return this.hostcode
+    }).then(data => {
+          // this.add(data)
+          for (let i = 0, len = data.length; i < len; i++) {
+
+            getDealerList(data[i]).then(res => {
+              var jingxiaoshanglist=[];
+              // var jingxiaoshangid=[]
+              //     console.log(res)
+              res.data.result_content.forEach((item)=> {
+                jingxiaoshanglist.push(item)
+                // jingxiaoshangid.push(item.dealer_id)
+              })
+              //     // this.jingxiaoshanglist.push(res.data.result_content)
+              // console.log(this.jingxiaoshanglist)
+              //   },).catch(error => {
+              //     console.log(error)
+              //   })
+              // })
+              console.log(jingxiaoshanglist)
+              return jingxiaoshanglist
+            }).then(msg => {
+
+              this.jiejue.push(msg)
+              console.log(JSON.stringify(this.jiejue))
+            })
+                .catch(error => {
+                  console.log(error)
+                })
+          }
+          // console.log(this.jiejue)
+        })
+
+    // this.jingxiaoshanglist=JSON.parse(this.jingxiaoshanglist)
+    // getDealerList(data[i]).then(res=> {
+    //   // console.log(JSON.stringify(res)+'w')
+    //   // this.hostcontent = JSON.parse(JSON.stringify(res.data.result_content))
+    //   // console.log(this.hostcontent+'11')
+    //   res.data.result_content.forEach(item => {
+    //     // this.jingxiaoshanglist = JSON.parse(this.jingxiaoshanglist)
+    //     // console.log(item.dealer_name)
+    //     // this.jingxiaoshanglist=this.jingxiaoshanglist.concat()
+    //
+    //     this.jingxiaoshanglist.push(item.dealer_name)
+    //
+    //     // this.hostcontent=JSON.stringify(this.jingxiaoshanglist.push(item.dealer_name))
+    //
+    //
+    //   })
+    //   console.log(this.jingxiaoshanglist)
+    //   // this.jingxiaoshanglist=JSON.parse(JSON.stringify(this.jingxiaoshanglist))
+    //   // this.jingxiaoshanglist.push(res.data.result_content)
+    //
+    //
+    //
+    //   return this.jingxiaoshanglist
+    // })
+
+
+    // console.log(this.jingxiaoshanglist)
+    // this.jingxiaoshanglist=JSON.stringify(this.jingxiaoshanglist)
+    // console.log(JSON.stringify(this.jingxiaoshanglist))
+    // })
+
+    //     .catch(error => {
+    //   console.log(error)
+    // });
+    // getGroupItem(this.hostid).then(res=> {
+    //   console.log(res)
+    // }).catch(error=> {
+    //   console.log(error)
+    // })
+    // getDealerList(this.hostcode).then(res=> {
+    //   console.log(res)
+    //   this.jingxiaoshanglist.push(res.data.result_content)
+    //   console.log(this.jingxiaoshanglist)
+    // },).catch(error => {
+    //   console.log(error)
+    // })
+    // }
+    // data() {
+    //   return {
+    //     sidebarItem: "",
+    //   };
+    // },
+    // mounted() {
+    //   this.sidebarItem = this.$route.name;
+    // },
+    // methods: {
+    //   changeSidebar(name) {
+    //     this.sidebarItem = name;
+    //     this.$router.push({
+    //       name: name,
+    //     });
+    //   },
+    // },
   }
-  // data() {
-  //   return {
-  //     sidebarItem: "",
-  //   };
-  // },
-  // mounted() {
-  //   this.sidebarItem = this.$route.name;
-  // },
-  // methods: {
-  //   changeSidebar(name) {
-  //     this.sidebarItem = name;
-  //     this.$router.push({
-  //       name: name,
-  //     });
-  //   },
-  // },
-};
+}
 </script>
 
 <style scoped>

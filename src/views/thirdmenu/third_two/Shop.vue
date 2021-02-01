@@ -36,3 +36,4 @@ export default {
     flex-direction: row;
   }
 </style>
+<!--select1添加onchange事件，传递值给父组件，，父组件监听数据变化，发出请求-->

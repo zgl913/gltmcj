@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div style="width:20%;float: left;display: flex;flex-direction: column;align-items: flex-start;">
-      <div style="width:100%;height:30px;background-color: pink;">选择服务站</div>
+    <div style="width:20%;float: left;display: flex;flex-direction: column;align-items: flex-start;position:relative;">
+      <div style="width:100%;height:30px;background-color: #D3D3D3;" class="selectservice">选择服务站</div>
       <div style="width:100%;margin-top: 20px;"> <Input search placeholder="服务站名"  style="width: 100%"/></div>
       <div style="font-size: 20px;font-weight: bold;">当前：杭州领克旗舰店</div>
       <div style="font-size: 20px;font-weight: bold;">最近访问</div>
       <div style="display: flex;justify-content: space-between;width: 100%;">
-        <div class="store">杭州店一</div>
-        <div class="store">上海店一</div>
-        <div class="store">成都店一</div>
+        <div class="store selectservice1">杭州店一</div>
+        <div class="store selectservice1">上海店一</div>
+        <div class="store selectservice1">成都店一</div>
       </div>
     </div>
     <div style="clear: both">
       <TreeOrigion></TreeOrigion>
     </div>
     <div style="float: left">
-      <div style="width:100%;height:30px;background-color: pink;">选择监控点</div>
+      <div style="width:100%;height:30px;background-color: #D3D3D3;" class="selectservice">选择监控点</div>
       <div style="display: flex;margin-top: 20px">
         <div style="display: flex;flex-direction: column">
           <Button class="viewplace">门口接待处</Button>
@@ -53,9 +53,15 @@ export default {
   .store {
     width: 100px;
     height: 40px;
-    background-color: pink;
+    background-color: #D3D3D3;
   }
   .viewplace {
     margin-top: 10px;
+  }
+  .selectservice {
+  line-height: 30px;
+  }
+  .selectservice1 {
+    line-height: 40px;
   }
 </style>

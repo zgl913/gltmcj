@@ -15,6 +15,11 @@ import Stores from "@/views/HostManagement/Stores";
 import DeviceNumber from "@/components/thirdcomponents/third_1/DeviceNumber";
 import OfflineDevice from "@/components/thirdcomponents/third_1/OfflineDevice";
 import OnlineDevice from "@/components/thirdcomponents/third_1/OnlineDevice";
+import ShangXianMengDian from "@/components/thirdcomponents/third_1/ShangXianMengDian";
+import SheBeiTongji from "@/components/thirdcomponents/third_1/SheBeiTongji";
+import Login from "@/views/firstmenu/Login";
+import index from "@/views/index";
+import Jingxiaoshang from "@/components/fourthcomponents/jingxiaoshang/Jingxiaoshang";
 // import Center from "@/views/Center";
 // import personcenter from "@/views/personcenter";
 // import viewdata from "@/views/viewdata";
@@ -37,86 +42,130 @@ const routes = [
   //   children:
   //       [
     {
-      path: '/Home',
-      component: Home,
-      name: '首页',
-      // meta: {
-      //   title: 'home'
-      // }
-    },
-    {
-        path: '/',
-        redirect: '/Home'
-    },
-    {
-        path: '/videocheck',
-        component: videocheck,
-        name: '视频巡店'
-    },
-    {
-        path: '/personcenter',
-        component: personcenter,
-        name: '个人中心'
-    },
-    {
-        path: "/viewdata",
-        name: "可视数据",
-        component: viewdata,
-        // meta: {
-        //     title: "可视数据"
-        // },
-        children: [
-            {
-                path: "DeviceNumber",
-                component: DeviceNumber
-            },
-            {
-                path: "OfflineDevice",
-                component: OfflineDevice
-            },
-            {
-                path: "OnlineDevice",
-                component: OnlineDevice
-            },
-            {
-                path:"",
-                component: DeviceNumber
-            }
-        ]
+        path: '/Login',
+        component: Login,
+        name: '登录',
     },
     // {
-    //     path: "/detaildata",
-    //     name: "detaildata",
-    //     component: detaildata,
-    //     meta: {
-    //         title: "detaildata"
-    //     }
+    //     path: '/',
+    //     redirect: '/Login',
     // },
     {
-        path: "/OffLine",
-        component: OffLine,
-        name: '离线'
+        path: '/',
+        redirect: '/index',
     },
     {
-        path: "/Shop",
-        component: Shop,
-        name: '门店'
+        path: '/index',
+        component: index,
+        name: '主页',
+        children: [
+            {
+                path: '/Home',
+                component: Home,
+                name: '首页',
+                // meta: {
+                //   title: 'home'
+                // }
+            },
+            {
+                path: '',
+                component: Home,
+            },
+
+            {
+                path: '/videocheck',
+                component: videocheck,
+                name: '视频巡店'
+            },
+            {
+                path: '/personcenter',
+                component: personcenter,
+                name: '个人中心'
+            },
+            {
+                path: "/viewdata",
+                name: "可视数据",
+                component: viewdata,
+                // meta: {
+                //     title: "可视数据"
+                // },
+                children: [
+
+                    {
+                        path: "ShangXianMengDian",
+                        component: ShangXianMengDian
+                    },
+                    {
+                        path: "SheBeiTongji",
+                        component: SheBeiTongji,
+                        children: [
+                            {
+                                path: "DeviceNumber",
+                                component: DeviceNumber
+                            },
+                            {
+                                path: "OfflineDevice",
+                                component: OfflineDevice
+                            },
+                            {
+                                path: "OnlineDevice",
+                                component: OnlineDevice
+                            },
+                            {
+                                path:"",
+                                component: DeviceNumber
+                            }
+                        ]
+                    },
+                    {
+                        path:"",
+                        component: ShangXianMengDian
+                    }
+
+
+                ]
+            },
+            // {
+            //     path: "/detaildata",
+            //     name: "detaildata",
+            //     component: detaildata,
+            //     meta: {
+            //         title: "detaildata"
+            //     }
+            // },
+            {
+                path: "/OffLine",
+                component: OffLine,
+                name: '离线'
+            },
+            {
+                path: "/Shop",
+                component: Shop,
+                name: '门店'
+            },
+            {
+                path: "/admitor",
+                component: AdmitorManagement,
+                name: '用户管理'
+            },
+            {
+                path: "/shebei",
+                name: '设备管理',
+                component: DeviceManagement
+            },
+            {
+                path: "/jingxiaoshang",
+                name: '主机厂',
+                component: Jingxiaoshang
+            },
+            {
+                path: "/stores",
+                name: '具体店信息',
+                component: Stores
+            },
+        ]
     },
-    {
-        path: "/admitor",
-        component: AdmitorManagement,
-        name: '系统管理'
-    },
-    {
-        path: "/shebei",
-        name: '设备管理',
-        component: DeviceManagement
-    },
-    {
-        path: "/stores",
-        name: '具体店信息',
-        component: Stores
-    },
+
 
     //       ]
   // }

@@ -13,8 +13,8 @@
     </div>
     <div class="buttontotal">
       <div class="buttontwo">
-        <Button type="text">上线门店统计</Button>
-        <Button type="text">设备统计</Button>
+        <router-link to="/viewdata/shangxianmengdian"><Button type="text">上线门店统计</Button></router-link>
+        <router-link to="/viewdata/shebeitongji"><Button type="text">设备统计</Button></router-link>
       </div>
       <Button>导出列表</Button>
     </div>
@@ -27,26 +27,8 @@
       </div>
     </div>
     <Divider></Divider>
-    <div style="float: left;display: flex;justify-content: space-around;width: 300px;margin-bottom: 15px;">
-      <div><router-link to="/viewdata/DeviceNumber">设备总数</router-link></div>
-      <div><router-link to="/viewdata/OnlineDevice">在线设备</router-link></div>
-      <div><router-link to="/viewdata/OfflineDevice">离线设备</router-link></div>
-    </div>
-    <Divider></Divider>
-    <div style="float: left">
-      <Button class="datalayout">今日</Button>
-      <Button class="datalayout">本周</Button>
-      <Button class="datalayout">本月</Button>
-      <Button class="datalayout">本年</Button>
-      <DatePicker type="daterange" placement="bottom-end" placeholder="Select date" style="width: 250px;height: 100%" class="datalayout"></DatePicker>
-      <Button class="datalayout">查询</Button>
-    </div>
-    <div style="display: flex;justify-content: space-around;clear: both;">
-<!--      <DualAxesEcharts></DualAxesEcharts>-->
-<!--      <Bar></Bar>-->
-<!--      <DualAxes></DualAxes>-->
-      <router-view></router-view>
-    </div>
+    <router-view></router-view>
+
   </div>
 
 </template>

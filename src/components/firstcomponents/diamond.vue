@@ -7,15 +7,15 @@
 <template>
   <div class="diamond">
     <div class="sum sum-1">
-      <div>356家</div>
+      <div>{{onlinestore}}家</div>
       <div>全国上线门店总数</div>
     </div>
     <div class="sum sum-2">
-      <div>3162台</div>
+      <div>{{devicetotal }}台</div>
       <div>设备总数</div>
     </div>
     <div class="sum sum-3">
-      <div>3162台</div>
+      <div>{{onlinedevice}}台</div>
       <div>在线设备数</div>
     </div>
   </div>
@@ -23,7 +23,14 @@
 
 <script>
 export default {
-name: "diamond"
+name: "diamond",
+  data () {
+    return {
+      onlinestore:356,
+      devicetotal:3162,
+      onlinedevice:123,
+    }
+  }
 }
 </script>
 
@@ -31,6 +38,7 @@ name: "diamond"
   .diamond {
   width: 100%;
   display: flex;
+    height: 15%;
   justify-content: space-around;
 }
   .sum {
@@ -44,7 +52,7 @@ name: "diamond"
     /*line-height: 100px;*/
     background-color: white;
     width: 200px;
-    height: 100px;
+    height: 100%;
     color: #2d8cf0;
   }
 </style>

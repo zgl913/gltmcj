@@ -2,7 +2,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: 'http://datainfo.hzqnkj.com/uni/UniData/',
+                target: 'http://116.62.203.227:9001/qndata/qnbasedata/',
                 // 允许跨域
                 changeOrigin: true,
                 ws: true,

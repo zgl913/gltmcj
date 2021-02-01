@@ -26,7 +26,7 @@ export default {
   data () {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('Please enter your password'));
+        callback(new Error('请输入您的旧密码'));
       } else {
         if (this.formCustom.passwdCheck !== '') {
           // 对第二个密码框单独验证
@@ -37,7 +37,7 @@ export default {
     };
     const validatePassCheck = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('Please enter your password again'));
+        callback(new Error('请输入您的新密码'));
       } else if (value !== this.formCustom.passwd) {
         callback(new Error('The two input passwords do not match!'));
       } else {
@@ -46,7 +46,7 @@ export default {
     };
     const validateAge = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('Age cannot be empty'));
+        return callback(new Error('请再次输入您的新密码'));
       }
       // 模拟异步验证效果
       setTimeout(() => {

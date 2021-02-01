@@ -5,9 +5,7 @@
   copyright Hangzhou QianNeng 2021.1.5
 -->
 <template>
-  <div class="barlayout">
-    <div id="map" class="maplayout"></div>
-  </div>
+    <div id="map" style="height: 100%;"></div>
 </template>
 
 <script>
@@ -23,12 +21,14 @@ export default {
       const scene = new Scene({
         id: 'map',
         map: new Mapbox({
-          center: [ 180.2825, 39.9 ],
+          // center: [ 180.2825, 39.9 ],
+          center: [ 116.2825, 39.9 ],
           pitch: 0,
           style: 'blank',
           zoom: 3,
-          minZoom: 2.5,
-          maxZoom: 10
+          minZoom:1.5,
+          maxZoom: 10,
+          // autoFit: true,
         })
       });
       const attachMapContainer = document.createElement('div');
@@ -112,7 +112,7 @@ border: 1px solid #333;`;
           }
         });
       });
-
+      // scene.panBy(0,100);
     }
     },
   mounted() {
@@ -122,27 +122,27 @@ border: 1px solid #333;`;
 </script>
 
 <style>
-  .maplayout {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 2;
-  }
-  /*.17-ctrl-logo {*/
-  /*     display: none;*/
-  /*   }*/
-  .maplayout a{
-    display: none;
-  }
-  .barlayout {
-    position: relative;
-    width: 50%;
-    height: 500px;
-    margin-top: 50px;
-    margin-left: 20px;
-    background-color: white;
-    overflow: hidden;
-  }
+  /*.maplayout {*/
+  /*  width: 100%;*/
+  /*  height: 100%;*/
+  /*  position: relative;*/
+  /*  z-index: 300;*/
+  /*}*/
+  /*!*.17-ctrl-logo {*!*/
+  /*!*     display: none;*!*/
+  /*!*   }*!*/
+  /*.maplayout a{*/
+  /*  display: none;*/
+  /*}*/
+  /*.barlayout {*/
+  /*  position: relative;*/
+  /*  width: 50%;*/
+  /*  height: 100%;*/
+  /*  !*margin-top: 50px;*!*/
+  /*  margin-left: 20px;*/
+  /*  background-color: white;*/
+  /*  !*overflow: hidden;*!*/
+  /*}*/
   /*.barstyle{*/
   /*  width: 100%;*/
   /*  height: 500px;*/
@@ -150,9 +150,19 @@ border: 1px solid #333;`;
   /*  top:0px;*/
 
   /*}*/
-  .maplayout canvas {
-  }
-  .mapboxgl-canvas {
-    margin-top: 100px;
-  }
+  /*.maplayout canvas {*/
+  /*  margin-top: 0px;*/
+  /*  height: 550px !important;*/
+  /*  width: 1600px;*/
+  /*}*/
+  /*.mapboxgl-canvas {*/
+  /*  margin-top: 100px;*/
+  /*}*/
+  /*.resize-sensor {*/
+  /*  height: 0px !important;*/
+  /*}*/
+#map canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
 </style>

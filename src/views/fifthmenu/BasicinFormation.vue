@@ -10,8 +10,8 @@
 
     <div v-if="showModal" style="height: 300px;width: 500px;border: 2px solid black">
       <div style="float: right">
-        <Button @click="showModal=!showModal">保存</Button>
-        <Button @click="showModal=!showModal">取消</Button>
+        <Button @click="showModal=!showModal" class="buttonsave buttontop">保存</Button>
+        <Button @click="showModal=!showModal" class="buttoncancle buttontop">取消</Button>
       </div>
       <div style="clear: both">
         <div v-html="'账号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;123456'" class="informationtotal"></div>
@@ -60,5 +60,7 @@ export default {
     top:20px;
     right:0px;
   }
-
+  .buttontop {
+    margin:10px;
+  }
 </style>
