@@ -1,10 +1,11 @@
 <template>
   <div style="position: relative">
     <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showadd">
+      <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showadd = !showadd">×</button>
       <Form ref="formLeft" :model="formLeft" label-position="left" :label-width="100" >
-        <FormItem label="主机厂编号" prop="input1">
-          <Input v-model="formLeft.input1"/>
-        </FormItem>
+<!--        <FormItem label="主机厂编号" prop="input1">-->
+<!--          <Input v-model="formLeft.input1"/>-->
+<!--        </FormItem>-->
         <FormItem label="经销商代码" prop="input2">
           <Input v-model="formLeft.input2"/>
         </FormItem>
@@ -29,7 +30,7 @@
         <FormItem label="工作开始时间" prop="input9">
           <Input v-model="formLeft.input9"/>
         </FormItem>
-        <FormItem label="工作介绍时间" prop="input10">
+        <FormItem label="工作结束时间" prop="input10">
           <Input v-model="formLeft.input10"/>
         </FormItem>
         <FormItem label="经销商层级" prop="input11">
@@ -39,7 +40,45 @@
           <Input v-model="formLeft.input12"/>
         </FormItem>
         <Button @click="addjxs">提交</Button>
-        <Button @click="handleReset('formLeft')" style="margin-left: 8px">Reset</Button>
+        <Button @click="handleReset('formLeft')" style="margin-left: 8px">重置</Button>
+      </Form>
+    </div>
+
+    <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showxiugai">
+      <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showxiugai = !showxiugai">×</button>
+      <Form ref="formLeft1" :model="formLeft1" label-position="left" :label-width="100" >
+        <FormItem label="经销商简称" prop="input1">
+          <Input v-model="formLeft1.input1"/>
+        </FormItem>
+        <FormItem label="经销商全称" prop="input2">
+          <Input v-model="formLeft1.input2"/>
+        </FormItem>
+        <FormItem label="地址" prop="input3">
+          <Input v-model="formLeft1.input3"/>
+        </FormItem>
+        <FormItem label="店端服务器IP" prop="input4">
+          <Input v-model="formLeft1.input4"/>
+        </FormItem>
+        <FormItem label="远程tv号" prop="input5">
+          <Input v-model="formLeft1.input5"/>
+        </FormItem>
+        <FormItem label="远程tv密码" prop="input6">
+          <Input v-model="formLeft1.input6"/>
+        </FormItem>
+        <FormItem label="工作开始时间" prop="input7">
+          <Input v-model="formLeft1.input7"/>
+        </FormItem>
+        <FormItem label="工作结束时间" prop="input8">
+          <Input v-model="formLeft1.input8"/>
+        </FormItem>
+        <FormItem label="经销商层级" prop="input9">
+          <Input v-model="formLeft1.input9"/>
+        </FormItem>
+        <FormItem label="项目代码" prop="input10">
+          <Input v-model="formLeft1.input10"/>
+        </FormItem>
+        <Button @click="xiugaijxs('formLeft1')">确定</Button>
+        <Button @click="handleReset('formLeft1')" style="margin-left: 8px">重置</Button>
       </Form>
     </div>
     <div class="messagetotal">
@@ -59,10 +98,10 @@
         <span v-else>{{ row.group_code }}</span>
       </template>
 
-      <template slot-scope="{ row, index }" slot="dealer_id">
-        <Input type="text" v-model="editdealer_id" v-if="editIndex === index" />
-        <span v-else>{{ row.dealer_id }}</span>
-      </template>
+<!--      <template slot-scope="{ row, index }" slot="dealer_id">-->
+<!--        <Input type="text" v-model="editdealer_id" v-if="editIndex === index" />-->
+<!--        <span v-else>{{ row.dealer_id }}</span>-->
+<!--      </template>-->
 
       <template slot-scope="{ row, index }" slot="dealer_code">
         <Input type="text" v-model="editdealer_code" v-if="editIndex === index" />
@@ -117,7 +156,7 @@
           <Button @click="editIndex = -1">取消</Button>
         </div>
         <div v-else>
-          <Button @click="handleEdit(row, index)">编辑</Button>
+          <Button @click="handleEdit(row, index)">修改</Button>
           <Button @click="remove(index)">删除</Button>
         </div>
       </template>
@@ -156,10 +195,10 @@ export default {
           title: '主机厂编号',
           slot: 'group_code'
         },
-        {
-          title: '经销商id',
-          slot: 'dealer_id'
-        },
+        // {
+        //   title: '经销商id',
+        //   slot: 'dealer_id'
+        // },
         {
           title: '经销商代码',
           slot: 'dealer_code'
@@ -193,7 +232,7 @@ export default {
           slot: 'work_start'
         },
         {
-          title: '工作介绍时间',
+          title: '工作结束时间',
           slot: 'work_end'
         },
         {
@@ -209,38 +248,7 @@ export default {
           slot: 'operation'
         }
       ],
-      data: [
-        {
-          group_code: '相机1',
-          dealer_id: '相机类型1',
-          dealer_code: '相机型号1',
-          dealer_name: '代码1',
-          dealer_fullname: '店端IP1',
-          address: '1111',
-          server_ip: '1111',
-          tv_number: '1111',
-          tv_pwd: '1111',
-          work_start: '1111',
-          work_end: '1111',
-          dealer_level: '1111',
-          project_code:'1111'
-        },
-        {
-          group_code: '相机1',
-          dealer_id: '相机类型1',
-          dealer_code: '相机型号1',
-          dealer_name: '代码1',
-          dealer_fullname: '店端IP1',
-          address: '1111',
-          server_ip: '1111',
-          tv_number: '1111',
-          tv_pwd: '1111',
-          work_start: '1111',
-          work_end: '1111',
-          dealer_level: '1111',
-          project_code:'1111'
-        },
-      ],
+      data: [],
       editIndex: -1,
       editgroup_code: '',  // 当前聚焦的输入框的行数
       editdealer_id: '',  // 第一列输入框，当然聚焦的输入框的输入内容，与 data 分离避免重构的闪烁
@@ -269,7 +277,24 @@ export default {
         input11: '',
         input12: '',
       },
+      formLeft1: {
+        input1: '',
+        input2: '',
+        input3: '',
+        input4: '',
+        input5: '',
+        input6: '',
+        input7: '',
+        input8: '',
+        input9: '',
+        input10: '',
+        input11: '',
+        input12: '',
+      },
       showadd:false,
+      showxiugai:false,
+      dealeridnumber: '',
+      indexx: 1,
     }
   },
   methods: {
@@ -277,56 +302,114 @@ export default {
       this.$refs[name].resetFields();
     },
     addjxs() {
-      addDealerItem(this.formLeft.input1,this.formLeft.input2,this.formLeft.input3,this.formLeft.input4,this.formLeft.input5,this.formLeft.input6,this.formLeft.input7,
+      addDealerItem(this.jingxiaoshangcode,this.formLeft.input2,this.formLeft.input3,this.formLeft.input4,this.formLeft.input5,this.formLeft.input6,this.formLeft.input7,
           this.formLeft.input8,this.formLeft.input9,this.formLeft.input10,this.formLeft.input11,this.formLeft.input12).then(res =>{
-        console.log(JSON.stringify(res))
+        // console.log(JSON.stringify(res))
+        // console.log(this.data)
+
+        console.log(this.data)
+        if(res.data.result_code == -1){
+          alert(res.data.result_content)
+          // this.showadd = !this.showadd
+        }else {
+          this.showadd = !this.showadd
+          this.data.push({
+            group_code: this.jingxiaoshangcode,
+            dealer_code: this.formLeft.input2,
+            dealer_name: this.formLeft.input3,
+            dealer_fullname: this.formLeft.input4,
+            address: this.formLeft.input5,
+            server_ip: this.formLeft.input6,
+            tv_number: this.formLeft.input7,
+            tv_pwd: this.formLeft.input8,
+            work_start: this.formLeft.input9,
+            work_end: this.formLeft.input10,
+            dealer_level: this.formLeft.input11,
+            project_code: this.formLeft.input12,
+          })
+          alert(res.data.result_msg)
+        }
       }).catch(error => {
         console.log(error)
       })
     },
-    handleEdit (row, index) {
-      this.editgroup_code = row.group_code;
-      this.editdealer_id = row.dealer_id;
-      this.editdealer_code = row.dealer_code;
-      this.editdealer_name = row.dealer_name;
-      this.editdealer_fullname = row.dealer_fullname;
-      this.editaddress = row.address;
-      this.editserver_ip = row.server_ip;
-      this.edittv_number = row.tv_number;
-      this.edittv_pwd = row.tv_pwd;
-      this.editwork_start = row.work_start;
-      this.editwork_end = row.work_end;
-      this.editdealer_level = row.dealer_level;
-      this.editproject_code = row.project_code;
-      this.editIndex = index;
-    },
-    handleSave (row,index) {
-      editDealerItem(this.editgroup_code,this.editdealer_id,this.editdealer_code,this.editdealer_name,this.editdealer_fullname,this.editaddress,
-      this.editserver_ip,this.edittv_number,this.edittv_pwd,this.editwork_start,this.editwork_end,this.editdealer_level,this.editproject_code).then(res => {
+    xiugaijxs (name){
+      editDealerItem(this.formLeft1.input11,this.dealeridnumber,this.formLeft1.input12,this.formLeft1.input1,this.formLeft1.input2,this.formLeft1.input3,
+              this.formLeft1.input4,this.formLeft1.input5,this.formLeft1.input6,this.formLeft1.input7,this.formLeft1.input8,this.formLeft1.input9,this.formLeft1.input10).then(res => {
         console.log(res)
       }).catch(error=> {
         console.log(error)
       })
-      this.data[index].group_code = this.editgroup_code;
-      this.data[index].dealer_id = this.editdealer_id;
-      this.data[index].dealer_code = this.editdealer_code;
-      this.data[index].dealer_name = this.editdealer_name;
-      this.data[index].dealer_fullname= this.editdealer_fullname;
-      this.data[index].address= this.editaddress;
-      this.data[index].server_ip= this.editserver_ip;
-      this.data[index].tv_number= this.edittv_number;
-      this.data[index].tv_pwd= this.edittv_pwd;
-      this.data[index].work_start= this.editwork_start;
-      this.data[index].work_end= this.editwork_end;
-      this.data[index].dealer_level= this.editdealer_level;
-      this.data[index].project_code= this.editproject_code;
-      this.editIndex = -1;
+      this.data[this.indexx].group_code = this.formLeft1.input11;
+      // this.data[index].dealer_id = this.editdealer_id;
+      this.data[this.indexx].dealer_code = this.formLeft1.input12;
+      this.data[this.indexx].dealer_name = this.formLeft1.input1;
+      this.data[this.indexx].dealer_fullname= this.formLeft1.input2;
+      this.data[this.indexx].address= this.formLeft1.input3;
+      this.data[this.indexx].server_ip= this.formLeft1.input4;
+      this.data[this.indexx].tv_number= this.formLeft1.input5;
+      this.data[this.indexx].tv_pwd= this.formLeft1.input6;
+      this.data[this.indexx].work_start= this.formLeft1.input7;
+      this.data[this.indexx].work_end= this.formLeft1.input8;
+      this.data[this.indexx].dealer_level= this.formLeft1.input9;
+      this.data[this.indexx].project_code= this.formLeft1.input10;
+      // this.editIndex = -1;
+      this.showxiugai = !this.showxiugai
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.$Message.success('Success!');
+        } else {
+          this.$Message.error('Fail!');
+        }
+      })
     },
+
+    handleEdit (row,index) {
+      // this.editgroup_code = row.group_code;
+      // // this.editdealer_id = row.dealer_id;
+      // this.editdealer_code = row.dealer_code;
+      // this.editdealer_name = row.dealer_name;
+      // this.editdealer_fullname = row.dealer_fullname;
+      // this.editaddress = row.address;
+      // this.editserver_ip = row.server_ip;
+      // this.edittv_number = row.tv_number;
+      // this.edittv_pwd = row.tv_pwd;
+      // this.editwork_start = row.work_start;
+      // this.editwork_end = row.work_end;
+      // this.editdealer_level = row.dealer_level;
+      // this.editproject_code = row.project_code;
+      // this.editIndex = index;
+      this.showxiugai = !this.showxiugai
+      this.dealeridnumber = row.dealer_id
+      this.formLeft1.input1 = row.dealer_name
+      this.formLeft1.input2 = row.dealer_fullname
+      this.formLeft1.input3 = row.address
+      this.formLeft1.input4 = row.server_ip
+      this.formLeft1.input5 = row.tv_number
+      this.formLeft1.input6 = row.tv_pwd
+      this.formLeft1.input7 = row.work_start
+      this.formLeft1.input8 = row.work_end
+      this.formLeft1.input9 = row.dealer_level
+      this.formLeft1.input10 = row.project_code
+      this.formLeft1.input11 =row.group_code
+      this.formLeft1.input12 = row.dealer_code
+      this.indexx = index
+    },
+    // handleSave (row,index) {
+    //
+    // },
     remove (index) {
       deleteDealerItem(this.data[index].dealer_id).then(res=>{
         console.log(res)
+        // if(res.data.result_code>=0) {
+        //   this.data.splice(index, 1);
+        //   this.$Message.success('Success!');
+        // }else {
+        //   this.$Message.success('Fail!');
+        // }
+              this.data.splice(index, 1);
       })
-      this.data.splice(index, 1);
+
     }
   },
 
@@ -334,9 +417,15 @@ export default {
     this.jingxiaoshangcode = this.$route.query.key_code;
     this.jingxiaoshangid = this.$route.query.key_id;
     getDealerList(this.jingxiaoshangcode).then(res => {
-      res.data.result_content.forEach(item => {
-        this.dealerid.push(item.dealer_id)
-      })
+        console.log(res)
+        if(res.data.result_content) {
+            res.data.result_content.forEach(item => {
+                this.dealerid.push(item.dealer_id)
+            })
+        }else {
+            this.dealerid=[]
+        }
+
       return this.dealerid
     }).then(data => {
       for (let i=0;i<data.length;i++) {
@@ -393,10 +482,11 @@ export default {
         return this.dealerid
       }).then(data => {
         this.tabledata=[]
-        var jingxiaoshanglist1=[];
+        // var jingxiaoshanglist1=[];
         for (let i=0;i<data.length;i++) {
           getDealerItem(data[i]).then(res => {
-            jingxiaoshanglist1=[];
+              console.log(res)
+             var jingxiaoshanglist1=[];
             this.tabledata.push({
               group_code: res.data.result_content.group_code,
               dealer_id: res.data.result_content.dealer_id,
@@ -453,9 +543,13 @@ export default {
     justify-content: space-between;
   }
   .ivu-form-item {
-    margin-bottom: 24px;
+    margin-bottom: 10px !important;
     margin: 3%;
     vertical-align: top;
     zoom: 1;
+  }
+  /*.ivu-form-item label:first-child*/
+  .ivu-form-label-left {
+      clear: both;
   }
 </style>

@@ -38,7 +38,7 @@ name: "diamond",
   .diamond {
   width: 100%;
   display: flex;
-    height: 15%;
+    height: 12%;
   justify-content: space-around;
 }
   .sum {
@@ -51,7 +51,7 @@ name: "diamond",
     text-align: center;
     /*line-height: 100px;*/
     background-color: white;
-    width: 200px;
+    width: 10%;
     height: 100%;
     color: #2d8cf0;
   }

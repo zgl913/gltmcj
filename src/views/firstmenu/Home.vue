@@ -3,7 +3,7 @@
 <!--    <img alt="Vue logo" src="../assets/logo.png" />-->
 <!--    <HelloWorld msg="Welcome to Your Vue.js App" />-->
     <div class="bigsquare">
-      <div style="height: 100%">
+      <div style="height: 99%">
 <!--        <Button @click="showdata">1111</Button>-->
 <!--        <div>{{namejx}}</div>-->
         <diamond></diamond>
@@ -15,38 +15,35 @@
 
           <!--        <Map></Map>-->
         </div>
+          <div class="homebottom">
+              <div class='bottomcompont'>
+                  <Pie></Pie>
+                  <div>离线设备总数{{offlinenum}}</div>
+              </div>
+              <div class='bottomcompont'>
+                      <PieTotal></PieTotal>
+                      <div class="font">离线屏幕数{{offlinenum}}</div>
+                      <div class="font">离线相机数{{offlinenum}}</div>
+              </div>
+              <Divider type="vertical"/>
+              <div style="width: 85%">
+                  <div style="float:right;">
+                      <Input placeholder="请输入服务站" style="width: 50%"/>
+                      <Button style="margin: 0 10px">查询</Button>
+                      <div style="display: inline-block">查看全部</div>
+                  </div>
+                  <!--          <Carousel></Carousel>-->
+                  <!--          <Swiper></Swiper>-->
+                  <div style="clear:both;margin-top: 50px;width:80%;float: right">
+                      <Swiperone></Swiperone>
+                  </div>
+
+
+
+              </div>
+          </div>
       </div>
-      <div class="homebottom">
-        <div>
-          <Pie></Pie>
-          <div>离线设备总数{{offlinenum}}</div>
-        </div>
-        <div>
-          <div>
-            <PieTotal></PieTotal>
-          </div>
-          <div>
-            <div>离线屏幕数{{offlinenum}}</div>
-            <div>离线相机数{{offlinenum}}</div>
-          </div>
-        </div>
-        <Divider type="vertical"/>
-        <div style="width: 85%">
-          <div style="float:right;">
-            <Input placeholder="请输入服务站" style="width: 50%"/>
-            <Button style="margin: 0 10px">查询</Button>
-            <div style="display: inline-block">查看全部</div>
-          </div>
-<!--          <Carousel></Carousel>-->
-<!--          <Swiper></Swiper>-->
-          <div style="clear:both;margin-top: 50px;width:80%;float: right">
-            <Swiperone></Swiperone>
-          </div>
 
-
-
-        </div>
-      </div>
     </div>
 
   </div>
@@ -129,7 +126,7 @@ export default {
     width: 100%;
     height: 50%;
     display: flex;
-    margin-top:30px;
+    margin-top:2%;
     justify-content: space-between;
     overflow: hidden;
   }
@@ -137,20 +134,29 @@ export default {
     /*width: 90%;*/
     height: 25%;
     display: flex;
-    justify-content: space-around;
+    /*justify-content: space-around;*/
     align-items: center;
-    position: absolute;
-    bottom: 0px;
+    margin-top:1%;
     background-color: white;
   }
   .home {
-    height: 100%;
+    height: 95%;
   }
   .bigsquare {
     height: 100%;
+      position: relative;
   }
   .ivu-divider {
     height: 70%;
     width: 3px;
   }
+    .bottomcompont {
+        height: 100%;
+        width:20%;
+        display: flex;
+        flex-direction: column;
+    }
+    .font {
+        white-space:nowrap;
+    }
 </style>

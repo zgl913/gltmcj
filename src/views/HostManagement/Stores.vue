@@ -1,13 +1,14 @@
 <template>
  <div style="position:relative;">
    <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showadd">
+     <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showadd = !showadd">×</button>
      <Form ref="formLeft" :model="formLeft" label-position="left" :label-width="100">
-       <FormItem label="主机厂编号" prop="input1">
-         <Input v-model="formLeft.input1"/>
-       </FormItem>
-       <FormItem label="经销商编号" prop="input2">
-         <Input v-model="formLeft.input2"/>
-       </FormItem>
+<!--       <FormItem label="主机厂编号" prop="input1">-->
+<!--         <Input v-model="formLeft.input1"/>-->
+<!--       </FormItem>-->
+<!--       <FormItem label="经销商编号" prop="input2">-->
+<!--         <Input v-model="formLeft.input2"/>-->
+<!--       </FormItem>-->
        <FormItem label="设备类型" prop="input3">
          <Input v-model="formLeft.input3"/>
        </FormItem>
@@ -48,8 +49,58 @@
        <Button @click="handleReset('formLeft')" style="margin-left: 8px">Reset</Button>
      </Form>
    </div>
+
+   <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showxiugai">
+     <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showxiugai = !showxiugai">×</button>
+     <Form ref="formLeft1" :model="formLeft1" label-position="left" :label-width="100">
+       <!--       <FormItem label="主机厂编号" prop="input1">-->
+       <!--         <Input v-model="formLeft.input1"/>-->
+       <!--       </FormItem>-->
+       <!--       <FormItem label="经销商编号" prop="input2">-->
+       <!--         <Input v-model="formLeft.input2"/>-->
+       <!--       </FormItem>-->
+       <FormItem label="设备类型" prop="input3">
+         <Input v-model="formLeft1.input3"/>
+       </FormItem>
+       <FormItem label="相机类型" prop="input4">
+         <Input v-model="formLeft1.input4"/>
+       </FormItem>
+       <FormItem label="设备编号" prop="input5">
+         <Input v-model="formLeft1.input5"/>
+       </FormItem>
+       <FormItem label="设备名称" prop="input6">
+         <Input v-model="formLeft1.input6"/>
+       </FormItem>
+       <FormItem label="店端设备编号" prop="input7">
+         <Input v-model="formLeft1.input7"/>
+       </FormItem>
+       <FormItem label="设备型号" prop="input8">
+         <Input v-model="formLeft1.input8"/>
+       </FormItem>
+       <FormItem label="设备ip" prop="input9">
+         <Input v-model="formLeft1.input9"/>
+       </FormItem>
+       <FormItem label="设备端口" prop="input10">
+         <Input v-model="formLeft1.input10"/>
+       </FormItem>
+       <FormItem label="设备用户名" prop="input11">
+         <Input v-model="formLeft1.input11"/>
+       </FormItem>
+       <FormItem label="设备密码" prop="input12">
+         <Input v-model="formLeft1.input12"/>
+       </FormItem>
+       <FormItem label="IS平台标识" prop="input13">
+         <Input v-model="formLeft1.input13"/>
+       </FormItem>
+       <FormItem label="项目编号" prop="input14">
+         <Input v-model="formLeft1.input14"/>
+       </FormItem>
+       <Button @click="xiugaidevice('formLeft1')">确定</Button>
+       <Button @click="handleReset('formLeft1')" style="margin-left: 8px">重置</Button>
+     </Form>
+   </div>
    <div class="messagetotal">
-     <div class="storemessage">经销商代码&nbsp;:&nbsp;{{DistributorCode}}</div>
+     <div class="storemessage">经销商编号&nbsp;:&nbsp;{{DistributorCode}}</div>
      <div class="storemessage">经销商简称&nbsp;:&nbsp;{{DistributorAbbreviation}}</div>
      <div class="storemessage">经销商全称&nbsp;:&nbsp;{{DistributorFullname}}</div>
      <div class="storemessage">经销商地址&nbsp;:&nbsp;{{DistributorAddress}}</div>
@@ -178,7 +229,7 @@
 // import HostDeviceMessageTable from "@/components/Hostcomponents/HostDeviceMessageTable";
 import Pagetotal from "@/components/common/Pagetotal";
 
-import {getProjectList, getProjectItem, getDealerItem,addDeviceItem,getDeviceList,editDeviceItem,deleteDeviceItem} from '@/api/api'
+import {getProjectList, getProjectItem, getDealerItem,addDeviceItem,getDeviceList,getDeviceItem,editDeviceItem,deleteDeviceItem} from '@/api/api'
 export default {
   name: "Shop",
   data() {
@@ -194,6 +245,7 @@ export default {
       ShopID: '店端服务器IP',
       WorkStartTime: '工作开始时间',
       WorkEndtTime: '工作结束时间',
+      ceshi: 'b7a38c88-877d-4e3f-9616-3fdf427c5ff0',
       // DistributorProject: [
       //   {
       //     value: 'project1',
@@ -318,6 +370,7 @@ export default {
       editdevice_pwd: '',  // 第四列输入框
       editisc_code: '',  // 第四列输入框
       editproject_code: '',  // 第四列输入框
+      indexx: 1,
       formLeft: {
         input1: '',
         input2: '',
@@ -334,80 +387,144 @@ export default {
         input13: '',
         input14: '',
       },
+      formLeft1: {
+        input1: '',
+        input2: '',
+        input3: '',
+        input4: '',
+        input5: '',
+        input6: '',
+        input7: '',
+        input8: '',
+        input9: '',
+        input10: '',
+        input11: '',
+        input12: '',
+        input13: '',
+        input14: '',
+      },
       showadd:false,
+      showxiugai:false,
+      adddevice1: [],
+      groupcodee:'',
+      dealeridd:'',
+      deviceiddd:'',
     }
   },
   components: {
     Pagetotal,
   },
   methods: {
+    xiugaidevice(name) {
+      editDeviceItem(
+              this.formLeft1.input1, this.deviceiddd,this.formLeft1.input2, this.formLeft1.input3, this.formLeft1.input4,
+              this.formLeft1.input5, this.formLeft1.input6, this.formLeft1.input7, this.formLeft1.input8,
+              this.formLeft1.input9, this.formLeft1.input10, this.formLeft1.input11, this.formLeft1.input12, this.formLeft1.input13,
+              this.formLeft1.input14
+      )
+      this.data[this.indexx].group_code = this.formLeft1.input1;
+      this.data[this.indexx].device_id = this.deviceiddd;
+      this.data[this.indexx].dealer_code = this.formLeft1.input2;
+      this.data[this.indexx].device_type = this.formLeft1.input3;
+      this.data[this.indexx].device_type_ex= this.formLeft1.input4;
+      this.data[this.indexx].device_code= this.formLeft1.input5;
+      this.data[this.indexx].device_name= this.formLeft1.input6;
+      this.data[this.indexx].hall_device_code= this.formLeft1.input7;
+      this.data[this.indexx].device_model= this.formLeft1.input8;
+      this.data[this.indexx].device_ip= this.formLeft1.input9;
+      this.data[this.indexx].device_port= this.formLeft1.input10;
+      this.data[this.indexx].device_user= this.formLeft1.input11;
+      this.data[this.indexx].device_pwd= this.formLeft1.input12;
+      this.data[this.indexx].isc_code= this.formLeft1.input13;
+      this.data[this.indexx].project_code= this.formLeft1.input14;
+      // this.editIndex = -1;
+      this.showxiugai = !this.showxiugai
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.$Message.success('Success!');
+        } else {
+          this.$Message.error('Fail!');
+        }
+      })
+    },
     handleReset (name) {
       this.$refs[name].resetFields();
     },
     adddevice() {
-      addDeviceItem(this.formLeft.input1,this.formLeft.input2,this.formLeft.input3,this.formLeft.input4,this.formLeft.input5,this.formLeft.input6,this.formLeft.input7,
+      addDeviceItem(this.groupcodee,this.dealeridd,this.formLeft.input3,this.formLeft.input4,this.formLeft.input5,this.formLeft.input6,this.formLeft.input7,
           this.formLeft.input8,this.formLeft.input9,this.formLeft.input10,this.formLeft.input11,this.formLeft.input12,this.formLeft.input13,this.formLeft.input14).then(res=> {
-            console.log(res)
+            // console.log(res)
+        // console.log(this.data)
         if(res.data.result_code == -1){
           alert(res.data.result_content)
+          // this.showadd = !this.showadd
+        }else {
+          this.showadd = !this.showadd
+          this.data.push({
+            group_code: this.groupcodee,
+            dealer_code: this.dealeridd,
+            device_type: this.formLeft.input3,
+            device_type_ex: this.formLeft.input4,
+            device_code: this.formLeft.input5,
+            device_name: this.formLeft.input6,
+            hall_device_code: this.formLeft.input7,
+            device_model: this.formLeft.input8,
+            device_ip: this.formLeft.input9,
+            device_port: this.formLeft.input10,
+            device_user: this.formLeft.input11,
+            device_pwd: this.formLeft.input12,
+            isc_code: this.formLeft.input13,
+            project_code: this.formLeft.input14,})
+          alert(res.data.result_msg)
         }
       }).catch(error=> {
         console.log(error)
       })
     },
     handleEdit (row, index) {
-      this.editgroup_code = row.group_code;
-      this.editdevice_id = row.device_id;
-      this.editdealer_code = row.dealer_code;
-      this.editdevice_type = row.device_type;
-      this.editdevice_type_ex = row.device_type_ex;
-      this.editdevice_code = row.device_code;
-      this.editdevice_name = row.device_name;
-      this.edithall_device_code = row.hall_device_code;
-      this.editdevice_model = row.device_model;
-      this.editdevice_ip = row.device_ip;
-      this.editdevice_port = row.device_port;
-      this.editdevice_user = row.device_user;
-      this.editdevice_pwd = row.device_pwd;
-      this.editisc_code = row.isc_code;
-      this.editproject_code = row.project_code;
-      this.editIndex = index;
+      this.showxiugai = !this.showxiugai
+      this.formLeft1.input1 = row.group_code;
+      this.deviceiddd = row.device_id;
+      this.formLeft1.input2 = row.dealer_code;
+      this.formLeft1.input3 = row.device_type;
+      this.formLeft1.input4 = row.device_type_ex;
+      this.formLeft1.input5 = row.device_code;
+      this.formLeft1.input6= row.device_name;
+      this.formLeft1.input7 = row.hall_device_code;
+      this.formLeft1.input8 = row.device_model;
+      this.formLeft1.input9= row.device_ip;
+      this.formLeft1.input10= row.device_port;
+      this.formLeft1.input11 = row.device_user;
+      this.formLeft1.input12 = row.device_pwd;
+      this.formLeft1.input13= row.isc_code;
+      this.formLeft1.input14 = row.project_code;
+      // this.editIndex = index;
+
+      this.indexx = index
     },
-    handleSave (row,index) {
-      editDeviceItem(
-      this.editgroup_code, this.editdevice_id, this.editdealer_code, this.editdevice_type,
-          this.editdevice_type_ex, this.editdevice_code, this.editdevice_name, this.edithall_device_code,
-          this.editdevice_model, this.editdevice_ip, this.editdevice_port, this.editdevice_user, this.editdevice_pwd,
-          this.editisc_code, this.editproject_code,
-      )
-      this.data[index].group_code = this.editgroup_code;
-      this.data[index].device_id = this.editdevice_id;
-      this.data[index].dealer_code = this.editdealer_code;
-      this.data[index].device_type = this.editdevice_type;
-      this.data[index].device_type_ex= this.editdevice_type_ex;
-      this.data[index].device_code= this.editdevice_code;
-      this.data[index].device_name= this.editdevice_name;
-      this.data[index].hall_device_code= this.edithall_device_code;
-      this.data[index].device_model= this.editdevice_model;
-      this.data[index].device_ip= this.editdevice_ip;
-      this.data[index].device_port= this.editdevice_port;
-      this.data[index].device_user= this.editdevice_user;
-      this.data[index].device_pwd= this.editdevice_pwd;
-      this.data[index].isc_code= this.editisc_code;
-      this.data[index].project_code= this.editproject_code;
-      this.editIndex = -1;
-    },
+    // handleSave (row,index) {
+    //
+    // },
     remove (index) {
       deleteDeviceItem(this.data[index].device_id).then(res=> {
         console.log(res)
+        if(res.data.result_code>=0) {
+          this.data.splice(index, 1);
+          this.$Message.success('Success!');
+        }else {
+          this.$Message.success('Fail!');
+        }
+        console.log(res)
       })
-      this.data.splice(index, 1);
+      // this.data.splice(index, 1);
     }
   },
   created() {
     // this.topic = this.DistributorProject[0].project_name;
   },
   mounted() {
+    this.groupcodee = this.$route.query.group_code;
+    this.dealeridd = this.$route.query.key_code
     // getGroupList().then(res=>{
     //   console.log(res)
     // });
@@ -429,7 +546,7 @@ export default {
       console.log(res)
       this.project_id = res.data.result_content.dealer_id,
           this.DistributorCode = res.data.result_content.dealer_code,
-          this.DistributorAbbreviation = res.data.result_content.dealer_id,
+          this.DistributorAbbreviation = res.data.result_content.dealer_name,
           this.DistributorFullname = res.data.result_content.dealer_fullname,
           this.DistributorAddress = res.data.result_content.address,
           this.ShopID = res.data.result_content.server_ip,
@@ -463,17 +580,24 @@ export default {
       )
 
       this.data = this.devicelist
+      console.log(this.data)
+      return this.data
     }).catch(error=> {
       console.log(error)
+    })
+    getDeviceItem(this.ceshi).then(res=> {
+      console.log(res)
     })
   },
   watch: {
     '$route': function (to) {
+      this.groupcodee = to.query.group_code;
+      this.dealeridd = to.query.key_code
       getDealerItem(to.query.key_id).then(res => {
-        console.log(res)
+        // console.log(res)
         this.project_id = res.data.result_content.dealer_id,
         this.DistributorCode = res.data.result_content.dealer_code,
-        this.DistributorAbbreviation = res.data.result_content.dealer_id,
+        this.DistributorAbbreviation = res.data.result_content.dealer_name,
         this.DistributorFullname = res.data.result_content.dealer_fullname,
         this.DistributorAddress = res.data.result_content.address,
         this.ShopID = res.data.result_content.server_ip,
@@ -550,5 +674,8 @@ export default {
     margin: 3%;
     vertical-align: top;
     zoom: 1;
+  }
+  .sblx {
+    margin-top: 10px;
   }
 </style>

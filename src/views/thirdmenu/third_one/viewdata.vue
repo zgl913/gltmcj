@@ -45,6 +45,13 @@ export default {
     // DualAxes,
     Select1,
     // Bar,
+  },
+  watch: {
+    $route() {
+      this.list = []
+      this.list = this.$route.matched
+      console.log(this.$route.matched)
+    }
   }
 }
 </script>

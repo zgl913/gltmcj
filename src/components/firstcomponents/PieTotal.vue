@@ -26,8 +26,8 @@ name: "PieTotal",
     const piePlot = new Pie('container2', {
       appendPadding: 10,
       data,
-      width:230,
-      height:230,
+      // width:230,
+      // height:230,
       angleField: 'value',
       colorField: 'type',
       radius: 0.9,
@@ -54,5 +54,8 @@ name: "PieTotal",
 </script>
 
 <style scoped>
-
+  .piestyle {
+    height: 100%;
+    width: 100%;
+  }
 </style>

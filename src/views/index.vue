@@ -51,11 +51,11 @@
   justify-content: flex-end;
   align-items: center;
 }
-.homebottom {
-  width:100%;
-  display: flex;
-  justify-content: space-around;
-}
+/*.homebottom {*/
+/*  width:100%;*/
+/*  display: flex;*/
+/*  !*justify-content: space-around;*!*/
+/*}*/
 .bigsquare {
   width: 300px;
   height: 300px;
@@ -64,33 +64,36 @@
 <template>
   <div class="layout">
     <Layout>
-      <Header>
-        <Menu mode="horizontal" theme="dark" active-name="1">
-<!--          <div class="layout-logo"></div>-->
-          <Button @click="showlogin" v-if="buttonloginshow2">登录</Button>
-          <Avatar icon="ios-person" size="large"/>
-          <router-link to="/personcenter"><div style="margin-left:10px;color:red">{{username1}}</div></router-link>
+        <div style="height: 10%">
+            <Header>
+                <Menu mode="horizontal" theme="dark" active-name="1">
+                    <!--          <div class="layout-logo"></div>-->
+                    <Button @click="showlogin" v-if="buttonloginshow2">登录</Button>
+                    <Avatar icon="ios-person" size="large"/>
+                    <router-link to="/personcenter"><div style="margin-left:10px;color:red">{{username1}}</div></router-link>
 
-<!--          <div class="layout-nav">-->
-<!--            <MenuItem name="1">-->
-<!--              <Icon type="ios-navigate"></Icon>-->
-<!--              Item 1-->
-<!--            </MenuItem>-->
-<!--            <MenuItem name="2">-->
-<!--              <Icon type="ios-keypad"></Icon>-->
-<!--              Item 2-->
-<!--            </MenuItem>-->
-<!--            <MenuItem name="3">-->
-<!--              <Icon type="ios-analytics"></Icon>-->
-<!--              Item 3-->
-<!--            </MenuItem>-->
-<!--            <MenuItem name="4">-->
-<!--              <Icon type="ios-paper"></Icon>-->
-<!--              Item 4-->
-<!--            </MenuItem>-->
-<!--          </div>-->
-        </Menu>
-      </Header>
+                    <!--          <div class="layout-nav">-->
+                    <!--            <MenuItem name="1">-->
+                    <!--              <Icon type="ios-navigate"></Icon>-->
+                    <!--              Item 1-->
+                    <!--            </MenuItem>-->
+                    <!--            <MenuItem name="2">-->
+                    <!--              <Icon type="ios-keypad"></Icon>-->
+                    <!--              Item 2-->
+                    <!--            </MenuItem>-->
+                    <!--            <MenuItem name="3">-->
+                    <!--              <Icon type="ios-analytics"></Icon>-->
+                    <!--              Item 3-->
+                    <!--            </MenuItem>-->
+                    <!--            <MenuItem name="4">-->
+                    <!--              <Icon type="ios-paper"></Icon>-->
+                    <!--              Item 4-->
+                    <!--            </MenuItem>-->
+                    <!--          </div>-->
+                </Menu>
+            </Header>
+        </div>
+
       <div v-if="loginwindow" style="border:1px solid black;background-color: white;width: 50%;height: 50%;position: absolute;left:25%;top:25%;z-index: 333">
         <Login @ifshowlogin="showlogin1" @ifshowlogin1="showlogin2"></Login></div>
 <!--      <Layout>-->
@@ -232,3 +235,4 @@ export default {
   }
 }
 </script>
+
