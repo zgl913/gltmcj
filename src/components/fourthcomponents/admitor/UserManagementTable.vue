@@ -60,7 +60,7 @@
             //   align: 'center'
             // },
             {
-              type: 'selection',
+              // type: 'selection',
               width: 60,
               align: 'center'
             },
@@ -86,6 +86,14 @@
             },
             {
               title: '添加时间',
+              slot: 'addtime'
+            },
+            {
+              title: '角色',
+              slot: 'addtime'
+            },
+            {
+              title: '重置密码',
               slot: 'addtime'
             },
             {

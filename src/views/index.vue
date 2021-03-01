@@ -24,7 +24,7 @@
 }
 .ivu-layout-header {
   background: blue;
-  padding: 0 50px;
+  padding: 0 0px;
   height: 64px;
   line-height: 64px;
 }
@@ -64,13 +64,16 @@
 <template>
   <div class="layout">
     <Layout>
-        <div style="height: 10%">
+        <div style="height: 7%">
             <Header>
                 <Menu mode="horizontal" theme="dark" active-name="1">
                     <!--          <div class="layout-logo"></div>-->
-                    <Button @click="showlogin" v-if="buttonloginshow2">登录</Button>
-                    <Avatar icon="ios-person" size="large"/>
-                    <router-link to="/personcenter"><div style="margin-left:10px;color:red">{{username1}}</div></router-link>
+                    <div class="rightlayout">
+                        <Button @click="showlogin" v-if="buttonloginshow2" >退出</Button>
+                        <Avatar icon="ios-person" size="large"/>
+                        <router-link to="/personcenter"><div style="margin-left:10px;color:red">{{username1}}</div></router-link>
+                    </div>
+
 
                     <!--          <div class="layout-nav">-->
                     <!--            <MenuItem name="1">-->
@@ -94,8 +97,8 @@
             </Header>
         </div>
 
-      <div v-if="loginwindow" style="border:1px solid black;background-color: white;width: 50%;height: 50%;position: absolute;left:25%;top:25%;z-index: 333">
-        <Login @ifshowlogin="showlogin1" @ifshowlogin1="showlogin2"></Login></div>
+      <div v-if="loginwindow" style="border:1px solid black;background-color: white;width: 20%;height: 20%;position: absolute;right:5%;top:8%;z-index: 333">
+        <exit @ifshowlogin="showlogin1" @ifshowlogin1="showlogin2"></exit></div>
 <!--      <Layout>-->
 <!--        <Sider hide-trigger :style="{background: '#fff'}">-->
 <!--          <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">-->
@@ -186,7 +189,7 @@
 // import viewdata from "@/views/viewdata";
 // import personcenter from "@/views/personcenter";
 import Center from "@/views/Center";
-import Login from "@/views/firstmenu/Login"
+import exit from "@/views/firstmenu/exit"
 export default {
   data() {
     return {
@@ -211,7 +214,7 @@ export default {
   // }
   components: {
     Center,
-    Login,
+    exit,
   },
   methods: {
     // shownonelogin(booleannumber) {
@@ -235,4 +238,38 @@ export default {
   }
 }
 </script>
+<style>
+    .ivu-menu-horizontal {
+        /* height: 60px; */
+        height: 100%;
+        line-height: 60px;
+        position: relative;
+    }
+    .rightlayout {
+        position: absolute;
+        height: 100%;
+        width:300px;
+        display: flex;
+        align-items: center;
+        /*margin-top: 3%;*/
+    }
+    .ivu-layout-header[data-v-a83bd3b0] {
+        background: blue;
+        padding: 0 0px;
+        height: 100%;
+        line-height: 64px;
+    }
+    .rightlayout button {
+        /*height: 70%;*/
+    }
+    .rightlayout span {
+        /*height: 80%;*/
+        /*width: 20%;*/
+        margin-left: 5%;
+    }
+    .ivu-avatar-large.ivu-avatar-icon {
+        width: 13%;
+        font-size: 24px;
+    }
+</style>
 

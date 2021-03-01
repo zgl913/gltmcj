@@ -8,20 +8,22 @@
       <span class="informationtotal">性别：<span>{{usergender}}</span></span>
     </div>
 
-    <div v-if="showModal" style="height: 300px;width: 500px;border: 2px solid black">
+    <div v-if="showModal" class="basicinformationshowmodal">
       <div style="float: right">
-        <Button @click="showModal=!showModal" class="buttonsave buttontop">保存</Button>
+<!--        <Button @click="showModal=!showModal" class="buttonsave buttontop">保存</Button>-->
+        <Button @click="savemessage(username1,usergender1)" class="buttonsave buttontop">保存</Button>
         <Button @click="showModal=!showModal" class="buttoncancle buttontop">取消</Button>
+<!--        <Button @click="exitmessage()" class="buttoncancle buttontop">取消</Button>-->
       </div>
       <div style="clear: both">
         <div v-html="'账号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;123456'" class="informationtotal"></div>
         <div>
           昵称
-          <input v-model="username"/>
+          <input v-model="username1"/>
         </div>
-        <div>
+        <div class="xingbiehang">
           性别
-          <input v-model="usergender"/>
+          <input v-model="usergender1"/>
         </div>
       </div>
     </div>
@@ -36,7 +38,16 @@ export default {
       showModal: false,
       username:'1234567',
       usergender: '女1',
+      username1:this.username,
+      usergender1: this.usergender,
     }
+  },
+  methods: {
+    savemessage(username1,usergender1) {
+      this.username = username1;
+      this.usergender = usergender1;
+      this.showModal=!this.showModal
+    },
   }
 }
 </script>
@@ -62,5 +73,14 @@ export default {
   }
   .buttontop {
     margin:10px;
+  }
+  .basicinformationshowmodal {
+    margin-left: 20px;
+    height: 250px;
+    width: 20%;
+    border: 2px solid black
+  }
+  .xingbiehang {
+    margin-top:20px;
   }
 </style>

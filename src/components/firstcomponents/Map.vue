@@ -5,7 +5,8 @@
   copyright Hangzhou QianNeng 2021.1.5
 -->
 <template>
-    <div id="map" style="height: 100%;"></div>
+    <div id="map" class="maplayout">
+    </div>
 </template>
 
 <script>
@@ -26,7 +27,7 @@ export default {
           pitch: 0,
           style: 'blank',
           zoom: 3,
-          minZoom:1.5,
+          minZoom:1,
           maxZoom: 10,
           // autoFit: true,
         })
@@ -52,7 +53,7 @@ border: 1px solid #333;`;
           showBorder: false,
           label: {
             // enable: false
-            size:15,
+            size:10,
             color: '#ff4500',
             // stroke: false
           },
@@ -70,7 +71,7 @@ border: 1px solid #333;`;
           }
         });
       });
-
+        scene.panTo([ 10.2825, 39.9 ]);
 // 添加附图，附图需要和主图保持一致
 
       const scene2 = new Scene({
@@ -112,7 +113,6 @@ border: 1px solid #333;`;
           }
         });
       });
-      // scene.panBy(0,100);
     }
     },
   mounted() {
@@ -161,8 +161,24 @@ border: 1px solid #333;`;
   /*.resize-sensor {*/
   /*  height: 0px !important;*/
   /*}*/
-#map canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
+  /*  #map canvas {*/
+  /*    width: 100% !important;*/
+  /*    height: 100% !important;*/
+  /*  }*/
+    .maplayout {
+        width: 100%;
+        height: 100%;
+        position:relative;
+    }
+  /*.mapboxgl-canvas {*/
+  /*    height: 100% !important;*/
+  /*}*/
+    #l7-scene-0 canvas{
+        display: inline-block;
+        position: relative;
+        height: 100% !important;
+        width: 150% !important;
+        right: 30%;
+
+    }
 </style>

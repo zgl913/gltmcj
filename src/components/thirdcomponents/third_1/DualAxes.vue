@@ -5,7 +5,7 @@
   copyright Hangzhou QianNeng 2021.1.5
 -->
 <template>
-  <div style="height: 10%;width: 300px">
+  <div class="dualaxestotal">
     <div id="container2">
     </div>
   </div>
@@ -65,4 +65,8 @@ export default {
 </script>
 
 <style scoped>
+  .dualaxestotal {
+    height: 10%;
+    width: 300px
+  }
 </style>

@@ -1,10 +1,10 @@
 <template>
-  <div style="border: 1px solid black;width: 500px">
+  <div class="adddecivetotal">
     <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="80">
       <FormItem>
-        <div style="float:left;margin-left: -80px">
+        <div class="adddecivetype">
           *设备类型
-          <Select v-model="model1" style="width:200px" placeholder="请选择">
+          <Select v-model="model1" class="adddeciveselect" placeholder="请选择">
             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </div>
@@ -18,7 +18,7 @@
       <FormItem>
         <div style="float:left;margin-left: -80px">
           *所属经销商：
-          <Select v-model="model1" style="width:200px" placeholder="请选择">
+          <Select v-model="model1" class="adddeciveselect" placeholder="请选择">
             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </div>
@@ -45,9 +45,9 @@
         <Input type="text" v-model="formCustom.age" number/>
       </FormItem>
       <FormItem>
-        <div style="float:left;margin-left: -80px">
+        <div class="adddecivetype">
           是否球机
-          <Select v-model="model1" style="width:200px" placeholder="请选择">
+          <Select v-model="model1" class="adddeciveselect" placeholder="请选择">
             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </div>
@@ -58,7 +58,6 @@
       <FormItem>
         <Button @click="handleReset('formCustom')" style="margin-left: 8px">取消</Button>
         <Button type="primary" @click="handleSubmit('formCustom')">确定</Button>
-
       </FormItem>
     </Form>
   </div>
@@ -144,4 +143,15 @@ export default {
   float: left;
   width: 200px;
 }
+  .adddecivetotal {
+    border: 1px solid black;
+    width: 500px
+  }
+  .adddecivetype {
+    float:left;
+    margin-left: -80px
+  }
+  .adddeciveselect {
+    width:200px
+  }
 </style>

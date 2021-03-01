@@ -7,7 +7,7 @@
       <FormItem label="*新密码" prop="passwdCheck">
         <Input type="password" v-model="formCustom.passwdCheck"/>
       </FormItem>
-      <FormItem label="*再次确认密码" prop="age">
+      <FormItem label="*确认密码" prop="age">
         <Input type="text" v-model="formCustom.age" number/>
       </FormItem>
       <FormItem>
@@ -15,8 +15,8 @@
         <slot name="direction"></slot>
       </FormItem>
       <FormItem>
-        <Button type="primary" @click="handleSubmit('formCustom')">Submit</Button>
-        <Button @click="handleReset('formCustom')" style="margin-left: 8px">Reset</Button>
+        <Button type="primary" @click="handleSubmit('formCustom')">提交</Button>
+        <Button @click="handleReset('formCustom')" style="margin-left: 8px">重置</Button>
       </FormItem>
     </Form>
   </div>
@@ -103,5 +103,17 @@ export default {
   }
   .ivu-form-item-label {
     word-break:keep-all;
+    /*width: ;*/
+  }
+  .ivu-form .ivu-form-item-label {
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    font-size: 12px;
+    color: #515a6e;
+    line-height: 1;
+    padding: 0px !important;
+    box-sizing: border-box;
+    white-space: nowrap;
   }
 </style>

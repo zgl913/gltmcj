@@ -64,7 +64,7 @@ export default {
         //   align: 'center'
         // },
         {
-          type: 'selection',
+          // type: 'selection',
           width: 60,
           align: 'center'
         },

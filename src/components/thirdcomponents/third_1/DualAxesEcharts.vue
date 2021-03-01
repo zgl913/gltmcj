@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="main" style="width: 600px;height:400px;"></div>
+    <div id="main" class="dualaxesechartstotal"></div>
   </div>
 </template>
 
@@ -119,5 +119,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .dualaxesechartstotal {
+    width: 600px;
+    height:400px;
+  }
 </style>

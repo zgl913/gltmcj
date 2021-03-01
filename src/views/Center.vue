@@ -49,16 +49,14 @@
               系统管理
             </template>
             <router-link to="/admitor"><MenuItem name="4-1">用户管理</MenuItem></router-link>
-            <router-link to="/shebei"><MenuItem name="4-2">设备管理</MenuItem></router-link>
-            <Submenu name="a" StaticEnableDefaultPopOutImage = "false">
-              <template slot="title">
-                项目管理
-              </template>
-              <div v-for="(items) in programlist" :key="items">
-                <router-link :to="{path:'/Programlist',query:{key_id:items.project_id,proname:items.project_name}}"><MenuItem :name="items">{{items.project_name}}</MenuItem></router-link>
-              </div>
+<!--            <router-link to="/shebei"><MenuItem name="4-2">设备管理</MenuItem></router-link>-->
 
-            </Submenu>
+<!--                <div  v-for="(items) in programlist" :key="items">-->
+<!--                  <router-link :to="{path:'/Projectmanagement',query:{key_id:items.project_id,proname:items.project_name}}">项目管理</router-link>-->
+                  <router-link :to="{path:'/Projectmanagement'}"><MenuItem name="4-2">项目管理</MenuItem></router-link>
+<!--              <div v-for="(items) in programlist" :key="items">-->
+<!--                <router-link :to="{path:'/Programlist',query:{key_id:items.project_id,proname:items.project_name}}"><MenuItem :name="items">{{items.project_name}}</MenuItem></router-link>-->
+<!--              </div>-->
             <!--            <router-link to="/jingxiaoshang"><MenuItem name="4-3">经销商管理</MenuItem></router-link>-->
           </Submenu>
           <Submenu name="5">
@@ -414,7 +412,7 @@ export default {
 
 <style scoped>
   .hometotal {
-    height:90%;
+    height:93%;
   }
   .ivu-layout {
     height: 100%;
@@ -454,4 +452,11 @@ export default {
   .ivu-menu-vertical::-webkit-scrollbar {
     width: 0;
   }
+  /*.ivu-layout[data-v-628cac8f] {*/
+  /*  height: auto;*/
+  /*  display: flex;*/
+  /*  !* flex-direction: column; *!*/
+  /*  flex: auto;*/
+  /*  background: #f5f7f9;*/
+  /*}*/
 </style>

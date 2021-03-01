@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Tree :data="data5" :render="renderContent" class="demo-tree-render" style="width: 200px"></Tree>
+    <Tree :data="data5" :render="renderContent" class="demo-tree-render"></Tree>
   </div>
 </template>
 <script>
@@ -77,13 +77,13 @@ export default {
               expand: true,
               children: [
                 {
-                  title: 'leaf 1-2-1',
+                  title: '上海畅飞',
                   expand: true
                 },
-                {
-                  title: 'leaf 1-2-1',
-                  expand: true
-                }
+                // {
+                //   title: 'leaf 1-2-1',
+                //   expand: true
+                // }
               ]
             }
           ]
@@ -144,4 +144,7 @@ export default {
 .demo-tree-render .ivu-tree-title{
   width: 100%;
 }
+  .demo-tree-render {
+    width: 200px
+  }
 </style>

@@ -9,10 +9,9 @@
         <diamond></diamond>
         <div class="layout">
           <Bar></Bar>
-          <div style="height:100%;width: 50%;position: relative;">
+          <div style="height:100%;width: 50%;">
             <Map></Map>
           </div>
-
           <!--        <Map></Map>-->
         </div>
           <div class="homebottom">
@@ -26,7 +25,7 @@
                       <div class="font">离线相机数{{offlinenum}}</div>
               </div>
               <Divider type="vertical"/>
-              <div style="width: 85%">
+              <div style="width: 58%">
                   <div style="float:right;">
                       <Input placeholder="请输入服务站" style="width: 50%"/>
                       <Button style="margin: 0 10px">查询</Button>
@@ -34,18 +33,13 @@
                   </div>
                   <!--          <Carousel></Carousel>-->
                   <!--          <Swiper></Swiper>-->
-                  <div style="clear:both;margin-top: 50px;width:80%;float: right">
+                  <div style="clear:both;margin-top: 1%;width:80%;float: right;margin-right: 10%">
                       <Swiperone></Swiperone>
                   </div>
-
-
-
               </div>
           </div>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -129,10 +123,11 @@ export default {
     margin-top:2%;
     justify-content: space-between;
     overflow: hidden;
+      position: relative;
   }
   .homebottom {
     /*width: 90%;*/
-    height: 25%;
+    height: 30%;
     display: flex;
     /*justify-content: space-around;*/
     align-items: center;

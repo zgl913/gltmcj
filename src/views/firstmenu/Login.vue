@@ -1,14 +1,16 @@
 <template>
-  <div>
-    <Form ref="formInline" :model="formInline" :rules="ruleInline" inline style="display: flex;flex-direction: column;margin-top: 70px">
-      <div>
-        <div style="display: inline-block;width:70px;">用户名：</div>
-        <FormItem prop="user">
-          <Input type="text" v-model="formInline.user" placeholder="用户名"/>
-          <!--          <Icon type="ios-person-outline" slot="prepend"></Icon>-->
-          <!--        </Input>-->
-        </FormItem>
-      </div>
+  <div class="bglayout">
+    <Form ref="formInline" :model="formInline" :rules="ruleInline" inline
+          style="display: flex;flex-direction: column;padding:15%;align-items: center">
+      <div class="logintotallayout">
+          <div class="namelayout">
+              <div style="display: inline-block;width:70px;">用户名：</div>
+              <FormItem prop="user">
+                  <Input type="text" v-model="formInline.user" placeholder="用户名"/>
+                  <!--          <Icon type="ios-person-outline" slot="prepend"></Icon>-->
+                  <!--        </Input>-->
+              </FormItem>
+          </div>
       <div>
         <div style="display: inline-block;width:70px;">密码：</div>
         <FormItem prop="password">
@@ -17,11 +19,16 @@
           <!--        </Input>-->
         </FormItem>
       </div>
+      <div class="fonttotal">
+        忘记密码？
+      </div>
+<!--      <div>是否确定退出？</div>-->
       <div>
         <FormItem>
           <Button type="primary" @click="handleSubmit('formInline')">确认</Button>
-          <Button type="primary" @click="resetForm('formInline')" style="margin-left: 20px">取消</Button>
+          <Button type="primary" @click="resetForm('formInline')" style="margin-left: 20px">重置</Button>
         </FormItem>
+      </div>
       </div>
     </Form>
 
@@ -52,24 +59,26 @@ export default {
     // this.$refs.input
     handleSubmit(name) {
       getdata1(this.formInline.user,this.formInline.password).then((res)=>{
-        console.log(res)
+        console.log(name)
         if(this.formInline.user ==res.data.name &&this.formInline.password ==res.data.password){
           // alert('chenggpng')
           this.$emit('ifshowlogin1',false)
           this.$router.replace({path:'/index', query:{username:res.data.name,zhujichangshow:res.data.zhujichang}})
+            this.$Message.success('Success!');
         }else {
           // alert('shibai')
+            this.$Message.error('Fail!');
         }
       }).catch(error => {
         console.log(error);
       });
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$Message.success('Success!');
-        } else {
-          this.$Message.error('Fail!');
-        }
-      })
+      // this.$refs[name].validate((valid) => {
+      //   if (valid) {
+      //     this.$Message.success('Success!');
+      //   } else {
+      //     this.$Message.error('Fail!');
+      //   }
+      // })
     },
     resetForm(formName) {
       this.$nextTick(function() {
@@ -84,3 +93,27 @@ export default {
   }
 }
 </script>
+<style>
+    /*.loginbutton {*/
+    /*    margin-top: 10px;*/
+    /*}*/
+    .bglayout {
+        /*float: top;*/
+        width: 100%;
+        height: 100%;
+        background-image: url("../../pic/sky2.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+    .logintotallayout {
+        width: 20%;
+        /*height: 50%;*/
+        background-color: white;
+    }
+    .namelayout {
+        margin-top: 15%;
+    }
+    .fonttotal {
+        color: #007aff;
+    }
+</style>

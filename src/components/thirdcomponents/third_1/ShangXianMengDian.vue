@@ -2,7 +2,7 @@
   <div>
     <div style="float: left;">上线门店数</div>
     <Divider></Divider>
-    <div style="float: left">
+    <div style="float: left;display: flex">
       <Button class="datalayout">今日</Button>
       <Button class="datalayout">本周</Button>
       <Button class="datalayout">本月</Button>
@@ -10,12 +10,12 @@
       <DatePicker type="daterange" placement="bottom-end" placeholder="Select date" style="width: 250px;height: 100%" class="datalayout"></DatePicker>
       <Button class="datalayout">查询</Button>
     </div>
-    <div style="clear:both">
-      <div style="float:left">上线门店数量</div>
-      <div style="clear:both">
+<!--    <div style="clear:both">-->
+<!--      <div style="float:left">上线门店数量</div>-->
+      <div style="clear:both;padding-left: 30%">
         <DualAxesEcharts></DualAxesEcharts>
       </div>
-    </div>
+<!--    </div>-->
 
   </div>
 </template>

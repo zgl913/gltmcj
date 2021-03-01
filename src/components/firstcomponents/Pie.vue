@@ -21,7 +21,7 @@ export default {
         // height: 150,
         // width: 150,
         autoFit: false,
-        percent: 0.7,
+        percent: 0.6,
         color: ['#5B8FF9', '#E8EDF3'],
       });
 
@@ -42,8 +42,8 @@ export default {
   /*  height: 50% !important;*/
   /*}*/
   .piestyle {
-    height: 100%;
-    width:100%;
+    height: 95%;
+    width:95%;
     display: flex;
     align-items: center;
     /*width: 50%;*/

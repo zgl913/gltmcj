@@ -11,19 +11,19 @@
 <!--    </Select>-->
     <div>
       大区：
-      <Select v-model="model1" style="width:100px" placeholder="选择大区">
+      <Select v-model="model1" class="selectlayout" placeholder="选择大区">
         <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
     </div>
     <div>
       二级区域：
-      <Select v-model="model2" style="width:100px" placeholder="选择二级区域">
+      <Select v-model="model2" class="selectlayout" placeholder="选择二级区域">
         <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
     </div>
     <div>
       省份：
-      <Select v-model="model3" style="width:100px" placeholder="选择省份">
+      <Select v-model="model3" class="selectlayout" placeholder="选择省份">
         <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
     </div>
@@ -38,8 +38,6 @@
     </div>
     <div><slot name="shebeiword"></slot></div>
     <div><Button>查询</Button></div>
-
-
   </div>
 </template>
 <script>
@@ -96,4 +94,7 @@ export default {
     flex-wrap: wrap;
     padding-left: 0px;
   }
+   .selectlayout {
+      width:100px
+    }
 </style>

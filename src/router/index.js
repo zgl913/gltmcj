@@ -19,6 +19,7 @@ const Login = () => import("@/views/firstmenu/Login")
 const index = () => import("@/views/index")
 const Jingxiaoshang = () => import("@/components/fourthcomponents/jingxiaoshang/Jingxiaoshang")
 const Programlist = () => import("@/views/HostManagement/Programlist")
+const Projectmanagement = () => import("@/views/fourthmenu/Projectmanagement")
 
 
 // // import Home from "../views/firstmenu/Home.vue";
@@ -75,7 +76,7 @@ const routes = [
     // },
     {
         path: '/',
-        redirect: '/index',
+        redirect: '/Login',
     },
     {
         path: '/index',
@@ -175,6 +176,11 @@ const routes = [
                 path: "/admitor",
                 component: AdmitorManagement,
                 name: '用户管理'
+            },
+            {
+                path: "/Projectmanagement",
+                name: '项目管理',
+                component: Projectmanagement
             },
             {
                 path: "/shebei",
