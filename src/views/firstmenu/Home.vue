@@ -1,4 +1,5 @@
 <template>
+
   <div class="home">
 <!--    <img alt="Vue logo" src="../assets/logo.png" />-->
 <!--    <HelloWorld msg="Welcome to Your Vue.js App" />-->
@@ -9,7 +10,7 @@
         <diamond></diamond>
         <div class="layout">
           <Bar></Bar>
-          <div style="height:100%;width: 50%;">
+          <div style="height:100%;width: 60%;">
             <Map></Map>
           </div>
           <!--        <Map></Map>-->
@@ -42,8 +43,9 @@
     </div>
   </div>
 </template>
-
+<script type="text/javascript" src="@/js/china.js" ></script>
 <script>
+
 import diamond from "@/components/firstcomponents/diamond";
 import Bar from "@/components/firstcomponents/Bar";
 import Pie from "@/components/firstcomponents/Pie";
@@ -67,10 +69,27 @@ export default {
       namejx: '123',
       name:1,
       age:2,
-
       barxdata:[],
       barydata:[],
-
+        // mydata : [
+        //     {name: '北京',value: '100' },{name: '天津',value: this.randomData() },
+        //     {name: '上海',value: this.randomData() },{name: '重庆',value: randomData() },
+        //     {name: '河北',value: randomData() },{name: '河南',value: randomData() },
+        //     {name: '云南',value: randomData() },{name: '辽宁',value: randomData() },
+        //     {name: '黑龙江',value: randomData() },{name: '湖南',value: randomData() },
+        //     {name: '安徽',value: randomData() },{name: '山东',value: randomData() },
+        //     {name: '新疆',value: randomData() },{name: '江苏',value: randomData() },
+        //     {name: '浙江',value: randomData() },{name: '江西',value: randomData() },
+        //     {name: '湖北',value: randomData() },{name: '广西',value: randomData() },
+        //     {name: '甘肃',value: randomData() },{name: '山西',value: randomData() },
+        //     {name: '内蒙古',value: randomData() },{name: '陕西',value: randomData() },
+        //     {name: '吉林',value: randomData() },{name: '福建',value: randomData() },
+        //     {name: '贵州',value: randomData() },{name: '广东',value: randomData() },
+        //     {name: '青海',value: randomData() },{name: '西藏',value: randomData() },
+        //     {name: '四川',value: randomData() },{name: '宁夏',value: randomData() },
+        //     {name: '海南',value: randomData() },{name: '台湾',value: randomData() },
+        //     {name: '香港',value: randomData() },{name: '澳门',value: randomData() }
+        // ],
     }
   },
   components: {
@@ -87,8 +106,11 @@ export default {
   methods: {
     showdata (){
 
-    }
-  },
+    },
+//      randomData() {
+//     return Math.round(Math.random()*500);
+// }
+},
   mounted () {
     // getdata(this.name,this.age).then(res => {
     //   this.namejx = res.result_msg

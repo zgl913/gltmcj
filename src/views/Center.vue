@@ -3,8 +3,9 @@
     <Layout>
       <Sider hide-trigger :style="{background: '#fff'}">
 <!--        <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">-->
-        <Menu @on-select="changeSidebar"
-              :active-name="sidebarItem"
+<!--        <Menu @on-select="changeSidebar"-->
+<!--              :active-name="sidebarItem"-->
+        <Menu
               theme="light"
               width="auto"
               :open-names="['center']">
@@ -73,9 +74,9 @@
                 </router-link>
                 <!--                  </keep-alive>-->
               </template>
-              <div v-for="(items) in jiejue[i]" :key="items">
+              <div v-for="(items,index) in jiejue[i]" :key="index">
                 <router-link :to="{path:'/stores',query:{key_id:items.dealer_id,group_code:item.group_code,key_code:items.dealer_code,proname:items.dealer_name}}">
-                  <MenuItem :name="items">
+                  <MenuItem :name="items.dealer_id">
                     {{items.dealer_name}}
                   </MenuItem>
                 </router-link>
@@ -152,10 +153,12 @@ export default {
     return {
       list: [],
       hostgroup: [],
-
+      // sidebarItem: '',
+      // changeSidebar: '',
       hostid: '',
       hostcode: [],
       jiejue: [],
+      jiejue1: [],
       programlist: [],
       // hostcontent:[["长安店","11","22"],["1"]],
 
@@ -163,12 +166,60 @@ export default {
     }
   },
   methods: {
+      // changeSidebar(name) {
+      //   this.sidebarItem = name;
+      //   this.$router.push({
+      //     name: name,
+      //   });
+      // },
     async fn1(data){
+      // console.log(data)
         for (let i = 0, len = data.length; i < len; i++) {
-          await this.fn(data[i])
+          await this.fn(data[i],i)
         }
     },
-    async fn(key_code) {
+//     async geizhi(i,j,data1) {
+//       await this.jiejue[i][j] = data1[j];
+// },
+//     async fuzhi(i,data1) {
+//       for(let j=0;j<data1.length;j++) {
+//         // this.jiejue[i] = [];
+//         await this.geizhi(i,j,data1);
+//       }
+//     },
+//     async fn(key_code,i) {
+//       await getDealerList(key_code).then(res => {
+//         // var jingxiaoshanglist=[];
+//         // var jingxiaoshangid=[]
+//         console.log(res)
+//         // for(let j=0;j<res.data.result_content.length;j++) {
+//           // console.log(res.data.result_content[j])
+//           // this.jiejue1.push(res.data.result_content[j])
+//           this.fuzhi(i,res.data.result_content)
+//            //  this.jiejue[i] = []; //每行有10列
+//            // this.jiejue[i][j] = res.data.result_content[j];
+//         // }
+//         // res.data.result_content.forEach((item)=> {
+//         //   console.log(item)
+//         //
+//         //       this.jiejue[i].push(item)
+//         //
+//         //   // this.jiejue[i].push(item)
+//         //   // jingxiaoshangid.push(item.dealer_id)
+//         // })
+//         console.log(this.jiejue)
+//         //     // this.jingxiaoshanglist.push(res.data.result_content)
+//         // console.log(this.jingxiaoshanglist)
+//         //   },).catch(error => {
+//         //     console.log(error)
+//         //   })
+//         // })
+//       })
+
+
+
+
+    async fn(key_code,i) {
       await getDealerList(key_code).then(res => {
         var jingxiaoshanglist=[];
         // var jingxiaoshangid=[]
@@ -183,13 +234,60 @@ export default {
         //     console.log(error)
         //   })
         // })
-        console.log(jingxiaoshanglist)
+        // console.log(jingxiaoshanglist)
         return jingxiaoshanglist
       }).then(msg => {
+      // console.log(msg)
+        for(let j=0;j<msg.length;j++) {
+          this.jiejue[i]=[];
+          this.jiejue[i]=msg;
+        }
+          // msg.forEach((item) => {
+          //   console.log(item)
+          //   this.jiejue[i].push(item)
+          // })
+          // this.jiejue.push(msg)
 
-        this.jiejue.push(msg)
+
+        // console.log(this.jiejue)
         // console.log(JSON.stringify(this.jiejue))
       })
+
+
+
+
+      // async fn(key_code,i) {
+      //   await getDealerList(key_code).then(res => {
+      //     var jingxiaoshanglist=[];
+      //     // var jingxiaoshangid=[]
+      //     console.log(res)
+      //     res.data.result_content.forEach((item)=> {
+      //       jingxiaoshanglist.push(item)
+      //       // jingxiaoshangid.push(item.dealer_id)
+      //     })
+      //     //     // this.jingxiaoshanglist.push(res.data.result_content)
+      //     // console.log(this.jingxiaoshanglist)
+      //     //   },).catch(error => {
+      //     //     console.log(error)
+      //     //   })
+      //     // })
+      //     console.log(jingxiaoshanglist)
+      //     return jingxiaoshanglist
+      //   }).then(msg => {
+      //     console.log(msg)
+      //     msg.forEach((item) => {
+      //       console.log(item)
+      //       this.jiejue[i].push(item)
+      //     })
+      //     // this.jiejue.push(msg)
+      //
+      //
+      //     console.log(this.jiejue)
+      //     // console.log(JSON.stringify(this.jiejue))
+      //   })
+
+
+
           .catch(error => {
             console.log(error)
           })
@@ -249,7 +347,6 @@ export default {
     $route(to) {   // 监听路由变化
       this.list = []
       this.list = this.$route.matched
-      // console.log(this.$route.matched)
       if(to.query.proname) {
         this.list[1].name = to.query.proname
       }
@@ -286,8 +383,9 @@ export default {
 
   },
   mounted() {
+    // this.sidebarItem = this.$route.name;
     getProjectList().then(res => {
-      console.log(res)
+      // console.log(res)
       res.data.result_content.forEach(item => {
         this.programlist.push(item)
       })

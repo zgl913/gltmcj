@@ -152,7 +152,7 @@ export default {
 
 <style scoped>
   .barlayout {
-    width: 50%;
+    width: 40%;
     height: 100%;
     background-color: white;
 

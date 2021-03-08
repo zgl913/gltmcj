@@ -19,10 +19,16 @@
 
 
       <FormItem label="*设备类型" prop="input3">
-        <Input v-model="formLeft.input3" placeholder="必填"/>
+          <Select v-model="formLeft.input3" style="width:200px" @on-change="getdevice($event)" >
+              <Option v-for="item in devicetype" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          </Select>
+<!--        <Input v-model="formLeft.input3" placeholder="必填"/>-->
       </FormItem>
        <FormItem label="*相机类型" prop="input4">
-         <Input v-model="formLeft.input4" placeholder="必填"/>
+           <Select v-model="formLeft.input4" style="width:200px">
+               <Option v-for="item in devicetypeex" :value="item.value" :key="item.value">{{ item.label }}</Option>
+           </Select>
+<!--         <Input v-model="formLeft.input4" placeholder="必填"/>-->
        </FormItem>
        <FormItem label="*设备编号" prop="input5">
          <Input v-model="formLeft.input5" placeholder="必填"/>
@@ -53,7 +59,7 @@
        </FormItem>
        <FormItem label="项目编号" prop="input14">
            <Select v-model="formLeft.input14" style="width:200px">
-               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+               <Option v-for="item in xiangmucode" :value="item" :key="item">{{ item}}</Option>
            </Select>
 <!--         <Input v-model="formLeft.input14"/>-->
        </FormItem>
@@ -72,10 +78,16 @@
        <!--         <Input v-model="formLeft.input2"/>-->
        <!--       </FormItem>-->
        <FormItem label="设备类型" prop="input3">
-         <Input v-model="formLeft1.input3"/>
+           <Select v-model="formLeft1.input3" style="width:200px" @on-change="getdevice($event)" >
+               <Option v-for="item in devicetype" :value="item.label" :key="item.value">{{ item.label }}</Option>
+           </Select>
+<!--         <Input v-model="formLeft1.input3"/>-->
        </FormItem>
        <FormItem label="相机类型" prop="input4">
-         <Input v-model="formLeft1.input4"/>
+           <Select v-model="formLeft1.input4" style="width:200px">
+               <Option v-for="item in devicetypeex" :value="item.label" :key="item.value">{{ item.label }}</Option>
+           </Select>
+<!--         <Input v-model="formLeft1.input4"/>-->
        </FormItem>
        <FormItem label="设备编号" prop="input5">
          <Input v-model="formLeft1.input5"/>
@@ -106,8 +118,11 @@
        </FormItem>
        <FormItem label="项目编号" prop="input14">
            <Select v-model="formLeft1.input14" style="width:200px">
-               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+               <Option v-for="item in xiangmucode" :value="item" :key="item">{{item}}</Option>
            </Select>
+<!--           <Select v-model="formLeft1.input14" style="width:200px">-->
+<!--               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>-->
+<!--           </Select>-->
 <!--         <Input v-model="formLeft1.input14"/>-->
        </FormItem>
        <Button @click="xiugaidevice('formLeft1')">确定</Button>
@@ -228,7 +243,7 @@
          </div>
 
      <div class="storespage">
-         <Page :total="dataCount" :page-size="pageSize" @on-change="changepage" @on-page-size-change="_nowPageSize" show-total show-sizer show-elevator/>
+         <Page :total="dataCount" :page-size="pageSize" :current="pageCurrent" @on-change="changepage" @on-page-size-change="_nowPageSize" show-total show-sizer show-elevator/>
      </div>
 
 
@@ -276,6 +291,7 @@ export default {
       // ],
       DistributorProject: [],
       topic:'',
+      xiangmucode:[],
       ProjectState: [
         {
           value: 'State1',
@@ -441,6 +457,41 @@ export default {
                 label: '456'
             },
         ],
+        devicetype: [
+            {
+                value: '1',
+                label: '相机'
+            },
+            {
+                value: '2',
+                label: 'NVR'
+            },
+        ],
+        // 1入口en,2工位ln,3出口ex,4监控jk,5人脸fs
+        devicetypeex: [
+            {
+                value: '1',
+                label: '入口en'
+            },
+            {
+                value: '2',
+                label: '工位ln'
+            },
+            {
+                value: '3',
+                label: '出口ex'
+            },
+            {
+                value: '4',
+                label: '监控jk'
+            },
+            {
+                value: '5',
+                label: '人脸fs'
+            },
+        ],
+        shebeileixing:'',
+        xiangjileixing: '',
     }
   },
   components: {
@@ -483,13 +534,63 @@ export default {
           this.remove11 = index
           this.del =!this.del
       },
-    xiugaidevice(name) {
+       xiugaidevice(name) {
+          // console.log(this.formLeft1.input3)
+           if(this.formLeft1.input3 =='相机') {
+               this.formLeft1.input3 = 1
+           }else {
+               this.formLeft1.input3 = 2
+           }
+           // 1入口en,2工位ln,3出口ex,4监控jk,5人脸fs
+           switch (this.formLeft1.input4) {
+               case "入口en":
+                   this.formLeft1.input4 = 1;
+                   break;
+               case "工位ln":
+                   this.formLeft1.input4 = 2;
+                   break;
+               case "出口ex":
+                   this.formLeft1.input4 = 3;
+                   break;
+               case "监控jk":
+                   this.formLeft1.input4 = 4;
+                   break;
+               case "人脸fs":
+                   this.formLeft1.input4 = 5;
+                   break;
+
+           }
       editDeviceItem(
               this.formLeft1.input1, this.deviceiddd,this.formLeft1.input2, this.formLeft1.input3, this.formLeft1.input4,
               this.formLeft1.input5, this.formLeft1.input6, this.formLeft1.input7, this.formLeft1.input8,
               this.formLeft1.input9, this.formLeft1.input10, this.formLeft1.input11, this.formLeft1.input12, this.formLeft1.input13,
               this.formLeft1.input14
-      )
+      ).then(res => {
+          console.log(res)
+      })
+        // if(this.formLeft1.input3 ==1) {
+        //     this.shebeileixing = '相机'
+        // }else {
+        //     this.shebeileixing = 'NVR'
+        // }
+        // // 1入口en,2工位ln,3出口ex,4监控jk,5人脸fs
+        // switch (this.formLeft1.input4) {
+        //     case 1:
+        //         this.xiangjileixing = '入口en';
+        //         break;
+        //     case 2:
+        //         this.xiangjileixing = '工位ln'
+        //         break;
+        //     case 3:
+        //         this.xiangjileixing = '出口ex'
+        //         break;
+        //     case 4:
+        //         this.xiangjileixing = '监控jk'
+        //         break;
+        //     case 5:
+        //         this.xiangjileixing = '人脸fs'
+        // }
+        // console.log(this.formLeft1.input4)
       this.nowData[this.indexx].group_code = this.formLeft1.input1;
       this.nowData[this.indexx].device_id = this.deviceiddd;
       this.nowData[this.indexx].dealer_code = this.formLeft1.input2;
@@ -520,14 +621,60 @@ export default {
     },
     adddevice() {
       addDeviceItem(this.groupcodee,this.dealeridd,this.formLeft.input3,this.formLeft.input4,this.formLeft.input5,this.formLeft.input6,this.formLeft.input7,
-          this.formLeft.input8,this.formLeft.input9,this.formLeft.input10,this.formLeft.input11,this.formLeft.input12,this.formLeft.input13,this.formLeft.input14).then(res=> {
-            // console.log(res)
+          this.formLeft.input8,this.formLeft.input9,this.formLeft.input10,this.formLeft.input11,
+          this.formLeft.input12,this.formLeft.input13,this.formLeft.input14).then(res=> {
+            console.log(res)
         // console.log(this.data)
         if(res.data.result_code == -1){
           // alert(res.data.result_content)
             this.$Message.error(res.data.result_msg);
+            // this.pageCurrent = 0;
             // console.log(res)
           // this.showadd = !this.showadd
+        }else {
+            this.$Message.success(res.data.result_msg);
+              // this.data.push({
+              //   group_code: this.groupcodee,
+              //   dealer_code: this.dealeridd,
+              //   device_type: this.formLeft.input3,
+              //   device_type_ex: this.formLeft.input4,
+              //   device_code: this.formLeft.input5,
+              //   device_name: this.formLeft.input6,
+              //   hall_device_code: this.formLeft.input7,
+              //   device_model: this.formLeft.input8,
+              //   device_ip: this.formLeft.input9,
+              //   device_port: this.formLeft.input10,
+              //   device_user: this.formLeft.input11,
+              //   device_pwd: this.formLeft.input12,
+              //   isc_code: this.formLeft.input13,
+              //   project_code: this.formLeft.input14,
+              // })
+
+            // this.nowData = [];
+            // if(this.pageSize<=this.data.length) {
+            //     for (let i = 0; i < this.pageSize; i++) {
+            //         this.nowData.push(this.data[i]);
+            //     }
+            // }else {
+            //     for (let i = 0; i < this.data.length; i++) {
+            //         this.nowData.push(this.data[i]);
+            //     }
+            // }
+            // this.pageCurrent = 1;
+
+
+            // this.nowData = this.data;
+            //   console.log(this.pageCurrent) //3
+            //   console.log(this.pageSize) //10
+            // //需要显示开始数据的index,(因为数据是从0开始的，页码是从1开始的，需要-1)
+            // let _start = (this.pageCurrent - 1) * this.pageSize;
+            // //需要显示结束数据的index
+            // let _end = this.pageCurrent * this.pageSize;
+            // //截取需要显示的数据
+            // this.nowData = this.data.slice(_start, _end);
+            // //储存当前页
+            // // this.pageCurrent = index;
+
         }
         // else {
         //   this.showadd = !this.showadd
@@ -552,12 +699,33 @@ export default {
         // }
         return res
       }).then(res => {
-          this.$Message.success(res.data.result_msg);
-          // console.log(res)
+          console.log(res)
           getDeviceList(this.groupcodee,this.dealeridd).then(res=> {
-              // console.log(res)
+              console.log(res)
               this.devicelist = []
               res.data.result_content.forEach(item =>{
+                  if(item.device_type ==1) {
+                      item.device_type = '相机'
+                  }else {
+                      item.device_type = 'NVR'
+                  }
+                  // 1入口en,2工位ln,3出口ex,4监控jk,5人脸fs
+                  switch (item.device_type_ex) {
+                      case 1:
+                          item.device_type_ex = '入口en';
+                          break;
+                      case 2:
+                          item.device_type_ex = '工位ln'
+                          break;
+                      case 3:
+                          item.device_type_ex = '出口ex'
+                          break;
+                      case 4:
+                          item.device_type_ex = '监控jk'
+                          break;
+                      case 5:
+                          item.device_type_ex = '人脸fs'
+                  }
                       this.devicelist.push({
                           group_code: item.group_code,
                           device_id: item.device_id,
@@ -575,50 +743,51 @@ export default {
                           isc_code: item.isc_code,
                           project_code: item.project_code,
                       })
+                  })
+              this.data = this.devicelist;
+              console.log(this.data)
+              this.dataCount = this.data.length;
+              // this.nowData = this.data;
+              this.pageCurrent = 1;
+              this.nowData = [];
+              if(this.pageSize<=this.data.length) {
+                  for (let i = 0; i < this.pageSize; i++) {
+                      this.nowData.push(this.data[i]);
                   }
+                  console.log(this.nowData)
+              }else {
+                  for (let i = 0; i < this.data.length; i++) {
+                      this.nowData.push(this.data[i]);
+                  }
+              }
+      //
+      //         )
 
-              )
-
-              this.nowData = this.devicelist
+              // this.nowData = this.devicelist
+              // this.data = this.devicelist
+              // this.dataCount = this.data.length;
+              // this.nowData = [];
+              // // this.pageCurrent = 0;
+              // if(this.pageSize<=this.data.length) {
+              //     for (let i = 0; i < this.pageSize; i++) {
+              //         this.nowData.push(this.data[i]);
+              //     }
+              // }else {
+              //     for (let i = 0; i < this.data.length; i++) {
+              //         this.nowData.push(this.data[i]);
+              //     }
+              // }
               // console.log(this.data)
-          }).catch(error=> {
-              console.log(error)
+          // }).catch(error=> {
+          //     console.log(error)
           })
       })
         this.showadd = !this.showadd
-        // getDeviceList(this.groupcodee,this.dealeridd).then(res=> {
-        //     console.log(res)
-        //     this.devicelist = []
-        //     res.data.result_content.forEach(item =>{
-        //             this.devicelist.push({
-        //                 group_code: item.group_code,
-        //                 device_id: item.device_id,
-        //                 dealer_code: item.dealer_code,
-        //                 device_type: item.device_type,
-        //                 device_type_ex: item.device_type_ex,
-        //                 device_code: item.device_code,
-        //                 device_name: item.device_name,
-        //                 hall_device_code: item.hall_device_code,
-        //                 device_model: item.device_model,
-        //                 device_ip: item.device_ip,
-        //                 device_port: item.device_port,
-        //                 device_user: item.device_user,
-        //                 device_pwd: item.device_pwd,
-        //                 isc_code: item.isc_code,
-        //                 project_code: item.project_code,
-        //             })
-        //         }
-        //
-        //     )
-        //
-        //     this.data = this.devicelist
-        //     console.log(this.data)
-        // }).catch(error=> {
-        //     console.log(error)
-        // })
     },
     handleEdit (row, index) {
-      this.showxiugai = !this.showxiugai
+          console.log(row.device_type)
+          console.log(row.device_type_ex)
+
       this.formLeft1.input1 = row.group_code;
       this.deviceiddd = row.device_id;
       this.formLeft1.input2 = row.dealer_code;
@@ -634,8 +803,41 @@ export default {
       this.formLeft1.input12 = row.device_pwd;
       this.formLeft1.input13= row.isc_code;
       this.formLeft1.input14 = row.project_code;
+        this.showxiugai = !this.showxiugai
+        if(this.formLeft1.input3=='NVR'||this.formLeft1.input3 ==2) {
+            this.devicetypeex =[
+                {
+                    value: '0',
+                    babel:'0'
+                }
+            ]
+        }else{
+            this.devicetypeex=[
+                {
+                    value: '1',
+                    label: '入口en'
+                },
+                {
+                    value: '2',
+                    label: '工位ln'
+                },
+                {
+                    value: '3',
+                    label: '出口ex'
+                },
+                {
+                    value: '4',
+                    label: '监控jk'
+                },
+                {
+                    value: '5',
+                    label: '人脸fs'
+                },
+            ]
+        }
       // this.editIndex = index;
-
+      //   document.getElementById("xuanze1").value=this.formLeft1.input3;
+console.log(this.formLeft1)
       this.indexx = index
     },
     // handleSave (row,index) {
@@ -650,7 +852,38 @@ export default {
       })
         this.del =!this.del
       // this.data.splice(index, 1);
-    }
+    },
+      getdevice: function (prov) {
+          if(prov =='NVR') {
+              this.devicetypeex=[{
+                  value: '0',
+                  label: ''
+              }]
+          }else {
+              this.devicetypeex= [
+                  {
+                      value: '1',
+                      label: '入口en'
+                  },
+                  {
+                      value: '2',
+                      label: '工位ln'
+                  },
+                  {
+                      value: '3',
+                      label: '出口ex'
+                  },
+                  {
+                      value: '4',
+                      label: '监控jk'
+                  },
+                  {
+                      value: '5',
+                      label: '人脸fs'
+                  },
+              ]
+          }
+      },
   },
   created() {
     // this.topic = this.DistributorProject[0].project_name;
@@ -662,9 +895,12 @@ export default {
     //   console.log(res)
     // });
     getProjectList().then(res=>{
-      // console.log(res)
+      console.log(res)
       this.DistributorProject = res.data.result_content;
       this.topic= this.DistributorProject[0].project_name
+        res.data.result_content.forEach(item => {
+            this.xiangmucode.push(item.project_code)
+        })
       // console.log(this.DistributorProject)
       // console.log(this.topic)
     }).catch(error=> {
@@ -689,8 +925,30 @@ export default {
       console.log(error)
     })
     getDeviceList(this.$route.query.group_code,this.$route.query.key_code).then(res=> {
-      // console.log(res)
+      console.log(res)
       res.data.result_content.forEach(item =>{
+          if(item.device_type ==1) {
+              item.device_type = '相机'
+          }else {
+              item.device_type = 'NVR'
+          }
+              // 1入口en,2工位ln,3出口ex,4监控jk,5人脸fs
+          switch (item.device_type_ex) {
+            case 1:
+                item.device_type_ex = '入口en';
+                break;
+            case 2:
+                  item.device_type_ex = '工位ln'
+                break;
+            case 3:
+                  item.device_type_ex = '出口ex'
+                break;
+            case 4:
+                  item.device_type_ex = '监控jk'
+                break;
+             case 5:
+                  item.device_type_ex = '人脸fs'
+          }
             this.devicelist.push({
               group_code: item.group_code,
               device_id: item.device_id,
@@ -726,8 +984,8 @@ export default {
             }
         }
 
-      // console.log(this.data)
-      return this.data
+      console.log(this.data)
+      // return this.data
     }).catch(error=> {
       console.log(error)
     })
@@ -760,6 +1018,28 @@ export default {
         }else {
           this.devicelist=[]
           res.data.result_content.forEach(item =>{
+              if(item.device_type ==1) {
+                  item.device_type = '相机'
+              }else {
+                  item.device_type = 'NVR'
+              }
+              // 1入口en,2工位ln,3出口ex,4监控jk,5人脸fs
+              switch (item.device_type_ex) {
+                  case 1:
+                      item.device_type_ex = '入口en';
+                      break;
+                  case 2:
+                      item.device_type_ex = '工位ln'
+                      break;
+                  case 3:
+                      item.device_type_ex = '出口ex'
+                      break;
+                  case 4:
+                      item.device_type_ex = '监控jk'
+                      break;
+                  case 5:
+                      item.device_type_ex = '人脸fs'
+              }
                 this.devicelist.push({
                   group_code: item.group_code,
                   device_id: item.device_id,
@@ -794,7 +1074,6 @@ export default {
                 }
             }
         }
-
       }).catch(error=> {
         console.log(error)
       })
@@ -805,6 +1084,7 @@ export default {
 
 <style scoped>
   .messagetotal {
+      width:80%;
     display: flex;
     justify-content: space-between;
   }

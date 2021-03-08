@@ -54,7 +54,8 @@ export default {
     // this.$refs.input
     handleSubmit(name) {
         console.log(name)
-        this.$router.replace('/Login')
+        window.sessionStorage.clear();
+        this.$router.replace('/Login');
     },
     resetForm(formName) {
       this.$nextTick(function() {

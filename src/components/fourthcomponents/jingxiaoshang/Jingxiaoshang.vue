@@ -76,8 +76,9 @@
                   @on-change="getCity($event)">
               <Option
                       v-for="item in citys"
-                      :label="item.label"
+                :label="item.label"
                       :value="item.value"
+
                       :key="item.value">
               </Option>
           </Select>
@@ -174,7 +175,13 @@
       <div class="storemessage">编辑时间&nbsp;:&nbsp;{{host_edittime}}</div>
       <Button @click="showxiugaihost = !showxiugaihost">编辑主机厂</Button>
     </div>
-    <div style="float: right"><Button @click="showadd=!showadd">添加经销商</Button></div>
+      <div class="biaotou">
+          <div>
+              <Input search enter-button placeholder="Enter something..." />
+          </div>
+          <div style="float: right"><Button @click="showadd=!showadd">添加经销商</Button></div>
+      </div>
+
     <div class="tablejxs">
     <Table :columns="columns" :data="nowData">
 <!--      <template slot-scope="{ row, index }" slot="group_code">-->
@@ -189,7 +196,7 @@
 
       <template slot-scope="{ row, index }" slot="dealer_code">
         <Input type="text" v-model="editdealer_code" v-if="editIndex === index" />
-        <span v-else s>{{row.dealer_code}}</span>
+        <span v-else>{{row.dealer_code}}</span>
       </template>
 
       <template slot-scope="{ row, index }" slot="dealer_name">
@@ -248,7 +255,7 @@
 
     </div>
       <div class="jingxiaoshangpage" >
-          <Page :total="dataCount" :page-size="pageSize" @on-change="changepage" @on-page-size-change="_nowPageSize" show-total show-sizer show-elevator/>
+          <Page :total="dataCount" :page-size="pageSize" :current="pageCurrent" @on-change="changepage" @on-page-size-change="_nowPageSize" show-total show-sizer show-elevator/>
       </div>
   </div>
 </template>
@@ -527,8 +534,8 @@ export default {
               console.log(error)
           })
       },
-    addjxs() {
-      addDealerItem(this.jingxiaoshangcode,this.formLeft.input2,this.formLeft.input3,this.formLeft.input4,this.formLeft.input5,this.formLeft.input6,this.formLeft.input7,
+    async addjxs() {
+        await addDealerItem(this.jingxiaoshangcode,this.formLeft.input2,this.formLeft.input3,this.formLeft.input4,this.formLeft.input5,this.formLeft.input6,this.formLeft.input7,
           this.formLeft.input8,this.formLeft.input9,this.formLeft.input10,this.formLeft.input11,this.formLeft.input12).then(res =>{
         // console.log(JSON.stringify(res))
         // console.log(this.data)
@@ -566,7 +573,7 @@ export default {
               this.showadd = !this.showadd
               this.$Message.success(res.data.result_msg)
               console.log(res)
-              getDealerList(this.jingxiaoshangcode).then(res => {
+               getDealerList(this.jingxiaoshangcode).then(res => {
                   this.dealerid = []
                   if(res.data.result_content) {
                       res.data.result_content.forEach(item => {
@@ -581,15 +588,28 @@ export default {
                   console.log(this.tabledata)
                   return this.tabledata
               }).then(res => {
-                  this.nowData = res
-                  console.log(this.nowData)
+                console.log(res)
+                  // this.nowData = res.slice(0,this.pageSize)
+                  // console.log(this.nowData)
+                  this.data = res
               })
           }
 
       }).catch(error => {
         console.log(error)
       })
-
+        this.pageCurrent=1;
+        this.nowData = [];
+        if(this.pageSize<=this.data.length) {
+            for (let i = 0; i < this.pageSize; i++) {
+                this.nowData.push(this.data[i]);
+            }
+            console.log(this.nowData)
+        }else {
+            for (let i = 0; i < this.data.length; i++) {
+                this.nowData.push(this.data[i]);
+            }
+        }
     },
     xiugaijxs (name){
       editDealerItem(this.formLeft1.input11,this.dealeridnumber,this.formLeft1.input12,this.formLeft1.input1,this.formLeft1.input2,this.formLeft1.input3,
@@ -1975,7 +1995,8 @@ export default {
       }).catch(error=> {
         console.log(error)
       })
-    }
+    },
+      // data:'changepage'
   }
 }
 </script>
@@ -2097,5 +2118,9 @@ export default {
         /*height: 90%;*/
         height: 79%;
         overflow-y: auto;
+    }
+    .biaotou {
+        display: flex;
+        justify-content: space-between;
     }
 </style>

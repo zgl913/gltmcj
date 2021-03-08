@@ -54,7 +54,7 @@
        </template>
        <template slot-scope="{ row, index }" slot="juese">
          <Input type="text" v-model="editjuese" v-if="editIndex === index" />
-         <span v-else>{{ row.addtime }}</span>
+         <span v-else>{{ row.juese }}</span>
        </template>
        <template slot-scope="{ row, index }" slot="chongzhimima">
          <Button @click="chongzhimima(row,index)">重置密码</Button>
@@ -102,10 +102,49 @@
          <Input v-model="formLeft.input6"/>
        </FormItem>
        <FormItem label="角色" prop="input7">
-         <Input v-model="formLeft.input7"/>
+         <Select v-model="formLeft.input7" style="width:100%">
+           <Option v-for="item in jueseList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+         </Select>
+<!--         <Input v-model="formLeft.input7"/>-->
        </FormItem>
        <Button @click="addadmitortijiao">提交</Button>
        <Button @click="handleReset('formLeft')" class="chongzhi2">重置</Button>
+     </Form>
+   </div>
+   <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showxiugai">
+     <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showxiugai = !showxiugai">×</button>
+     <Form ref="formLeft1" :model="formLeft1" label-position="left" :label-width="100">
+       <!--       <FormItem label="主机厂编号" prop="input1">-->
+       <!--         <Input v-model="formLeft.input1"/>-->
+       <!--       </FormItem>-->
+       <!--       <FormItem label="经销商编号" prop="input2">-->
+       <!--         <Input v-model="formLeft.input2"/>-->
+       <!--       </FormItem>-->
+       <FormItem label="姓名" prop="input1">
+         <Input v-model="formLeft1.input1"/>
+       </FormItem>
+       <FormItem label="手机" prop="input2">
+         <Input v-model="formLeft1.input2"/>
+       </FormItem>
+       <FormItem label="用户名" prop="input3">
+         <Input v-model="formLeft1.input3"/>
+       </FormItem>
+       <FormItem label="所属区域" prop="input4">
+         <Input v-model="formLeft1.input4"/>
+       </FormItem>
+       <FormItem label="经销商" prop="input5">
+         <Input v-model="formLeft1.input5"/>
+       </FormItem>
+       <FormItem label="添加时间" prop="input6">
+         <Input v-model="formLeft1.input6"/>
+       </FormItem>
+       <FormItem label="角色" prop="input7">
+         <Select v-model="formLeft1.input7" style="width:100%">
+           <Option v-for="item in jueseList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+         </Select>
+       </FormItem>
+       <Button @click="xiugaiuser('formLeft1')">确定</Button>
+       <Button @click="handleReset('formLeft1')" style="margin-left: 8px">重置</Button>
      </Form>
    </div>
    <div class="showaddlayout3" v-show="showchongzhimima">
@@ -132,6 +171,7 @@ export default {
     return {
       // adduser:false,
       showadd: false,
+      showxiugai: false,
       showchongzhimima:false,
       pageSize: 10,//每页显示多少条
       dataCount: 0,//总条数
@@ -193,6 +233,7 @@ export default {
           orign: '代码1',
           boss: '店端IP1',
           addtime: '店端端口1',
+          juese: '全国',
         },
         {
           name: '相机1',
@@ -201,6 +242,7 @@ export default {
           orign: '代码1',
           boss: '店端IP1',
           addtime: '店端端口1',
+          juese: '全国',
         },
         {
           name: '相机1',
@@ -208,9 +250,19 @@ export default {
           username: '相机型号1',
           orign: '代码1',
           boss: '店端IP1',
-          addtime: '店端端口1',
+          addtime: '店端端口2',
+          juese: '市级',
         },
       ],
+      formLeft1: {
+        input1: '',
+        input2: '',
+        input3: '',
+        input4: '',
+        input5: '',
+        input6: '',
+        input7: '',
+      },
       nowData:[],
       editIndex: -1,
       editname: '',  // 当前聚焦的输入框的行数
@@ -219,6 +271,7 @@ export default {
       editorign: '',  // 第三列输入框
       editboss: '',  // 第四列输入框
       editaddtime: '',
+      editjuese: '',
       cityList: [
         {
           value: 'New York',
@@ -251,11 +304,27 @@ export default {
         input3: '',
         input4: '',
         input5: '',
+        input6: '',
+        input7: '',
       },
       model1: '',
       model2: '',
       model3: '',
-      model4: ''
+      model4: '',
+      jueseList: [
+        {
+          value: '全国',
+          label: '全国'
+        },
+        {
+          value: '省级',
+          label: '省级'
+        },
+        {
+          value: '市级',
+          label: '市级'
+        },
+      ],
     }
   },
   components: {
@@ -264,6 +333,16 @@ export default {
     // Pagetotal
   },
   methods: {
+    xiugaiuser(name) {
+      this.showxiugai = !this.showxiugai
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.$Message.success('Success!');
+        } else {
+          this.$Message.error('Fail!');
+        }
+      })
+    },
     quedingchongzhi() {
 
     },
@@ -280,14 +359,17 @@ export default {
     addadmitortijiao() {
       this.showadd = !this.showadd
     },
-    handleEdit (row, index) {
-      this.editname = row.name;
-      this.editphone = row.phone;
-      this.editusername = row.username;
-      this.editorign = row.orign;
-      this.editboss = row.boss;
-      this.editaddtime=row.addtime;
-      this.editIndex = index;
+    handleEdit (row,index) {
+      this.formLeft1.input1 = row.name;
+      this.formLeft1.input2 = row.phone;
+      this.formLeft1.input3 = row.username;
+      this.formLeft1.input4 = row.orign;
+      this.formLeft1.input5 = row.boss;
+      this.formLeft1.input6=row.addtime;
+      this.formLeft1.input7=row.juese;
+      // this.editIndex = index;
+      this.showxiugai = !this.showxiugai;
+      console.log(index)
     },
     handleSave (index) {
       this.data[index].name = this.editname;
@@ -296,6 +378,7 @@ export default {
       this.data[index].orign = this.editorign;
       this.data[index].boss = this.editboss;
       this.data[index].addtime = this.editaddtime;
+      this.data[index].juese = this.editjuese;
       this.editIndex = -1;
     },
     remove (index) {
