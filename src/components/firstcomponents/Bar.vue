@@ -27,8 +27,6 @@ export default {
         // console.log(res)
         res.data.xdata.forEach((item) => {
           this.bardata.push(item)
-
-
         })
 
         this.showbar()

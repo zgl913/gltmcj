@@ -109,7 +109,7 @@
         </FormItem>
         <FormItem label="项目代码" prop="input12">
             <Select v-model="formLeft.input12">
-                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                <Option v-for="item in xiangmucode" :value="item" :key="item">{{ item}}</Option>
             </Select>
 <!--          <Input v-model="formLeft.input12"/>-->
         </FormItem>
@@ -121,6 +121,9 @@
     <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showxiugai">
       <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showxiugai = !showxiugai">×</button>
       <Form ref="formLeft1" :model="formLeft1" label-position="left" :label-width="100" >
+        <FormItem label="经销商代码" prop="input11">
+           <Input v-model="formLeft1.input12"/>
+        </FormItem>
         <FormItem label="经销商简称" prop="input1">
           <Input v-model="formLeft1.input1"/>
         </FormItem>
@@ -156,7 +159,7 @@
         </FormItem>
         <FormItem label="项目代码" prop="input10">
             <Select v-model="formLeft1.input10" style="width:200px">
-                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                <Option v-for="item in xiangmucode" :value="item" :key="item">{{ item }}</Option>
             </Select>
 <!--          <Input v-model="formLeft1.input10"/>-->
         </FormItem>
@@ -175,15 +178,13 @@
       <div class="storemessage">编辑时间&nbsp;:&nbsp;{{host_edittime}}</div>
       <Button @click="showxiugaihost = !showxiugaihost">编辑主机厂</Button>
     </div>
-      <div class="biaotou">
-          <div>
-              <Input search enter-button placeholder="Enter something..." />
-          </div>
+      <div class="cxtj">
+          <Input  search v-model="jxsmz" placeholder="请输入经销商" @on-search="cxjxs(jxsmz)" style="width: 10%"/>
           <div style="float: right"><Button @click="showadd=!showadd">添加经销商</Button></div>
       </div>
 
     <div class="tablejxs">
-    <Table :columns="columns" :data="nowData">
+    <Table :columns="columns" :data="nowData" :height="jxsbgheight">
 <!--      <template slot-scope="{ row, index }" slot="group_code">-->
 <!--        <Input type="text" v-model="editgroup_code" v-if="editIndex === index" />-->
 <!--        <span v-else>{{ row.group_code }}</span>-->
@@ -261,12 +262,14 @@
 </template>
 
 <script>
-import {addDealerItem,getDealerList,getGroupItem,getDealerItem,editDealerItem,deleteDealerItem} from "@/api/api";
-// import Pagetotal from "../../common/Pagetotal";
+import {addDealerItem,getDealerList,getGroupItem,getDealerItem,editDealerItem,deleteDealerItem,getProjectList} from "@/api/api";
 export default {
   name: "Jingxiaoshang",
   data() {
     return {
+        jxsmz:'',
+        xiangmucode:[],
+        jxsbgheight:'500',
       tabledata:[],
       jxsname: [],
       dealerid: [],
@@ -463,12 +466,48 @@ export default {
     }
   },
   methods: {
+      cxjxs(jxs) {
+          this.nowData = []
+          if (jxs) {
+              for(let i=0;i<this.data.length;i++) {
+                  if(this.data[i].dealer_name.indexOf(jxs) ==0) {
+                      this.nowData.push(this.data[i])
+                  }
+              }
+          }else {
+              if(this.pageSize<=this.data.length) {
+                  for (let i = 0; i < this.pageSize; i++) {
+                      this.nowData.push(this.data[i]);
+                  }
+              }else {
+                  for (let i = 0; i < this.data.length; i++) {
+                      this.nowData.push(this.data[i]);
+                  }
+              }
+          }
+        console.log(this.nowData)
+        console.log(this.data)
+        console.log(jxs)
+      },
+      compare(sz){
+          sz.sort(function(a, b){
+              var x = a.dealer_code.toLowerCase();
+              var y = b.dealer_code.toLowerCase();
+              if (x < y) {return -1;}
+              if (x > y) {return 1;}
+              return 0;
+          });
+      },
+      getgaodu() {
+          this.jxsbgheight= `${document.documentElement.clientHeight * 0.63}`;//默认值
+      },
       changepage(index) {
           //需要显示开始数据的index,(因为数据是从0开始的，页码是从1开始的，需要-1)
           let _start = (index - 1) * this.pageSize;
           //需要显示结束数据的index
           let _end = index * this.pageSize;
           //截取需要显示的数据
+          this.compare(this.data)
           this.nowData = this.data.slice(_start, _end);
           //储存当前页
           this.pageCurrent = index;
@@ -503,16 +542,15 @@ export default {
     handleReset (name) {
       this.$refs[name].resetFields();
     },
-      async fn1(data){
+    async fn1(data){
           for (let i = 0; i < data.length; i++) {
               await this.fn(data[i])
-
           }
       },
       fn(dealerid) {
           getDealerItem(dealerid).then(res => {
               // var jingxiaoshanglist = [];
-              console.log(res)
+              // console.log(res)
               this.tabledata.push({
                   group_code: res.data.result_content.group_code,
                   dealer_id: res.data.result_content.dealer_id,
@@ -533,35 +571,11 @@ export default {
           }).catch(error=> {
               console.log(error)
           })
+          return this.tabledata
       },
-    async addjxs() {
-        await addDealerItem(this.jingxiaoshangcode,this.formLeft.input2,this.formLeft.input3,this.formLeft.input4,this.formLeft.input5,this.formLeft.input6,this.formLeft.input7,
+    addjxs() {
+        addDealerItem(this.jingxiaoshangcode,this.formLeft.input2,this.formLeft.input3,this.formLeft.input4,this.formLeft.input5,this.formLeft.input6,this.formLeft.input7,
           this.formLeft.input8,this.formLeft.input9,this.formLeft.input10,this.formLeft.input11,this.formLeft.input12).then(res =>{
-        // console.log(JSON.stringify(res))
-        // console.log(this.data)
-
-        // console.log(this.data)
-
-        // else {
-        //   this.showadd = !this.showadd
-        //   this.data.push({
-        //     group_code: this.jingxiaoshangcode,
-        //     dealer_code: this.formLeft.input2,
-        //     dealer_name: this.formLeft.input3,
-        //     dealer_fullname: this.formLeft.input4,
-        //     address: this.formLeft.input5,
-        //     server_ip: this.formLeft.input6,
-        //     tv_number: this.formLeft.input7,
-        //     tv_pwd: this.formLeft.input8,
-        //     work_start: this.formLeft.input9,
-        //     work_end: this.formLeft.input10,
-        //     dealer_level: this.formLeft.input11,
-        //     project_code: this.formLeft.input12,
-        //   })
-        //     this.$Message.success(res.data.result_msg);
-        //   // alert(res.data.result_msg)
-        //
-        // }
           console.log(res)
           return res
       }).then(res => {
@@ -585,30 +599,55 @@ export default {
               }).then(data => {
                   this.tabledata= []
                   this.fn1(data)
-                  console.log(this.tabledata)
+                  // console.log(this.tabledata)
                   return this.tabledata
               }).then(res => {
                 console.log(res)
                   // this.nowData = res.slice(0,this.pageSize)
                   // console.log(this.nowData)
-                  this.data = res
+
+                    // this.compare(res)
+                   this.data = res
+                   console.log(this.data)
               })
           }
 
       }).catch(error => {
         console.log(error)
       })
+        // this.compare(this.data)
+        // this.compare(this.data)
+        console.log(this.data)
+        this.dataCount = this.dataCount +1;
         this.pageCurrent=1;
         this.nowData = [];
         if(this.pageSize<=this.data.length) {
+            // this.compare(this.data)
             for (let i = 0; i < this.pageSize; i++) {
                 this.nowData.push(this.data[i]);
             }
             console.log(this.nowData)
         }else {
+            // this.compare(this.data)
             for (let i = 0; i < this.data.length; i++) {
                 this.nowData.push(this.data[i]);
             }
+        }
+        // this.compare(this.nowData)
+        console.log(this.nowData)
+        this.formLeft = {
+            input1: '',
+                input2: '',
+                input3: '',
+                input4: '',
+                input5: '',
+                input6: '',
+                input7: '',
+                input8: '',
+                input9: '',
+                input10: '',
+                input11: '',
+                input12: '',
         }
     },
     xiugaijxs (name){
@@ -650,20 +689,6 @@ export default {
           this.showxiugaihost = !this.showxiugaihost
     },
     handleEdit (row,index) {
-      // this.editgroup_code = row.group_code;
-      // // this.editdealer_id = row.dealer_id;
-      // this.editdealer_code = row.dealer_code;
-      // this.editdealer_name = row.dealer_name;
-      // this.editdealer_fullname = row.dealer_fullname;
-      // this.editaddress = row.address;
-      // this.editserver_ip = row.server_ip;
-      // this.edittv_number = row.tv_number;
-      // this.edittv_pwd = row.tv_pwd;
-      // this.editwork_start = row.work_start;
-      // this.editwork_end = row.work_end;
-      // this.editdealer_level = row.dealer_level;
-      // this.editproject_code = row.project_code;
-      // this.editIndex = index;
       this.showxiugai = !this.showxiugai
       this.dealeridnumber = row.dealer_id
       this.formLeft1.input1 = row.dealer_name
@@ -680,11 +705,9 @@ export default {
       this.formLeft1.input12 = row.dealer_code
       this.indexx = index
     },
-    // handleSave (row,index) {
-    //
-    // },
     remove (index) {
           // console.log(this.data)
+        this.dataCount = this.dataCount -1;
           this.del =!this.del
       deleteDealerItem(this.nowData[index].dealer_id).then(res=>{
         // console.log(res)
@@ -1860,8 +1883,22 @@ export default {
         // Pagetotal,
     },
   mounted() {
+      this.getgaodu();
+      // this.jxsbgheight= `${document.documentElement.clientHeight * 0.63}`;//默认值
     this.jingxiaoshangcode = this.$route.query.key_code;
     this.jingxiaoshangid = this.$route.query.key_id;
+      getProjectList().then(res=>{
+          console.log(res)
+          this.DistributorProject = res.data.result_content;
+          this.topic= this.DistributorProject[0].project_name
+          res.data.result_content.forEach(item => {
+              this.xiangmucode.push(item.project_code)
+          })
+          // console.log(this.DistributorProject)
+          // console.log(this.topic)
+      }).catch(error=> {
+          console.log(error)
+      })
     getDealerList(this.jingxiaoshangcode).then(res => {
         // console.log(res)
         if(res.data.result_content) {
@@ -1896,6 +1933,8 @@ export default {
           return jingxiaoshanglist
         }).then(res => {
           this.data = this.tabledata
+            this.compare(this.data)
+            // console.log(this.data)
             this.dataCount = this.data.length;
             this.nowData = [];
             if(this.pageSize<=this.data.length) {
@@ -1965,6 +2004,7 @@ export default {
           }).then(res => {
             this.jxsname=[]
             this.data=this.tabledata;
+              this.compare(this.data)
               this.dataCount = this.data.length;
               this.nowData = [];
               if(this.pageSize<=this.data.length) {
@@ -2119,7 +2159,7 @@ export default {
         height: 79%;
         overflow-y: auto;
     }
-    .biaotou {
+    .cxtj {
         display: flex;
         justify-content: space-between;
     }

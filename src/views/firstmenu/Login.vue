@@ -23,10 +23,13 @@
         忘记密码？
       </div>
 <!--      <div>是否确定退出？</div>-->
-      <div>
+      <div  class="dengluan">
         <FormItem>
-          <Button type="primary" @click="handleSubmit('formInline')">确认</Button>
-          <Button type="primary" @click="resetForm('formInline')" style="margin-left: 20px">重置</Button>
+            <div>
+                <Button type="primary" @click="handleSubmit('formInline')">确认</Button>
+                <Button type="primary" @click="resetForm('formInline')" style="margin-left: 20px">重置</Button>
+            </div>
+
         </FormItem>
       </div>
       </div>
@@ -108,7 +111,7 @@ export default {
         background-size: 100% 100%;
     }
     .logintotallayout {
-        width: 20%;
+        width: 40%;
         /*height: 50%;*/
         background-color: white;
     }
@@ -117,5 +120,8 @@ export default {
     }
     .fonttotal {
         color: #007aff;
+    }
+    .dengluan {
+        margin-bottom: 15%;
     }
 </style>

@@ -16,11 +16,11 @@ Mock.mock('http://datainfo.hzqnkj.com/uni/UniData/meun', /post|get/i, ()=>{
     //     }
     // }]
     return {
-        name: 'xiaoqiang',
-        password: 123456,
+        name: 'admin',
+        password: 'qnkj234',
         token: 'qwer',
         success: true,
-        zhujichang:false,
+        zhujichang:true,
         data: 1,
         msg: '成功'
     }

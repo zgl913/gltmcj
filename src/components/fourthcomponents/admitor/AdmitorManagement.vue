@@ -1,5 +1,75 @@
 <template>
  <div class="admitorlayout">
+   <div class="showaddlayout2" v-show="showadd">
+     <button class="showaddbutton2" @click="showadd = !showadd">×</button>
+     <Form ref="formLeft" :model="formLeft" label-position="right" :label-width="100" >
+       <!--        <FormItem label="主机厂编号" prop="input1">-->
+       <!--          <Input v-model="formLeft.input1"/>-->
+       <!--        </FormItem>-->
+       <FormItem label="姓名" prop="input1">
+         <Input v-model="formLeft.input1"/>
+       </FormItem>
+       <FormItem label="手机" prop="input2">
+         <Input v-model="formLeft.input2"/>
+       </FormItem>
+       <FormItem label="用户名" prop="input3">
+         <Input v-model="formLeft.input3"/>
+       </FormItem>
+       <FormItem label="所属区域" prop="input4">
+         <Input v-model="formLeft.input4"/>
+       </FormItem>
+       <FormItem label="经销商" prop="input5">
+         <Input v-model="formLeft.input5"/>
+       </FormItem>
+       <FormItem label="添加时间" prop="input6">
+         <DatePicker type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="请选择日期" style="width: 100%" v-model="formLeft.input6"></DatePicker>
+       </FormItem>
+       <FormItem label="角色" prop="input7">
+         <Select v-model="formLeft.input7" style="width:100%">
+           <Option v-for="item in jueseList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+         </Select>
+         <!--         <Input v-model="formLeft.input7"/>-->
+       </FormItem>
+       <Button @click="addadmitortijiao">提交</Button>
+       <Button @click="handleReset('formLeft')" class="chongzhi2">重置</Button>
+     </Form>
+   </div>
+   <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showxiugai">
+     <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showxiugai = !showxiugai">×</button>
+     <Form ref="formLeft1" :model="formLeft1" label-position="right" :label-width="100">
+       <!--       <FormItem label="主机厂编号" prop="input1">-->
+       <!--         <Input v-model="formLeft.input1"/>-->
+       <!--       </FormItem>-->
+       <!--       <FormItem label="经销商编号" prop="input2">-->
+       <!--         <Input v-model="formLeft.input2"/>-->
+       <!--       </FormItem>-->
+       <FormItem label="姓名" prop="input1">
+         <Input v-model="formLeft1.input1"/>
+       </FormItem>
+       <FormItem label="手机" prop="input2">
+         <Input v-model="formLeft1.input2"/>
+       </FormItem>
+       <FormItem label="用户名" prop="input3">
+         <Input v-model="formLeft1.input3"/>
+       </FormItem>
+       <FormItem label="所属区域" prop="input4">
+         <Input v-model="formLeft1.input4"/>
+       </FormItem>
+       <FormItem label="经销商" prop="input5">
+         <Input v-model="formLeft1.input5"/>
+       </FormItem>
+       <FormItem label="添加时间" prop="input6">
+         <DatePicker type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="请选择日期" style="width: 100%" v-model="formLeft1.input6"></DatePicker>
+       </FormItem>
+       <FormItem label="角色" prop="input7">
+         <Select v-model="formLeft1.input7" style="width:100%">
+           <Option v-for="item in jueseList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+         </Select>
+       </FormItem>
+       <Button @click="xiugaiuser('formLeft1')">确定</Button>
+       <Button @click="handleReset('formLeft1')" style="margin-left: 8px">重置</Button>
+     </Form>
+   </div>
    <div class="selecttotal">
      <div class="select">
        <!--    <Select v-model="model2" size="small" style="width:100px">-->
@@ -12,7 +82,7 @@
 <!--         </Select>-->
 <!--       </div>-->
        <div>
-         <Input v-model="value" placeholder="请输入用户姓名/手机/经销商" class="admitorinput" slot="inputtotal"/>
+         <Input v-model="sousuozi" placeholder="请输入用户姓名/手机/经销商" class="admitorinput" slot="inputtotal"/>
        </div>
        <div><Button>查询</Button></div>
      </div>
@@ -33,7 +103,7 @@
          <span v-else>{{ row.phone }}</span>
        </template>
 
-       <template slot-scope="{ row, index }" slot="usernamee">
+       <template slot-scope="{ row, index }" slot="username">
          <Input type="text" v-model="editusername" v-if="editIndex === index" />
          <span v-else>{{row.username}}</span>
        </template>
@@ -77,76 +147,7 @@
      <Page :total="dataCount" :page-size="pageSize" @on-change="changepage" @on-page-size-change="_nowPageSize" show-total show-sizer show-elevator/>
    </div>
 
-   <div class="showaddlayout2" v-show="showadd">
-     <button class="showaddbutton2" @click="showadd = !showadd">×</button>
-     <Form ref="formLeft" :model="formLeft" label-position="left" :label-width="100" >
-       <!--        <FormItem label="主机厂编号" prop="input1">-->
-       <!--          <Input v-model="formLeft.input1"/>-->
-       <!--        </FormItem>-->
-       <FormItem label="姓名" prop="input1">
-         <Input v-model="formLeft.input1"/>
-       </FormItem>
-       <FormItem label="手机" prop="input2">
-         <Input v-model="formLeft.input2"/>
-       </FormItem>
-       <FormItem label="用户名" prop="input3">
-         <Input v-model="formLeft.input3"/>
-       </FormItem>
-       <FormItem label="所属区域" prop="input4">
-         <Input v-model="formLeft.input4"/>
-       </FormItem>
-       <FormItem label="经销商" prop="input5">
-         <Input v-model="formLeft.input5"/>
-       </FormItem>
-       <FormItem label="添加时间" prop="input6">
-         <Input v-model="formLeft.input6"/>
-       </FormItem>
-       <FormItem label="角色" prop="input7">
-         <Select v-model="formLeft.input7" style="width:100%">
-           <Option v-for="item in jueseList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-         </Select>
-<!--         <Input v-model="formLeft.input7"/>-->
-       </FormItem>
-       <Button @click="addadmitortijiao">提交</Button>
-       <Button @click="handleReset('formLeft')" class="chongzhi2">重置</Button>
-     </Form>
-   </div>
-   <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showxiugai">
-     <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showxiugai = !showxiugai">×</button>
-     <Form ref="formLeft1" :model="formLeft1" label-position="left" :label-width="100">
-       <!--       <FormItem label="主机厂编号" prop="input1">-->
-       <!--         <Input v-model="formLeft.input1"/>-->
-       <!--       </FormItem>-->
-       <!--       <FormItem label="经销商编号" prop="input2">-->
-       <!--         <Input v-model="formLeft.input2"/>-->
-       <!--       </FormItem>-->
-       <FormItem label="姓名" prop="input1">
-         <Input v-model="formLeft1.input1"/>
-       </FormItem>
-       <FormItem label="手机" prop="input2">
-         <Input v-model="formLeft1.input2"/>
-       </FormItem>
-       <FormItem label="用户名" prop="input3">
-         <Input v-model="formLeft1.input3"/>
-       </FormItem>
-       <FormItem label="所属区域" prop="input4">
-         <Input v-model="formLeft1.input4"/>
-       </FormItem>
-       <FormItem label="经销商" prop="input5">
-         <Input v-model="formLeft1.input5"/>
-       </FormItem>
-       <FormItem label="添加时间" prop="input6">
-         <Input v-model="formLeft1.input6"/>
-       </FormItem>
-       <FormItem label="角色" prop="input7">
-         <Select v-model="formLeft1.input7" style="width:100%">
-           <Option v-for="item in jueseList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-         </Select>
-       </FormItem>
-       <Button @click="xiugaiuser('formLeft1')">确定</Button>
-       <Button @click="handleReset('formLeft1')" style="margin-left: 8px">重置</Button>
-     </Form>
-   </div>
+
    <div class="showaddlayout3" v-show="showchongzhimima">
      <button class="showaddbutton3" @click="showchongzhimima = !showchongzhimima">×</button>
      <div class="cznr">
@@ -169,6 +170,7 @@ export default {
   name: "AdmitorManagement",
   data () {
     return {
+      sousuozi:'',
       // adduser:false,
       showadd: false,
       showxiugai: false,
@@ -177,14 +179,8 @@ export default {
       dataCount: 0,//总条数
       pageCurrent: 1,//当前页
       columns: [
-
-        // {
-        //   type: 'selection',
-        //   width: 60,
-        //   align: 'center'
-        // },
         {
-          // type: 'selection',
+          type: 'index',
           width: 60,
           align: 'center'
         },
@@ -232,7 +228,7 @@ export default {
           username: '相机型号1',
           orign: '代码1',
           boss: '店端IP1',
-          addtime: '店端端口1',
+          addtime: '2021-01-10 16:15:32',
           juese: '全国',
         },
         {
@@ -241,7 +237,7 @@ export default {
           username: '相机型号1',
           orign: '代码1',
           boss: '店端IP1',
-          addtime: '店端端口1',
+          addtime: '2021-01-10 16:15:32',
           juese: '全国',
         },
         {
@@ -250,7 +246,7 @@ export default {
           username: '相机型号1',
           orign: '代码1',
           boss: '店端IP1',
-          addtime: '店端端口2',
+          addtime: '2021-01-10 16:15:32',
           juese: '市级',
         },
       ],
@@ -358,6 +354,7 @@ export default {
     },
     addadmitortijiao() {
       this.showadd = !this.showadd
+
     },
     handleEdit (row,index) {
       this.formLeft1.input1 = row.name;
@@ -503,5 +500,11 @@ export default {
   .cznrbutton {
     margin-top: 3%;
     margin-bottom: 5%;
+  }
+  .ivu-row {
+    width: 100%;
+  }
+  .sjbj {
+    display: flex;
   }
 </style>

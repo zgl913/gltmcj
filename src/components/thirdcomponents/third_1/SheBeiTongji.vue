@@ -11,8 +11,11 @@
       <Button class="datalayout">本周</Button>
       <Button class="datalayout">本月</Button>
       <Button class="datalayout">本年</Button>
-      <DatePicker type="daterange" placement="bottom-end" placeholder="Select date" class="datalayout shebeitongjidata"></DatePicker>
-      <Button class="datalayout">查询</Button>
+      <div class="cxbuju">
+        <DatePicker type="daterange" placement="bottom-end" placeholder="Select date" class="datalayout shebeitongjidata"></DatePicker>
+        <Button class="datalayout">查询</Button>
+      </div>
+
     </div>
     <div class="shebeitongjirouter">
       <!--      <DualAxesEcharts></DualAxesEcharts>-->
@@ -48,5 +51,8 @@ name: "SheBeiTongji"
   .shebeitongjidata {
     width: 250px;
     height: 100%
+  }
+  .cxbuju {
+    display: flex;
   }
 </style>

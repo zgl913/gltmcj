@@ -19,13 +19,13 @@
 
 
       <FormItem label="*设备类型" prop="input3">
-          <Select v-model="formLeft.input3" style="width:200px" @on-change="getdevice($event)" >
+          <Select v-model="formLeft.input3" @on-change="getdevice($event)" >
               <Option v-for="item in devicetype" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
 <!--        <Input v-model="formLeft.input3" placeholder="必填"/>-->
       </FormItem>
        <FormItem label="*相机类型" prop="input4">
-           <Select v-model="formLeft.input4" style="width:200px">
+           <Select v-model="formLeft.input4">
                <Option v-for="item in devicetypeex" :value="item.value" :key="item.value">{{ item.label }}</Option>
            </Select>
 <!--         <Input v-model="formLeft.input4" placeholder="必填"/>-->
@@ -78,14 +78,15 @@
        <!--         <Input v-model="formLeft.input2"/>-->
        <!--       </FormItem>-->
        <FormItem label="设备类型" prop="input3">
-           <Select v-model="formLeft1.input3" style="width:200px" @on-change="getdevice($event)" >
-               <Option v-for="item in devicetype" :value="item.label" :key="item.value">{{ item.label }}</Option>
+           <Select v-model="formLeft1.input3" @on-change="getdevice($event)" >
+<!--               <Option v-for="item in devicetype" :value="item.label" :key="item.value">{{ item.label }}</Option>-->
+               <Option v-for="item in devicetype" :value="item.label?item.label:''" :key="item.value">{{ item.label }}</Option>
            </Select>
 <!--         <Input v-model="formLeft1.input3"/>-->
        </FormItem>
        <FormItem label="相机类型" prop="input4">
-           <Select v-model="formLeft1.input4" style="width:200px">
-               <Option v-for="item in devicetypeex" :value="item.label" :key="item.value">{{ item.label }}</Option>
+           <Select v-model="formLeft1.input4">
+               <Option v-for="item in devicetypeex" :value="item.label?item.label:''" :key="item.value">{{ item.label }}</Option>
            </Select>
 <!--         <Input v-model="formLeft1.input4"/>-->
        </FormItem>
@@ -117,7 +118,7 @@
          <Input v-model="formLeft1.input13"/>
        </FormItem>
        <FormItem label="项目编号" prop="input14">
-           <Select v-model="formLeft1.input14" style="width:200px">
+           <Select v-model="formLeft1.input14">
                <Option v-for="item in xiangmucode" :value="item" :key="item">{{item}}</Option>
            </Select>
 <!--           <Select v-model="formLeft1.input14" style="width:200px">-->
@@ -125,45 +126,48 @@
 <!--           </Select>-->
 <!--         <Input v-model="formLeft1.input14"/>-->
        </FormItem>
-       <Button @click="xiugaidevice('formLeft1')">确定</Button>
+       <Button @click="xiugaidevice()">确定</Button>
        <Button @click="handleReset('formLeft1')" style="margin-left: 8px">重置</Button>
      </Form>
    </div>
-   <div class="messagetotal">
-     <div class="storemessage">经销商编号&nbsp;:&nbsp;{{DistributorCode}}</div>
-     <div class="storemessage">经销商简称&nbsp;:&nbsp;{{DistributorAbbreviation}}</div>
-     <div class="storemessage">经销商全称&nbsp;:&nbsp;{{DistributorFullname}}</div>
-     <div class="storemessage">经销商地址&nbsp;:&nbsp;{{DistributorAddress}}</div>
-     <div class="storemessage">店端服务器IP&nbsp;:&nbsp;{{ShopID}}</div>
-   </div>
-   <div class="shopidtime">
-     <div class="textlayout"><div>经销商店端TV号&nbsp;:&nbsp;</div><Input style="width: 60%;"/></div>
-     <div class="storemessage">工作开始时间&nbsp;:&nbsp;{{WorkStartTime}}</div>
-     <div class="storemessage">工作结束时间&nbsp;:&nbsp;{{WorkEndtTime}}</div>
-   </div>
-   <div class="shopidtime">
-     <div class="textlayout">
-       <div class="fontbuju">经销商项目</div>
-       <Select style="width:100px"  v-model="topic">
-         <Option v-for="item in DistributorProject" :value="item.project_id" :key="item.project_id">{{ item.project_name }}</Option>
-       </Select>
+     <div class="storexinxi">
+         <div class="messagetotal">
+             <div class="storemessage">经销商编号&nbsp;:&nbsp;{{DistributorCode}}</div>
+             <div class="storemessage">经销商简称&nbsp;:&nbsp;{{DistributorAbbreviation}}</div>
+             <div class="storemessage">经销商全称&nbsp;:&nbsp;{{DistributorFullname}}</div>
+             <div class="storemessage">经销商地址&nbsp;:&nbsp;{{DistributorAddress}}</div>
+             <div class="storemessage">店端服务器IP&nbsp;:&nbsp;{{ShopID}}</div>
+         </div>
+         <div class="shopidtime">
+             <div class="textlayout"><div>经销商店端TV号&nbsp;:&nbsp;</div><Input style="width: 60%;"/></div>
+             <div class="storemessage">工作开始时间&nbsp;:&nbsp;{{WorkStartTime}}</div>
+             <div class="storemessage">工作结束时间&nbsp;:&nbsp;{{WorkEndtTime}}</div>
+         </div>
+         <div class="shopidtime">
+             <div class="textlayout">
+                 <div class="fontbuju">经销商项目</div>
+                 <Select style="width:100px"  v-model="topic">
+                     <Option v-for="item in DistributorProject" :value="item.project_id" :key="item.project_id">{{ item.project_name }}</Option>
+                 </Select>
+             </div>
+             <div class="textlayout">
+                 <div class="fontbuju">状态</div>
+                 <Select style="width:100px" placeholder="请选择状态">
+                     <Option v-for="item in ProjectState" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                 </Select>
+             </div>
+             <div class="textlayout">
+                 <div class="fontbuju">级别</div>
+                 <Select style="width:100px" placeholder="请选择级别">
+                     <Option v-for="item in ProjectLevel" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                 </Select>
+             </div>
+         </div>
      </div>
-     <div class="textlayout">
-       <div class="fontbuju">状态</div>
-       <Select style="width:100px" placeholder="请选择状态">
-         <Option v-for="item in ProjectState" :value="item.value" :key="item.value">{{ item.label }}</Option>
-       </Select>
-     </div>
-     <div class="textlayout">
-       <div class="fontbuju">级别</div>
-       <Select style="width:100px" placeholder="请选择级别">
-         <Option v-for="item in ProjectLevel" :value="item.value" :key="item.value">{{ item.label }}</Option>
-       </Select>
-     </div>
-   </div>
+
      <div style="float: right"><Button @click="showadd=!showadd">添加设备</Button></div>
          <div class="tablejxs1">
-             <Table :columns="columns" :data="nowData">
+             <Table :columns="columns" :data="nowData" :height="bgheight">
                  <!--         <template slot-scope="{ row, index }" slot="group_code">-->
                  <!--           <Input type="text" v-model="editgroup_code" v-if="editIndex === index" />-->
                  <!--           <span v-else>{{ row.group_code }}</span>-->
@@ -263,6 +267,7 @@ export default {
   name: "Shop",
   data() {
     return {
+        bgheight:'500',
       key_id:'',
       group_code:'',
       devicelist:[],
@@ -492,12 +497,23 @@ export default {
         ],
         shebeileixing:'',
         xiangjileixing: '',
+        input33:'',
+        input44:'',
     }
   },
   components: {
     // Pagetotal,
   },
   methods: {
+      compare(sz){
+          sz.sort(function(a, b){
+              var x = a.hall_device_code.toLowerCase();
+              var y = b.hall_device_code.toLowerCase();
+              if (x < y) {return -1;}
+              if (x > y) {return 1;}
+              return 0;
+          });
+        },
       changepage(index) {
           //需要显示开始数据的index,(因为数据是从0开始的，页码是从1开始的，需要-1)
           let _start = (index - 1) * this.pageSize;
@@ -534,87 +550,75 @@ export default {
           this.remove11 = index
           this.del =!this.del
       },
-       xiugaidevice(name) {
-          // console.log(this.formLeft1.input3)
+      xiugaidevice() {
+          console.log(this.formLeft1.input3)
+          console.log(this.formLeft1.input4)
            if(this.formLeft1.input3 =='相机') {
-               this.formLeft1.input3 = 1
+               this.input33 = 1
            }else {
-               this.formLeft1.input3 = 2
+               this.input33 = 2
            }
            // 1入口en,2工位ln,3出口ex,4监控jk,5人脸fs
            switch (this.formLeft1.input4) {
+               case '0':
+                   this.input44 = 0;
+                   break;
+               case undefined:
+                   this.input44 = 0;
+                   break;
                case "入口en":
-                   this.formLeft1.input4 = 1;
+                   this.input44 = 1;
                    break;
                case "工位ln":
-                   this.formLeft1.input4 = 2;
+                   this.input44 = 2;
                    break;
                case "出口ex":
-                   this.formLeft1.input4 = 3;
+                   this.input44 = 3;
                    break;
                case "监控jk":
-                   this.formLeft1.input4 = 4;
+                   this.input44 = 4;
                    break;
                case "人脸fs":
-                   this.formLeft1.input4 = 5;
+                   this.input44 = 5;
                    break;
 
            }
       editDeviceItem(
-              this.formLeft1.input1, this.deviceiddd,this.formLeft1.input2, this.formLeft1.input3, this.formLeft1.input4,
+              this.formLeft1.input1, this.deviceiddd,this.formLeft1.input2, this.input33, this.input44,
               this.formLeft1.input5, this.formLeft1.input6, this.formLeft1.input7, this.formLeft1.input8,
               this.formLeft1.input9, this.formLeft1.input10, this.formLeft1.input11, this.formLeft1.input12, this.formLeft1.input13,
               this.formLeft1.input14
       ).then(res => {
           console.log(res)
+          if(res.data.result_code=='-1') {
+              this.$Message.error(res.data.result_msg);
+          }else {
+
+              this.showxiugai = !this.showxiugai
+              this.$Message.success(res.data.result_msg);
+          }
+            return res
+      }).then(res => {
+          console.log(res)
+          console.log(this.formLeft1.input3)
+          console.log(this.formLeft1.input4)
+          this.nowData[this.indexx].group_code = this.formLeft1.input1;
+          this.nowData[this.indexx].device_id = this.deviceiddd;
+          this.nowData[this.indexx].dealer_code = this.formLeft1.input2;
+          this.nowData[this.indexx].device_type =  this.formLeft1.input3;
+          this.nowData[this.indexx].device_type_ex= this.formLeft1.input4;
+          this.nowData[this.indexx].device_code= this.formLeft1.input5;
+          this.nowData[this.indexx].device_name= this.formLeft1.input6;
+          this.nowData[this.indexx].hall_device_code= this.formLeft1.input7;
+          this.nowData[this.indexx].device_model= this.formLeft1.input8;
+          this.nowData[this.indexx].device_ip= this.formLeft1.input9;
+          this.nowData[this.indexx].device_port= this.formLeft1.input10;
+          this.nowData[this.indexx].device_user= this.formLeft1.input11;
+          this.nowData[this.indexx].device_pwd= this.formLeft1.input12;
+          this.nowData[this.indexx].isc_code= this.formLeft1.input13;
+          this.nowData[this.indexx].project_code= this.formLeft1.input14;
       })
-        // if(this.formLeft1.input3 ==1) {
-        //     this.shebeileixing = '相机'
-        // }else {
-        //     this.shebeileixing = 'NVR'
-        // }
-        // // 1入口en,2工位ln,3出口ex,4监控jk,5人脸fs
-        // switch (this.formLeft1.input4) {
-        //     case 1:
-        //         this.xiangjileixing = '入口en';
-        //         break;
-        //     case 2:
-        //         this.xiangjileixing = '工位ln'
-        //         break;
-        //     case 3:
-        //         this.xiangjileixing = '出口ex'
-        //         break;
-        //     case 4:
-        //         this.xiangjileixing = '监控jk'
-        //         break;
-        //     case 5:
-        //         this.xiangjileixing = '人脸fs'
-        // }
-        // console.log(this.formLeft1.input4)
-      this.nowData[this.indexx].group_code = this.formLeft1.input1;
-      this.nowData[this.indexx].device_id = this.deviceiddd;
-      this.nowData[this.indexx].dealer_code = this.formLeft1.input2;
-      this.nowData[this.indexx].device_type = this.formLeft1.input3;
-      this.nowData[this.indexx].device_type_ex= this.formLeft1.input4;
-      this.nowData[this.indexx].device_code= this.formLeft1.input5;
-      this.nowData[this.indexx].device_name= this.formLeft1.input6;
-      this.nowData[this.indexx].hall_device_code= this.formLeft1.input7;
-      this.nowData[this.indexx].device_model= this.formLeft1.input8;
-      this.nowData[this.indexx].device_ip= this.formLeft1.input9;
-      this.nowData[this.indexx].device_port= this.formLeft1.input10;
-      this.nowData[this.indexx].device_user= this.formLeft1.input11;
-      this.nowData[this.indexx].device_pwd= this.formLeft1.input12;
-      this.nowData[this.indexx].isc_code= this.formLeft1.input13;
-      this.nowData[this.indexx].project_code= this.formLeft1.input14;
-      // this.editIndex = -1;
-      this.showxiugai = !this.showxiugai
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$Message.success('Success!');
-        } else {
-          this.$Message.error('Fail!');
-        }
-      })
+
     },
     handleReset (name) {
       this.$refs[name].resetFields();
@@ -633,70 +637,8 @@ export default {
           // this.showadd = !this.showadd
         }else {
             this.$Message.success(res.data.result_msg);
-              // this.data.push({
-              //   group_code: this.groupcodee,
-              //   dealer_code: this.dealeridd,
-              //   device_type: this.formLeft.input3,
-              //   device_type_ex: this.formLeft.input4,
-              //   device_code: this.formLeft.input5,
-              //   device_name: this.formLeft.input6,
-              //   hall_device_code: this.formLeft.input7,
-              //   device_model: this.formLeft.input8,
-              //   device_ip: this.formLeft.input9,
-              //   device_port: this.formLeft.input10,
-              //   device_user: this.formLeft.input11,
-              //   device_pwd: this.formLeft.input12,
-              //   isc_code: this.formLeft.input13,
-              //   project_code: this.formLeft.input14,
-              // })
-
-            // this.nowData = [];
-            // if(this.pageSize<=this.data.length) {
-            //     for (let i = 0; i < this.pageSize; i++) {
-            //         this.nowData.push(this.data[i]);
-            //     }
-            // }else {
-            //     for (let i = 0; i < this.data.length; i++) {
-            //         this.nowData.push(this.data[i]);
-            //     }
-            // }
-            // this.pageCurrent = 1;
-
-
-            // this.nowData = this.data;
-            //   console.log(this.pageCurrent) //3
-            //   console.log(this.pageSize) //10
-            // //需要显示开始数据的index,(因为数据是从0开始的，页码是从1开始的，需要-1)
-            // let _start = (this.pageCurrent - 1) * this.pageSize;
-            // //需要显示结束数据的index
-            // let _end = this.pageCurrent * this.pageSize;
-            // //截取需要显示的数据
-            // this.nowData = this.data.slice(_start, _end);
-            // //储存当前页
-            // // this.pageCurrent = index;
-
         }
-        // else {
-        //   this.showadd = !this.showadd
-        //   this.data.push({
-        //     group_code: this.groupcodee,
-        //     dealer_code: this.dealeridd,
-        //     device_type: this.formLeft.input3,
-        //     device_type_ex: this.formLeft.input4,
-        //     device_code: this.formLeft.input5,
-        //     device_name: this.formLeft.input6,
-        //     hall_device_code: this.formLeft.input7,
-        //     device_model: this.formLeft.input8,
-        //     device_ip: this.formLeft.input9,
-        //     device_port: this.formLeft.input10,
-        //     device_user: this.formLeft.input11,
-        //     device_pwd: this.formLeft.input12,
-        //     isc_code: this.formLeft.input13,
-        //     project_code: this.formLeft.input14,
-        //   })
-        //     this.$Message.success(res.data.result_msg);
-        //   console.log(this.data)
-        // }
+
         return res
       }).then(res => {
           console.log(res)
@@ -745,7 +687,8 @@ export default {
                       })
                   })
               this.data = this.devicelist;
-              console.log(this.data)
+              this.compare(this.data)
+              // console.log(this.data)
               this.dataCount = this.data.length;
               // this.nowData = this.data;
               this.pageCurrent = 1;
@@ -760,58 +703,39 @@ export default {
                       this.nowData.push(this.data[i]);
                   }
               }
-      //
-      //         )
-
-              // this.nowData = this.devicelist
-              // this.data = this.devicelist
-              // this.dataCount = this.data.length;
-              // this.nowData = [];
-              // // this.pageCurrent = 0;
-              // if(this.pageSize<=this.data.length) {
-              //     for (let i = 0; i < this.pageSize; i++) {
-              //         this.nowData.push(this.data[i]);
-              //     }
-              // }else {
-              //     for (let i = 0; i < this.data.length; i++) {
-              //         this.nowData.push(this.data[i]);
-              //     }
-              // }
-              // console.log(this.data)
-          // }).catch(error=> {
-          //     console.log(error)
           })
       })
         this.showadd = !this.showadd
+        this.formLeft = {
+            input1: '',
+                input2: '',
+                input3: '',
+                input4: '',
+                input5: '',
+                input6: '',
+                input7: '',
+                input8: '',
+                input9: '',
+                input10: '',
+                input11: '',
+                input12: '',
+                input13: '',
+                input14: '',
+        }
     },
     handleEdit (row, index) {
-          console.log(row.device_type)
-          console.log(row.device_type_ex)
-
-      this.formLeft1.input1 = row.group_code;
-      this.deviceiddd = row.device_id;
-      this.formLeft1.input2 = row.dealer_code;
-      this.formLeft1.input3 = row.device_type;
-      this.formLeft1.input4 = row.device_type_ex;
-      this.formLeft1.input5 = row.device_code;
-      this.formLeft1.input6= row.device_name;
-      this.formLeft1.input7 = row.hall_device_code;
-      this.formLeft1.input8 = row.device_model;
-      this.formLeft1.input9= row.device_ip;
-      this.formLeft1.input10= row.device_port;
-      this.formLeft1.input11 = row.device_user;
-      this.formLeft1.input12 = row.device_pwd;
-      this.formLeft1.input13= row.isc_code;
-      this.formLeft1.input14 = row.project_code;
-        this.showxiugai = !this.showxiugai
-        if(this.formLeft1.input3=='NVR'||this.formLeft1.input3 ==2) {
-            this.devicetypeex =[
+          console.log(row.device_type) //NVR
+        console.log(row.device_type_ex) //0
+        // if(row.device_type=='NVR'||this.formLeft1.input3 ==2) {
+        if(row.device_type=='NVR') {
+            this.devicetypeex=[
                 {
                     value: '0',
-                    babel:'0'
-                }
+                    label: '0'
+                },
             ]
-        }else{
+        }
+        else {
             this.devicetypeex=[
                 {
                     value: '1',
@@ -835,14 +759,27 @@ export default {
                 },
             ]
         }
-      // this.editIndex = index;
-      //   document.getElementById("xuanze1").value=this.formLeft1.input3;
+
+    // console.log(this.formLeft1.input4)
+      this.formLeft1.input1 = row.group_code;
+      this.deviceiddd = row.device_id;
+      this.formLeft1.input2 = row.dealer_code;
+      this.formLeft1.input3 = row.device_type;
+      this.formLeft1.input4 = row.device_type_ex;
+      this.formLeft1.input5 = row.device_code;
+      this.formLeft1.input6= row.device_name;
+      this.formLeft1.input7 = row.hall_device_code;
+      this.formLeft1.input8 = row.device_model;
+      this.formLeft1.input9= row.device_ip;
+      this.formLeft1.input10= row.device_port;
+      this.formLeft1.input11 = row.device_user;
+      this.formLeft1.input12 = row.device_pwd;
+      this.formLeft1.input13= row.isc_code;
+      this.formLeft1.input14 = row.project_code;
+        this.showxiugai = !this.showxiugai
 console.log(this.formLeft1)
       this.indexx = index
     },
-    // handleSave (row,index) {
-    //
-    // },
     remove (index) {
       deleteDeviceItem(this.nowData[index].device_id).then(res=> {
         console.log(res)
@@ -850,14 +787,15 @@ console.log(this.formLeft1)
           this.data.splice(this.pageSize*(this.pageCurrent-1)+index,1)
           this.$Message.success(res.data.result_msg);
       })
+        this.dataCount = this.dataCount -1
         this.del =!this.del
       // this.data.splice(index, 1);
     },
       getdevice: function (prov) {
-          if(prov =='NVR') {
+          if(prov =='NVR' ||prov =='2') {
               this.devicetypeex=[{
                   value: '0',
-                  label: ''
+                  label: '0'
               }]
           }else {
               this.devicetypeex= [
@@ -889,11 +827,9 @@ console.log(this.formLeft1)
     // this.topic = this.DistributorProject[0].project_name;
   },
   mounted() {
-    this.groupcodee = this.$route.query.group_code;
+      this.bgheight= `${document.documentElement.clientHeight * 0.55}`;//默认值
+       this.groupcodee = this.$route.query.group_code;
     this.dealeridd = this.$route.query.key_code;
-    // getGroupList().then(res=>{
-    //   console.log(res)
-    // });
     getProjectList().then(res=>{
       console.log(res)
       this.DistributorProject = res.data.result_content;
@@ -934,6 +870,9 @@ console.log(this.formLeft1)
           }
               // 1入口en,2工位ln,3出口ex,4监控jk,5人脸fs
           switch (item.device_type_ex) {
+              case 0 :
+                  item.device_type_ex = '0';
+                  break;
             case 1:
                 item.device_type_ex = '入口en';
                 break;
@@ -969,9 +908,13 @@ console.log(this.formLeft1)
       }
 
       )
+        return this.devicelist
+    }).then(res => {
+        this.data = res
+        // this.data = this.data.sort(this.compare('device_code'))
 
-      this.data = this.devicelist
-        console.log(this.data)
+        this.compare(this.data)
+        // console.log(this.data)
         this.dataCount = this.data.length;
         this.nowData = [];
         if(this.pageSize<=this.data.length) {
@@ -983,10 +926,9 @@ console.log(this.formLeft1)
                 this.nowData.push(this.data[i]);
             }
         }
-
-      console.log(this.data)
-      // return this.data
-    }).catch(error=> {
+        console.log(this.nowData)
+    })
+        .catch(error=> {
       console.log(error)
     })
     getDeviceItem(this.ceshi).then(res=> {
@@ -1062,6 +1004,7 @@ console.log(this.formLeft1)
           // console.log(this.devicelist)
           this.data = this.devicelist
             // this.nowData = this.data
+            this.compare(this.data)
             this.dataCount = this.data.length;
             this.nowData = [];
             if(this.pageSize<=this.data.length) {
@@ -1093,7 +1036,7 @@ console.log(this.formLeft1)
   }
   .shopidtime {
     width: 50%;
-    margin-top:20px;
+    margin-top:0.8%;
     display: flex;
     justify-content: space-between;
   }
@@ -1166,14 +1109,15 @@ console.log(this.formLeft1)
     }
     .storespage {
         position: fixed;
-        bottom: 3%;
+        bottom: 2%;
         right: 3%;
     }
   .tablejxs1 {
+      position: relative;
       clear:both;
       /*height: 90%;*/
       height: 80%;
-      overflow-y: auto;
+      /*overflow-y: auto;*/
   }
   .ivu-layout.ivu-layout-has-sider>.ivu-layout, .ivu-layout.ivu-layout-has-sider>.ivu-layout-content {
       overflow-y: hidden !important;
@@ -1182,4 +1126,17 @@ console.log(this.formLeft1)
         height: 60%;
         overflow: auto;
     }
+  .ivu-menu {
+      display: block;
+      margin: 0;
+      padding: 0;
+      outline: 0;
+      list-style: none;
+      color: #515a6e;
+      font-size: 14px;
+      position: relative;
+      z-index: 900;
+      height: 400px;
+      overflow-y: scroll;
+  }
 </style>

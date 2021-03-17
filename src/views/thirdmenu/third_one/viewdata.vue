@@ -4,11 +4,11 @@
       <Select1>
         <template slot-scope="city" slot="ServiceStation">
           服务站：
-          <Select v-model="model4" style="width:100px" placeholder="选择服务站">
+          <Select v-model="fuwuzhan" style="width:100px" placeholder="选择服务站">
             <Option v-for="item in city.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </template>
-        <Input v-model="value" placeholder="请输入区域/服务站名" style="width: 300px" slot="inputtotal"/>
+        <Input v-model="quyuzhi" placeholder="请输入区域/服务站名" style="width: 300px" slot="inputtotal"/>
       </Select1>
     </div>
     <div class="buttontotal">
@@ -40,6 +40,12 @@ import Select1 from "@/components/common/Select1";
 // import DualAxesEcharts from "@/components/thirdcomponents/third_1/DualAxesEcharts";
 export default {
   name: "viewdata",
+  data() {
+    return {
+      quyuzhi: '',
+      fuwuzhan:'',
+    }
+  },
   components:{
     // DualAxesEcharts,
     // DualAxes,

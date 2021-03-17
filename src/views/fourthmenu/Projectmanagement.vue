@@ -2,7 +2,7 @@
     <div class="projectmanagementlayout">
         <div class="showaddlayout1" v-show="showadd">
             <button class="showaddbutton1" @click="showadd = !showadd">×</button>
-            <Form ref="formLeft" :model="formLeft" label-position="left" :label-width="100" >
+            <Form ref="formLeft" :model="formLeft" label-position="right" :label-width="100" >
                 <!--        <FormItem label="主机厂编号" prop="input1">-->
                 <!--          <Input v-model="formLeft.input1"/>-->
                 <!--        </FormItem>-->
@@ -16,13 +16,41 @@
                     <Input v-model="formLeft.input3"/>
                 </FormItem>
                 <FormItem label="创建时间" prop="input4">
-                    <Input v-model="formLeft.input4"/>
+                    <DatePicker type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="请选择日期" style="width: 100%" v-model="formLeft.input4"></DatePicker>
                 </FormItem>
                 <FormItem label="编辑时间" prop="input5">
-                    <Input v-model="formLeft.input5"/>
+                    <DatePicker type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="请选择日期" style="width: 100%" v-model="formLeft.input5"></DatePicker>
                 </FormItem>
                 <Button @click="addproject">提交</Button>
                 <Button @click="handleReset('formLeft')" class="chongzhi1">重置</Button>
+            </Form>
+        </div>
+        <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showxiugai">
+            <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showxiugai = !showxiugai">×</button>
+            <Form ref="formLeft1" :model="formLeft1" label-position="right" :label-width="100">
+                <!--       <FormItem label="主机厂编号" prop="input1">-->
+                <!--         <Input v-model="formLeft.input1"/>-->
+                <!--       </FormItem>-->
+                <!--       <FormItem label="经销商编号" prop="input2">-->
+                <!--         <Input v-model="formLeft.input2"/>-->
+                <!--       </FormItem>-->
+                <FormItem label="项目名称" prop="input1">
+                    <Input v-model="formLeft1.input1"/>
+                </FormItem>
+                <FormItem label="项目编号" prop="input2">
+                    <Input v-model="formLeft1.input2"/>
+                </FormItem>
+                <FormItem label="项目状态" prop="input3">
+                    <Input v-model="formLeft1.input3"/>
+                </FormItem>
+                <FormItem label="创建时间" prop="input4">
+                    <DatePicker type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="请选择日期" style="width: 100%" v-model="formLeft1.input4"></DatePicker>
+                </FormItem>
+                <FormItem label="编辑时间" prop="input5">
+                    <DatePicker type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="请选择日期" style="width: 100%" v-model="formLeft1.input5"></DatePicker>
+                </FormItem>
+                <Button @click="xiugaiuser('formLeft1')">确定</Button>
+                <Button @click="handleReset('formLeft1')" style="margin-left: 8px">重置</Button>
             </Form>
         </div>
         <div style="float: right"><Button @click="showadd=!showadd">添加项目</Button></div>
@@ -85,6 +113,7 @@
         data() {
             return {
                 showadd:false,
+                showxiugai:false,
                 projectlist:[],
                 pageSize: 10,//每页显示多少条
                 dataCount: 0,//总条数
@@ -136,6 +165,15 @@
                     input4: '',
                     input5: '',
                 },
+                formLeft1: {
+                    input1: '',
+                    input2: '',
+                    input3: '',
+                    input4: '',
+                    input5: '',
+                    input6: '',
+                    input7: '',
+                },
                 nowData: [
 
                 ],
@@ -151,7 +189,16 @@
         },
         methods: {
             handleEdit (row,index) {
-                console.log(row+index)
+                // this.formLeft1.input1 = row.name;
+                // this.formLeft1.input2 = row.phone;
+                // this.formLeft1.input3 = row.username;
+                // this.formLeft1.input4 = row.orign;
+                // this.formLeft1.input5 = row.boss;
+                // this.formLeft1.input6=row.addtime;
+                // this.formLeft1.input7=row.juese;
+                // // this.editIndex = index;
+                this.showxiugai = !this.showxiugai;
+                console.log(index,row)
             },
             remove1(index) {
                 console.log(index)
