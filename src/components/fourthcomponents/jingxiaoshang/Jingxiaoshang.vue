@@ -302,7 +302,8 @@ export default {
         // },
         {
           title: '经销商代码',
-          slot: 'dealer_code'
+          slot: 'dealer_code',
+            sortable: true
         },
         {
           title: '经销商简称',
@@ -470,7 +471,7 @@ export default {
           this.nowData = []
           if (jxs) {
               for(let i=0;i<this.data.length;i++) {
-                  if(this.data[i].dealer_name.indexOf(jxs) ==0) {
+                  if(this.data[i].dealer_name.indexOf(jxs) >=0) {
                       this.nowData.push(this.data[i])
                   }
               }
@@ -588,27 +589,23 @@ export default {
               this.$Message.success(res.data.result_msg)
               console.log(res)
                getDealerList(this.jingxiaoshangcode).then(res => {
-                  this.dealerid = []
-                  if(res.data.result_content) {
-                      res.data.result_content.forEach(item => {
-                          this.dealerid.push(item.dealer_id)
-                      })
-                  }
-                  console.log(this.dealerid)
-                  return this.dealerid
-              }).then(data => {
-                  this.tabledata= []
-                  this.fn1(data)
-                  // console.log(this.tabledata)
-                  return this.tabledata
-              }).then(res => {
-                console.log(res)
-                  // this.nowData = res.slice(0,this.pageSize)
-                  // console.log(this.nowData)
-
-                    // this.compare(res)
-                   this.data = res
-                   console.log(this.data)
+                   this.compare(res.data.result_content)
+                   this.data = res.data.result_content
+                   // this.changepage(1)
+                   // this.compare(this.data)
+                   // console.log(this.data)
+                   // this.dataCount = res.length;
+                   this.dataCount = res.data.result_content.length
+                   this.nowData = [];
+                   if(this.pageSize<=res.data.result_content.length) {
+                       for (let i = 0; i < this.pageSize; i++) {
+                           this.nowData.push(res.data.result_content[i]);
+                       }
+                   }else {
+                       for (let i = 0; i < res.length; i++) {
+                           this.nowData.push(res.data.result_content[i]);
+                       }
+                   }
               })
           }
 
@@ -617,24 +614,24 @@ export default {
       })
         // this.compare(this.data)
         // this.compare(this.data)
-        console.log(this.data)
-        this.dataCount = this.dataCount +1;
-        this.pageCurrent=1;
-        this.nowData = [];
-        if(this.pageSize<=this.data.length) {
-            // this.compare(this.data)
-            for (let i = 0; i < this.pageSize; i++) {
-                this.nowData.push(this.data[i]);
-            }
-            console.log(this.nowData)
-        }else {
-            // this.compare(this.data)
-            for (let i = 0; i < this.data.length; i++) {
-                this.nowData.push(this.data[i]);
-            }
-        }
-        // this.compare(this.nowData)
-        console.log(this.nowData)
+        // console.log(this.data)
+        // this.dataCount = this.dataCount +1;
+        // this.pageCurrent=1;
+        // this.nowData = [];
+        // if(this.pageSize<=this.data.length) {
+        //     // this.compare(this.data)
+        //     for (let i = 0; i < this.pageSize; i++) {
+        //         this.nowData.push(this.data[i]);
+        //     }
+        //     console.log(this.nowData)
+        // }else {
+        //     // this.compare(this.data)
+        //     for (let i = 0; i < this.data.length; i++) {
+        //         this.nowData.push(this.data[i]);
+        //     }
+        // }
+        // // this.compare(this.nowData)
+        // console.log(this.nowData)
         this.formLeft = {
             input1: '',
                 input2: '',
@@ -672,6 +669,17 @@ export default {
       this.data[this.indexx].project_code= this.formLeft1.input10;
       // this.editIndex = -1;
       this.showxiugai = !this.showxiugai
+        this.compare(this.data)
+        this.nowData = [];
+        if(this.pageSize<=this.data.length) {
+            for (let i = 0; i < this.pageSize; i++) {
+                this.nowData.push(this.data[i]);
+            }
+        }else {
+            for (let i = 0; i <this.data.length; i++) {
+                this.nowData.push(this.data[i]);
+            }
+        }
       this.$refs[name].validate((valid) => {
         if (valid) {
           this.$Message.success('Success!');
@@ -1882,7 +1890,7 @@ export default {
     components: {
         // Pagetotal,
     },
-  mounted() {
+  created() {
       this.getgaodu();
       // this.jxsbgheight= `${document.documentElement.clientHeight * 0.63}`;//默认值
     this.jingxiaoshangcode = this.$route.query.key_code;
@@ -1900,59 +1908,90 @@ export default {
           console.log(error)
       })
     getDealerList(this.jingxiaoshangcode).then(res => {
-        // console.log(res)
-        if(res.data.result_content) {
-            res.data.result_content.forEach(item => {
-                this.dealerid.push(item.dealer_id)
-            })
-        }else {
-            this.dealerid=[]
-        }
-
-      return this.dealerid
-    }).then(data => {
-      for (let i=0;i<data.length;i++) {
-        getDealerItem(data[i]).then(res => {
-          var jingxiaoshanglist=[];
-          this.tabledata.push({
-            group_code: res.data.result_content.group_code,
-            dealer_id: res.data.result_content.dealer_id,
-            dealer_code: res.data.result_content.dealer_code,
-            dealer_name: res.data.result_content.dealer_name,
-            dealer_fullname: res.data.result_content.dealer_fullname,
-            address: res.data.result_content.address,
-            server_ip: res.data.result_content.server_ip,
-            tv_number: res.data.result_content.tv_number,
-            tv_pwd: res.data.result_content.tv_pwd,
-            work_start: res.data.result_content.work_start,
-            work_end: res.data.result_content.work_end,
-            dealer_level: res.data.result_content.dealer_level,
-            project_code: res.data.result_content.project_code,
-          })
-            jingxiaoshanglist.push(res.data.result_content.dealer_name)
-          return jingxiaoshanglist
-        }).then(res => {
-          this.data = this.tabledata
-            this.compare(this.data)
-            // console.log(this.data)
-            this.dataCount = this.data.length;
-            this.nowData = [];
-            if(this.pageSize<=this.data.length) {
-                for (let i = 0; i < this.pageSize; i++) {
-                    this.nowData.push(this.data[i]);
-                }
-            }else {
-                for (let i = 0; i < this.data.length; i++) {
-                    this.nowData.push(this.data[i]);
-                }
+        console.log(res)
+        this.compare(res.data.result_content)
+        this.data = res.data.result_content
+        // this.changepage(1)
+        // this.compare(this.data)
+        // console.log(this.data)
+        // this.dataCount = res.length;
+        this.dataCount = res.data.result_content.length
+        this.nowData = [];
+        if(this.pageSize<=res.data.result_content.length) {
+            for (let i = 0; i < this.pageSize; i++) {
+                this.nowData.push(res.data.result_content[i]);
             }
-
-          res.forEach(item => {
-            this.jxsname.push(item)
-          })
-        })
-      }
-    }).catch(error=> {
+        }else {
+            for (let i = 0; i < res.length; i++) {
+                this.nowData.push(res.data.result_content[i]);
+            }
+        }
+        // if(res.data.result_content) {
+        //     res.data.result_content.forEach(item => {
+        //         getDealerItem(item.dealer_id).then(res => {
+        //             // var jingxiaoshanglist=[];
+        //             this.tabledata.push({
+        //                 group_code: res.data.result_content.group_code,
+        //                 dealer_id: res.data.result_content.dealer_id,
+        //                 dealer_code: res.data.result_content.dealer_code,
+        //                 dealer_name: res.data.result_content.dealer_name,
+        //                 dealer_fullname: res.data.result_content.dealer_fullname,
+        //                 address: res.data.result_content.address,
+        //                 server_ip: res.data.result_content.server_ip,
+        //                 tv_number: res.data.result_content.tv_number,
+        //                 tv_pwd: res.data.result_content.tv_pwd,
+        //                 work_start: res.data.result_content.work_start,
+        //                 work_end: res.data.result_content.work_end,
+        //                 dealer_level: res.data.result_content.dealer_level,
+        //                 project_code: res.data.result_content.project_code,
+        //             })
+        //             this.dataCount = this.tabledata.length
+        //             // this.compare(this.tabledata)
+        //             // jingxiaoshanglist.push(res.data.result_content.dealer_name)
+        //             // return jingxiaoshanglist
+        //             return this.tabledata
+        //         }).then(res => {
+        //             this.data = res
+        //             // this.changepage(1)
+        //             // this.compare(this.data)
+        //             // console.log(this.data)
+        //             // this.dataCount = res.length;
+        //             this.nowData = [];
+        //             if(this.pageSize<=res.length) {
+        //                 for (let i = 0; i < this.pageSize; i++) {
+        //                     this.nowData.push(res[i]);
+        //                 }
+        //             }else {
+        //                 for (let i = 0; i < res.length; i++) {
+        //                     this.nowData.push(res[i]);
+        //                 }
+        //             }
+        //             // this.data = this.tabledata
+        //             //   this.compare(this.data)
+        //             //   // console.log(this.data)
+        //             //   this.dataCount = this.data.length;
+        //             //   this.nowData = [];
+        //             //   if(this.pageSize<=this.data.length) {
+        //             //       for (let i = 0; i < this.pageSize; i++) {
+        //             //           this.nowData.push(this.data[i]);
+        //             //       }
+        //             //   }else {
+        //             //       for (let i = 0; i < this.data.length; i++) {
+        //             //           this.nowData.push(this.data[i]);
+        //             //       }
+        //             //   }
+        //
+        //             // res.forEach(item => {
+        //             //   this.jxsname.push(item)
+        //             // })
+        //         })
+        //         // this.dealerid.push(item.dealer_id)
+        //     })
+        // }else {
+        //     this.dealerid=[]
+        // }
+        // return this.dealerid
+        }).catch(error=> {
       console.log(error)
     })
     getGroupItem(this.jingxiaoshangid).then(res => {
@@ -1972,55 +2011,23 @@ export default {
       this.jingxiaoshangcode = to.query.key_code;
       this.jingxiaoshangid = to.query.key_id;
       getDealerList(this.jingxiaoshangcode).then(res => {
-        this.dealerid=[]
-        res.data.result_content.forEach(item => {
-          this.dealerid.push(item.dealer_id)
-        })
-        return this.dealerid
-      }).then(data => {
-        this.tabledata=[]
-        // var jingxiaoshanglist1=[];
-        for (let i=0;i<data.length;i++) {
-          getDealerItem(data[i]).then(res => {
-              // console.log(res)
-             var jingxiaoshanglist1=[];
-            this.tabledata.push({
-              group_code: res.data.result_content.group_code,
-              dealer_id: res.data.result_content.dealer_id,
-              dealer_code: res.data.result_content.dealer_code,
-              dealer_name: res.data.result_content.dealer_name,
-              dealer_fullname: res.data.result_content.dealer_fullname,
-              address: res.data.result_content.address,
-              server_ip: res.data.result_content.server_ip,
-              tv_number: res.data.result_content.tv_number,
-              tv_pwd: res.data.result_content.tv_pwd,
-              work_start: res.data.result_content.work_start,
-              work_end: res.data.result_content.work_end,
-              dealer_level: res.data.result_content.dealer_level,
-              project_code: res.data.result_content.project_code,
-            })
-            jingxiaoshanglist1.push(res.data.result_content.dealer_name)
-            return jingxiaoshanglist1
-          }).then(res => {
-            this.jxsname=[]
-            this.data=this.tabledata;
-              this.compare(this.data)
-              this.dataCount = this.data.length;
-              this.nowData = [];
-              if(this.pageSize<=this.data.length) {
-                  for (let i = 0; i < this.pageSize; i++) {
-                      this.nowData.push(this.data[i]);
-                  }
-              }else {
-                  for (let i = 0; i < this.data.length; i++) {
-                      this.nowData.push(this.data[i]);
-                  }
+          this.compare(res.data.result_content)
+          this.data = res.data.result_content
+          // this.changepage(1)
+          // this.compare(this.data)
+          // console.log(this.data)
+          // this.dataCount = res.length;
+          this.dataCount = res.data.result_content.length
+          this.nowData = [];
+          if(this.pageSize<=res.data.result_content.length) {
+              for (let i = 0; i < this.pageSize; i++) {
+                  this.nowData.push(res.data.result_content[i]);
               }
-            res.forEach(item => {
-              this.jxsname.push(item)
-            })
-          })
-        }
+          }else {
+              for (let i = 0; i < res.length; i++) {
+                  this.nowData.push(res.data.result_content[i]);
+              }
+          }
       }).catch(error=> {
             console.log(error)
           })

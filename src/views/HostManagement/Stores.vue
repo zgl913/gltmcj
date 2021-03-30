@@ -938,7 +938,7 @@ console.log(this.formLeft1)
   watch: {
     '$route': function (to) {
       this.groupcodee = to.query.group_code;
-      this.dealeridd = to.query.key_code
+      this.dealeridd = to.query.key_code;
       getDealerItem(to.query.key_id).then(res => {
         // console.log(res)
         this.project_id = res.data.result_content.dealer_id,
@@ -1006,6 +1006,7 @@ console.log(this.formLeft1)
             // this.nowData = this.data
             this.compare(this.data)
             this.dataCount = this.data.length;
+            this.pageCurrent = 1;
             this.nowData = [];
             if(this.pageSize<=this.data.length) {
                 for (let i = 0; i < this.pageSize; i++) {

@@ -26,7 +26,7 @@
       <div  class="dengluan">
         <FormItem>
             <div>
-                <Button type="primary" @click="handleSubmit('formInline')">确认</Button>
+                <Button type="primary" @click="handleSubmit()">确认</Button>
                 <Button type="primary" @click="resetForm('formInline')" style="margin-left: 20px">重置</Button>
             </div>
 
@@ -60,9 +60,9 @@ export default {
   },
   methods: {
     // this.$refs.input
-    handleSubmit(name) {
+    handleSubmit() {
       getdata1(this.formInline.user,this.formInline.password).then((res)=>{
-        console.log(name)
+        console.log(res)
         if(this.formInline.user ==res.data.name &&this.formInline.password ==res.data.password){
           // alert('chenggpng')
           // this.$emit('ifshowlogin1',false)
@@ -74,6 +74,7 @@ export default {
           // alert('shibai')
             this.$Message.error('Fail!');
         }
+          this.$store.dispatch('agetmessage',{username:res.data.name,nicheng:res.data.nicheng,xingbie:res.data.xingbie})
       }).catch(error => {
         console.log(error);
       });

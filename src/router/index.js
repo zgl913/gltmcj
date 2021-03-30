@@ -20,6 +20,9 @@ const index = () => import("@/views/index")
 const Jingxiaoshang = () => import("@/components/fourthcomponents/jingxiaoshang/Jingxiaoshang")
 const Programlist = () => import("@/views/HostManagement/Programlist")
 const Projectmanagement = () => import("@/views/fourthmenu/Projectmanagement")
+const JxsDevice = () => import("@/components/thirdcomponents/third_2/JxsDevice")
+const JxsMessage = () => import("@/components/thirdcomponents/third_2/JxsMessage")
+const JxsPromgram = () => import("@/components/thirdcomponents/third_2/JxsPromgram")
 
 
 // // import Home from "../views/firstmenu/Home.vue";
@@ -171,6 +174,21 @@ const routes = [
                 path: "/Shop",
                 component: Shop,
                 name: '门店'
+            },
+            {
+                path: "/JxsDevice",
+                component: JxsDevice,
+                name: '经销商设备信息'
+            },
+            {
+                path: "/JxsMessage",
+                component: JxsMessage,
+                name: '经销商信息'
+            },
+            {
+                path: "/JxsPromgram",
+                component: JxsPromgram,
+                name: '经销商程序信息'
             },
             {
                 path: "/admitor",

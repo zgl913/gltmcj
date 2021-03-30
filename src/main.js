@@ -12,7 +12,7 @@ Vue.prototype.$echarts = echarts;
 // import 'echarts/map/js/china'
 // import "../node_modules/echarts/extension-src/bmap/bmap.ts";
 // import china from 'echarts/map/js/china.js'
-import '../node_modules/echarts/map/js/china.js'
+// import '../node_modules/echarts/map/js/china.js'
 // echarts.registerMap('china', china)
 // import "echarts/extension-src/bmap/bmap.ts";
 
@@ -37,7 +37,6 @@ if (process.env.NODE_ENV === 'production') {
   if (process.env.VUE_APP_FLAG === 'pro') {
     //production 生产环境
     axios.defaults.baseURL = 'http://116.62.203.227:9001/qndata/qnbasedata/';
-
   } else {
     //test 测试环境
     axios.defaults.baseURL = '/api';

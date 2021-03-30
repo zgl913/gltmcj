@@ -71,7 +71,8 @@
                     <div class="rightlayout">
                         <Button @click="showlogin" v-if="buttonloginshow2" >退出</Button>
                         <Avatar icon="ios-person" size="large"/>
-                        <router-link to="/personcenter"><div style="margin-left:10px;color:red">{{username1}}</div></router-link>
+<!--                        <router-link to="/personcenter"><div style="margin-left:10px;color:red">{{username1}}</div></router-link>-->
+                        <router-link to="/personcenter"><div style="margin-left:10px;color:white">{{$store.state.username}}</div></router-link>
                     </div>
 
 

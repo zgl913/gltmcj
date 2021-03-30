@@ -2,6 +2,13 @@
   <div>
     <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
       <!-- slides -->
+<!--      <swiper-slide v-for="(item,index) in lunbo" :key="index">-->
+<!--        <div class="oneline">-->
+<!--          屏幕异常：{{item.pmyc}}<br>-->
+<!--          相机异常：{{item.xjyc}}-->
+<!--        </div>-->
+<!--        {{item.dianming}}-->
+<!--      </swiper-slide>-->
       <swiper-slide>
         <div>
           <ul>
@@ -223,6 +230,69 @@
 export default {
   data() {
     return {
+      // lunbo:[
+      //   {
+      //     pmyc:'1',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'2',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'3',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'4',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'5',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'6',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'7',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'8',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'9',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'10',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'11',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      //   {
+      //     pmyc:'12',
+      //     xjyc:'11',
+      //     dianming:'杭州旗舰店'
+      //   },
+      // ],
+      lbzs: '',
       callback:'',
       swiperOption: {
         // some swiper options/callbacks
@@ -260,6 +330,19 @@ export default {
 }
 </script>
 <style>
+  /*.oneline li {*/
+  /*  list-style: none;*/
+
+  /*}*/
+  /*.oneline{*/
+  /*  border-radius: 10px;*/
+  /*  background-color: #2d8cf0;*/
+  /*  color:white;*/
+  /*}*/
+  /*.oneline {*/
+  /*  display: flex;*/
+  /*  justify-content: space-around;*/
+  /*}*/
   .oneline li {
     list-style: none;
 

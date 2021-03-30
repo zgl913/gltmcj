@@ -82,9 +82,9 @@
 <!--         </Select>-->
 <!--       </div>-->
        <div>
-         <Input v-model="sousuozi" placeholder="请输入用户姓名/手机/经销商" class="admitorinput" slot="inputtotal"/>
+<!--         <Input search v-model="sousuozi" placeholder="请输入用户姓名/手机/经销商" class="admitorinput" slot="inputtotal"/>-->
+         <Input search v-model="sousuozi" placeholder="请输入用户姓名/手机/经销商" class="admitorinput" @on-search="cxyh(sousuozi)"/>
        </div>
-       <div><Button>查询</Button></div>
      </div>
      <div class="select1">
        <div><Button @click="addadmitor">添加用户</Button></div>
@@ -92,7 +92,7 @@
      </div>
    </div>
    <div>
-     <Table :columns="columns" :data="data">
+     <Table :columns="columns" :data="nowData">
        <template slot-scope="{ row, index }" slot="name">
          <Input type="text" v-model="editname" v-if="editIndex === index" />
          <span v-else>{{ row.name }}</span>
@@ -136,7 +136,7 @@
          </div>
          <div v-else>
            <!--            <Button @click="addrow()">新增</Button>-->
-           <Button @click="handleEdit(row, index)">编辑</Button>
+           <Button @click="handleEdit(row, index)">修改</Button>
            <Button @click="remove(index)">删除</Button>
          </div>
        </template>
@@ -156,7 +156,6 @@
          <Button @click="quedingchongzhi()">确定</Button>
          <Button @click="showchongzhimima=!showchongzhimima" class="chongzhi3">取消</Button>
        </div>
-
      </div>
    </div>
  </div>
@@ -227,22 +226,22 @@ export default {
           phone: '相机类型1',
           username: '相机型号1',
           orign: '代码1',
-          boss: '店端IP1',
+          boss: '店端IP2',
           addtime: '2021-01-10 16:15:32',
           juese: '全国',
         },
         {
-          name: '相机1',
-          phone: '相机类型1',
+          name: '相机2',
+          phone: '相机类型2',
           username: '相机型号1',
           orign: '代码1',
-          boss: '店端IP1',
+          boss: '店端IP2',
           addtime: '2021-01-10 16:15:32',
           juese: '全国',
         },
         {
-          name: '相机1',
-          phone: '相机类型1',
+          name: '相机2',
+          phone: '相机类型3',
           username: '相机型号1',
           orign: '代码1',
           boss: '店端IP1',
@@ -410,9 +409,39 @@ export default {
 
       // console.log(this.nowData)
     },
+    cxyh(cxzi) {
+      this.nowData = []
+      if (cxzi) {
+        for(let i=0;i<this.data.length;i++) {
+          if(this.data[i].name.indexOf(cxzi) ==0 || this.data[i].phone.indexOf(cxzi) ==0 || this.data[i].boss.indexOf(cxzi) ==0) {
+            this.nowData.push(this.data[i])
+          }
+        }
+      }else {
+        if(this.pageSize<=this.data.length) {
+          for (let i = 0; i < this.pageSize; i++) {
+            this.nowData.push(this.data[i]);
+          }
+        }else {
+          for (let i = 0; i < this.data.length; i++) {
+            this.nowData.push(this.data[i]);
+          }
+        }
+      }
+    }
   },
   mounted() {
-
+    this.nowData = [];
+    this.dataCount = this.data.length;
+    if(this.pageSize<=this.data.length) {
+      for (let i = 0; i < this.pageSize; i++) {
+        this.nowData.push(this.data[i]);
+      }
+    }else {
+      for (let i = 0; i < this.data.length; i++) {
+        this.nowData.push(this.data[i]);
+      }
+    }
   }
 }
 </script>
@@ -425,7 +454,7 @@ export default {
 .select {
   width: 60%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
   padding-left: 0px;
 }

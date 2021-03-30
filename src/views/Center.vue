@@ -40,8 +40,11 @@
               <template slot="title">
                 明细数据
               </template>
-              <router-link to="/shop"><MenuItem name="3-2-1">门店</MenuItem></router-link>
-              <router-link to="/offline"><MenuItem name="3-2-2">离线</MenuItem></router-link>
+              <router-link to="/JxsDevice"><MenuItem name="3-2-3">经销商设备信息</MenuItem></router-link>
+              <router-link to="/JxsMessage"><MenuItem name="3-2-4">经销商信息</MenuItem></router-link>
+              <router-link to="/JxsPromgram"><MenuItem name="3-2-5">经销商程序信息</MenuItem></router-link>
+<!--              <router-link to="/shop"><MenuItem name="3-2-1">门店</MenuItem></router-link>-->
+<!--              <router-link to="/offline"><MenuItem name="3-2-2">离线</MenuItem></router-link>-->
             </Submenu>
           </Submenu>
           <Submenu name="4">
@@ -191,7 +194,7 @@ export default {
         for(let k = 0; k<=i;k++) {
           if(k==i) {
             for (let j = 0; j < this.jiejue[i].length; j++) {
-              if(this.jiejue[i][j].dealer_name.indexOf(sousuovalue) == 0) {
+              if(this.jiejue[i][j].dealer_name.indexOf(sousuovalue) >= 0) {
                 this.jiejue2.push(this.jiejue[i][j])
               }
             }
@@ -286,6 +289,9 @@ export default {
     flex: auto;
     background: #f5f7f9;
   }
+  /*.ivu-layout-sider {*/
+  /*  width: 10% !important;*/
+  /*}*/
   .ivu-breadcrumb {
     display: flex;
     flex-direction: row;

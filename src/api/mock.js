@@ -17,6 +17,8 @@ Mock.mock('http://datainfo.hzqnkj.com/uni/UniData/meun', /post|get/i, ()=>{
     // }]
     return {
         name: 'admin',
+        nicheng:'xiaoqiang',
+        xingbie:'男',
         password: 'qnkj234',
         token: 'qwer',
         success: true,

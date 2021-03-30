@@ -189,14 +189,15 @@
         },
         methods: {
             handleEdit (row,index) {
-                // this.formLeft1.input1 = row.name;
-                // this.formLeft1.input2 = row.phone;
-                // this.formLeft1.input3 = row.username;
-                // this.formLeft1.input4 = row.orign;
-                // this.formLeft1.input5 = row.boss;
+                this.formLeft1.input1 = row.projectname;
+                this.formLeft1.input2 = row.projectcode;
+                this.formLeft1.input3 = row.projectstate;
+                this.formLeft1.input4 = row.projectcreatetime;
+                this.formLeft1.input5 = row.projectedittime;
                 // this.formLeft1.input6=row.addtime;
                 // this.formLeft1.input7=row.juese;
                 // // this.editIndex = index;
+                console.log(row.projectedittime)
                 this.showxiugai = !this.showxiugai;
                 console.log(index,row)
             },
@@ -204,7 +205,6 @@
                 console.log(index)
             },
             addproject() {
-
             },
             handleReset (name) {
                 this.$refs[name].resetFields();

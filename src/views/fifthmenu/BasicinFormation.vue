@@ -3,9 +3,9 @@
 
     <div class="information1">
       <div class="informationtotal">用户信息</div><Button @click="showModal=!showModal" class="makelayout">编辑</Button>
-      <span class="informationtotal">账号：<span>123456</span></span>
-      <span class="informationtotal">昵称：<span>{{username}}</span></span>
-      <span class="informationtotal">性别：<span>{{usergender}}</span></span>
+      <span class="informationtotal">账号：<span>{{$store.state.username}}</span></span>
+      <span class="informationtotal">昵称：<span>{{$store.state.nicheng}}</span></span>
+      <span class="informationtotal">性别：<span>{{$store.state.xingbie}}</span></span>
     </div>
 
     <div v-if="showModal" class="basicinformationshowmodal">
@@ -36,8 +36,8 @@ export default {
   data() {
     return {
       showModal: false,
-      username:'1234567',
-      usergender: '女1',
+      // username:'1234567',
+      // usergender: '女1',
       username1:this.username,
       usergender1: this.usergender,
     }
