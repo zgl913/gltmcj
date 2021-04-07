@@ -28,6 +28,15 @@
 import '@/css/global.css';
 
 export default {
-  components: {}
+  components: {},
+    mounted() {
+        // // 刷新后跳转到首页面
+        // // if
+        const tokenstr = window.sessionStorage.getItem("token")
+        if(tokenstr) {this.$router.push("/index").catch(err =>(console.log(err)));}else {
+            this.$router.push("/Login").catch(err =>(console.log(err)));
+        }
+
+    }
 }
 </script>

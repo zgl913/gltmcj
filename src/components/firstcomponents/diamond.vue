@@ -38,7 +38,7 @@ name: "diamond",
   .diamond {
   width: 100%;
   display: flex;
-    height: 12%;
+    height: 10%;
   justify-content: space-around;
 }
   .sum {

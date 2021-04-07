@@ -2,19 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-// import 'babel-polyfill'
-// import  promise from 'es6-promise';
-// promise.polyfill()
 
-//引入echarts
-import echarts from '../node_modules/echarts/dist/echarts.min'
-Vue.prototype.$echarts = echarts;
-// import 'echarts/map/js/china'
-// import "../node_modules/echarts/extension-src/bmap/bmap.ts";
-// import china from 'echarts/map/js/china.js'
-// import '../node_modules/echarts/map/js/china.js'
-// echarts.registerMap('china', china)
-// import "echarts/extension-src/bmap/bmap.ts";
 
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 

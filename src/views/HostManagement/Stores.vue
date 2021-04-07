@@ -16,8 +16,6 @@
 <!--       <FormItem label="经销商编号" prop="input2">-->
 <!--         <Input v-model="formLeft.input2"/>-->
 <!--       </FormItem>-->
-
-
       <FormItem label="*设备类型" prop="input3">
           <Select v-model="formLeft.input3" @on-change="getdevice($event)" >
               <Option v-for="item in devicetype" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -621,6 +619,7 @@ export default {
 
     },
     handleReset (name) {
+          console.log(name)
       this.$refs[name].resetFields();
     },
     adddevice() {

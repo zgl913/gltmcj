@@ -1,6 +1,6 @@
 <template>
-
   <div class="home">
+
 <!--    <img alt="Vue logo" src="../assets/logo.png" />-->
 <!--    <HelloWorld msg="Welcome to Your Vue.js App" />-->
     <div class="bigsquare">
@@ -8,13 +8,14 @@
 <!--        <Button @click="showdata">1111</Button>-->
 <!--        <div>{{namejx}}</div>-->
         <diamond></diamond>
-        <div class="layout">
+        <div class="layout" id = 'layy'>
           <Bar></Bar>
-          <div style="height:100%;width: 60%;">
-            <Map></Map>
+          <div style="height:100%;width: 60%;position:relative;">
+              <Map></Map>
           </div>
           <!--        <Map></Map>-->
         </div>
+
           <div class="homebottom">
               <div class='bottomcompont'>
                   <Pie></Pie>
@@ -69,6 +70,7 @@ export default {
       namejx: '123',
       name:1,
       age:2,
+        layoutheight:'',
       barxdata:[],
       barydata:[],
         // mydata : [
@@ -104,14 +106,18 @@ export default {
     // Map,
   },
   methods: {
-    showdata (){
-
-    },
+      // getheight() {
+      //     let allheight = document.getElementById('layy')
+      //     console.log(allheight.offsetHeight)
+      //     this.layoutheight = allheight.offsetHeight
+      //     console.log(this.layoutheight)
+      // }
 //      randomData() {
 //     return Math.round(Math.random()*500);
 // }
 },
   mounted () {
+      // this.getheight()
     // getdata(this.name,this.age).then(res => {
     //   this.namejx = res.result_msg
     // }).catch(error => {
@@ -140,7 +146,7 @@ export default {
 <style scoped>
   .layout {
     width: 100%;
-    height: 50%;
+    height: 60%;
     display: flex;
     margin-top:2%;
     justify-content: space-between;

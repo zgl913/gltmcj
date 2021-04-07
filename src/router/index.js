@@ -23,6 +23,7 @@ const Projectmanagement = () => import("@/views/fourthmenu/Projectmanagement")
 const JxsDevice = () => import("@/components/thirdcomponents/third_2/JxsDevice")
 const JxsMessage = () => import("@/components/thirdcomponents/third_2/JxsMessage")
 const JxsPromgram = () => import("@/components/thirdcomponents/third_2/JxsPromgram")
+const Map = () => import("@/components/firstcomponents/Map")
 
 
 // // import Home from "../views/firstmenu/Home.vue";
@@ -87,6 +88,10 @@ const routes = [
         name: '主页',
         children: [
             {
+                path: "",
+                component: Home
+            },
+            {
                 path: '/Home',
                 component: Home,
                 name: '首页',
@@ -108,6 +113,11 @@ const routes = [
                 path: '/personcenter',
                 component: personcenter,
                 name: '个人中心'
+            },
+            {
+                path: '/Map',
+                component: Map,
+                name: '地图'
             },
             {
                 path: "/viewdata",
@@ -233,7 +243,7 @@ const router = new VueRouter({
 });
 router.beforeEach((to,from,next) => {
     if(to.path ==="/Login") {return next()}
-    const tokenstr = window.sessionStorage.getItem("token")
+    const tokenstr = window.sessionStorage.getItem("message")
     if(!tokenstr) {return next("/Login")}
     next()
 })

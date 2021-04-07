@@ -1891,6 +1891,7 @@ export default {
         // Pagetotal,
     },
   created() {
+      console.log('created')
       this.getgaodu();
       // this.jxsbgheight= `${document.documentElement.clientHeight * 0.63}`;//默认值
     this.jingxiaoshangcode = this.$route.query.key_code;
@@ -1915,6 +1916,7 @@ export default {
         // this.compare(this.data)
         // console.log(this.data)
         // this.dataCount = res.length;
+        console.log(this.data)
         this.dataCount = res.data.result_content.length
         this.nowData = [];
         if(this.pageSize<=res.data.result_content.length) {
@@ -1922,7 +1924,7 @@ export default {
                 this.nowData.push(res.data.result_content[i]);
             }
         }else {
-            for (let i = 0; i < res.length; i++) {
+            for (let i = 0; i < res.data.result_content.length; i++) {
                 this.nowData.push(res.data.result_content[i]);
             }
         }
@@ -2008,9 +2010,12 @@ export default {
   },
   watch: {
     '$route': function (to) {
+        console.log('route')
       this.jingxiaoshangcode = to.query.key_code;
       this.jingxiaoshangid = to.query.key_id;
+      console.log(this.jingxiaoshangcode)
       getDealerList(this.jingxiaoshangcode).then(res => {
+          console.log(res)
           this.compare(res.data.result_content)
           this.data = res.data.result_content
           // this.changepage(1)
@@ -2019,15 +2024,17 @@ export default {
           // this.dataCount = res.length;
           this.dataCount = res.data.result_content.length
           this.nowData = [];
+          console.log(this.pageSize)
           if(this.pageSize<=res.data.result_content.length) {
               for (let i = 0; i < this.pageSize; i++) {
                   this.nowData.push(res.data.result_content[i]);
               }
           }else {
-              for (let i = 0; i < res.length; i++) {
+              for (let i = 0; i < res.data.result_content.length; i++) {
                   this.nowData.push(res.data.result_content[i]);
               }
           }
+          console.log(this.nowData)
       }).catch(error=> {
             console.log(error)
           })

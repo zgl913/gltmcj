@@ -30,7 +30,7 @@
                 </template>
                 <template slot-scope="{ row}" slot="cdisk_reamin">
 <!--                    <span :class="{'classa':parseInt(row.cdisk_reamin)<30}">{{ row.cdisk_reamin}}</span>-->
-                    <span :class="{'classa':Number(row.cdisk_reamin.split('G')[0])<20?true:false}">{{ row.cdisk_reamin}}</span>
+                    <span :class="{'classa':Number(row.cdisk_reamin.split('G')[0])<5?true:false}">{{ row.cdisk_reamin}}</span>
                 </template>
                 <template slot-scope="{ row}" slot="create_time">
                     <span >{{ row.create_time}}</span>
@@ -91,6 +91,7 @@
             }
         },
         methods: {
+
             exportData() {
                 this.$refs.table.exportCsv({
                     filename: '经销商信息',
@@ -201,6 +202,7 @@
                 console.log(this.devicelist)
                 return this.data
             }).then(res => {
+
                 console.log(res.length)
                 this.compare(res)
                 for(let i = 0;i<res.length;i++) {

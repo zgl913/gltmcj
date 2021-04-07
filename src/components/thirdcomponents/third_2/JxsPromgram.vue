@@ -1,6 +1,5 @@
 <template>
     <div>
-<!--        店数量：{{storenumber}}-->
         <div class="sousuobj">
             <div>
                 <div class="yhbj">
@@ -53,7 +52,13 @@
             </Table>
         </div>
         <div class="storespage">
-            <Page :total="dataCount" :page-size="pageSize" :current="pageCurrent" @on-change="changepage" @on-page-size-change="_nowPageSize" show-total show-sizer show-elevator/>
+            <div class="leftbj">
+                店总数：{{storenumber}}
+            </div>
+            <div class="rightbj">
+                <Page :total="dataCount" :page-size="pageSize" :current="pageCurrent" @on-change="changepage" @on-page-size-change="_nowPageSize" show-total show-sizer show-elevator/>
+            </div>
+
         </div>
     </div>
 </template>
@@ -66,6 +71,7 @@
             return {
                 group_code:'uni',
                 xiangmucode:["uni"],
+                storesz:[],
                 dealer_Name:'',
                 app_name:'',
                 data:[],
@@ -181,14 +187,6 @@
                     console.log(error)
                 })
             },
-            quchong(arr) {
-                    let s1 = new Set(arr.dealer_code);
-                    let arr2 = [];
-                    for(let item of s1){
-                        arr2.push(item);
-                    }
-                    return arr2;
-            },
             compare(sz){
                 sz.sort(function(a, b){
                     var x = a.dealer_code.toLowerCase();
@@ -248,8 +246,15 @@
                 console.log(this.devicelist)
                 return this.data
             }).then(res => {
-                this.storenumber = this.quchong(res).length
-                console.log(this.storenumber)
+                // this.storenumber = this.quchong(res).length
+                // console.log(this.storenumber)
+                let obj = {};
+                this.storesz = res.reduce((cur,next) => {
+                    obj[next.dealer_name] ? "" : obj[next.dealer_name] = true && cur.push(next);
+                    return cur;
+                },[]) //设置cur默认类型为数组，并且初始值为空的数组
+                console.log(this.storesz)
+                this.storenumber = this.storesz.length
                 console.log(res)
                 this.compare(res)
                 console.log(this.unique(res))
@@ -277,9 +282,14 @@
 
 <style scoped>
     .storespage {
-        position: fixed;
-        bottom: 2%;
-        right: 3%;
+        width: 100%;
+        position: relative;
+        /*width: 100%;*/
+        /*display: flex;*/
+        /*justify-content: space-around;*/
+        /*position: fixed;*/
+        /*bottom: 2%;*/
+        /*right: 3%;*/
     }
     .sousuobj {
         display: flex;
@@ -291,5 +301,13 @@
         white-space:nowrap;
         /*display: flex;*/
 
+    }
+    .leftbj {
+        position: absolute;
+        left: 0px;
+    }
+    .rightbj {
+        position: absolute;
+        right: 0px;
     }
 </style>

@@ -70,14 +70,13 @@
               主机厂管理
             </template>
             <Submenu StaticEnableDefaultPopOutImage = "false" v-for="(item,i) in hostgroup" :key="item.group_id" :name="i">
-
               <template slot="title">
-                <!--                  <keep-alive>-->
+                                  <keep-alive>
                 <router-link :to="{path:'/jingxiaoshang',query:{key_code:item.group_code,key_id:item.group_id,proname:item.group_name}}">
                   <div>{{item.group_name}}</div>
                   <!--                    {{item.group_name}}-->
                 </router-link>
-                <!--                  </keep-alive>-->
+                                  </keep-alive>
               </template>
                 <MenuItem name="5-1-1" class="menubj">
                     <Input  search v-model="sousuozhi" placeholder="请输入经销商" @on-search="sousuo(sousuozhi,i)"/>
@@ -116,7 +115,7 @@
             <!--            </Submenu>-->
           </Submenu>
           <router-link to="/personcenter"><MenuItem name="6"><Icon type="ios-person-outline" />个人中心</MenuItem></router-link>
-
+          <router-link to="/Map"><MenuItem name="4-1">用户管理</MenuItem></router-link>
         </Menu>
       </Sider>
       <Layout :style="{padding: '0 24px 24px'}">
