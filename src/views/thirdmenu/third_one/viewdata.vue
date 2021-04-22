@@ -18,14 +18,14 @@
       </div>
       <Button>导出列表</Button>
     </div>
-    <div>
-      <div style="text-align: left;margin: 20px;">数据概览</div>
-      <div class="dataoverview">
-        <div class="dataviewtotal">3640设备总数</div>
-        <div class="dataviewtotal">201今日新增</div>
-        <div class="dataviewtotal">419本周新增</div>
-      </div>
-    </div>
+<!--    <div>-->
+<!--      <div style="text-align: left;margin: 20px;">数据概览</div>-->
+<!--      <div class="dataoverview">-->
+<!--        <div class="dataviewtotal">3640设备总数</div>-->
+<!--        <div class="dataviewtotal">201今日新增</div>-->
+<!--        <div class="dataviewtotal">419本周新增</div>-->
+<!--      </div>-->
+<!--    </div>-->
     <Divider></Divider>
     <router-view></router-view>
 

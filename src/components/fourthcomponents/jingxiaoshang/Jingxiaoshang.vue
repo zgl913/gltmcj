@@ -38,7 +38,7 @@
               <Button @click="handleReset('formLeft3')" class="chongzhi">重置</Button>
           </Form>
       </div>
-    <div class="showaddlayout" v-show="showadd">
+    <div class="showaddlayout" v-show="showadd" @mousedown="move">
       <button class="showaddbutton" @click="showadd = !showadd">×</button>
       <Form ref="formLeft" :model="formLeft" label-position="left" :label-width="100" >
 <!--        <FormItem label="主机厂编号" prop="input1">-->
@@ -118,7 +118,7 @@
       </Form>
     </div>
 
-    <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showxiugai">
+    <div style="width:30%;position: absolute;top:0px;left:25%;border:1px solid black;float: left;z-index: 300;background-color: white" v-show="showxiugai" @mousedown="move">
       <button style="float:right;margin: 5px;width:20px;cursor: pointer" @click="showxiugai = !showxiugai">×</button>
       <Form ref="formLeft1" :model="formLeft1" label-position="left" :label-width="100" >
         <FormItem label="经销商代码" prop="input11">
@@ -467,6 +467,30 @@ export default {
     }
   },
   methods: {
+      move(e){
+          let odiv = e.target;        //获取目标元素
+
+          //算出鼠标相对元素的位置
+          let disX = e.clientX - odiv.offsetLeft;
+          let disY = e.clientY - odiv.offsetTop;
+          document.onmousemove = (e)=>{       //鼠标按下并移动的事件
+              //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+              let left = e.clientX - disX;
+              let top = e.clientY - disY;
+
+              //绑定元素位置到positionX和positionY上面
+              this.positionX = top;
+              this.positionY = left;
+
+              //移动当前元素
+              odiv.style.left = left + 'px';
+              odiv.style.top = top + 'px';
+          };
+          document.onmouseup = () => {
+              document.onmousemove = null;
+              document.onmouseup = null;
+          };
+      },
       cxjxs(jxs) {
           this.nowData = []
           if (jxs) {
@@ -2143,7 +2167,7 @@ export default {
     .showaddlayout {
         width:30%;
         position: absolute;
-        top:0px;
+        top:-10%;
         left:25%;
         border:1px solid black;
         float: left;

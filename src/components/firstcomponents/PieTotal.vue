@@ -9,46 +9,58 @@
 </template>
 
 <script>
-import { Pie } from '@antv/g2plot';
+  import { Pie } from '@antv/g2plot';
 export default {
 name: "PieTotal",
+  props:['lixianshu'],
+  data(){
+    return {
+      piedata:[]
+    }
+  },
   methods: {
   showpietotal() {
-    const data = [
-      { type: '分类一', value: 27 },
-      { type: '分类二', value: 25 },
-      { type: '分类三', value: 18 },
-      { type: '分类四', value: 15 },
-      { type: '分类五', value: 10 },
-      { type: '其他', value: 5 },
-    ];
+    const data = this.piedata;
+    // const data =
+    //         [
+    //   { type: '分类一', value: 27 },
+    //   { type: '分类二', value: 25 },
+    //   { type: '分类三', value: 18 },
+    //   { type: '分类四', value: 15 },
+    //   { type: '分类五', value: 10 },
+    //   { type: '其他', value: 5 },
+    // ];
 
     const piePlot = new Pie('container2', {
       appendPadding: 10,
       data,
-      // width:230,
-      // height:230,
+      width:250,
+      height:250,
       angleField: 'value',
       colorField: 'type',
-      radius: 0.9,
-      legend: false,
+      radius: 0.8,
+      legend:false,
       label: {
-        type: 'inner',
-        offset: '-30%',
-        content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
-        style: {
-          fontSize: 14,
-          textAlign: 'center',
-        },
+        type: 'outer',
+        content: '{name}：{value}',
       },
-      interactions: [{ type: 'element-active' }],
+      interactions: [{ type: 'pie-legend-active' }, { type: 'element-active' }],
     });
 
     piePlot.render();
+
   }
   },
   mounted() {
-  this.showpietotal()
+  // this.showpietotal()
+
+  },
+  watch: {
+    lixianshu(newValue){
+      console.log(newValue);
+      this.piedata= newValue
+      this.showpietotal()
+    }
   }
 }
 </script>

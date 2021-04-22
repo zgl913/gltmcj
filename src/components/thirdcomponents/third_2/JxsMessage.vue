@@ -30,7 +30,7 @@
                 </template>
                 <template slot-scope="{ row}" slot="cdisk_reamin">
 <!--                    <span :class="{'classa':parseInt(row.cdisk_reamin)<30}">{{ row.cdisk_reamin}}</span>-->
-                    <span :class="{'classa':Number(row.cdisk_reamin.split('G')[0])<5?true:false}">{{ row.cdisk_reamin}}</span>
+                    <span :class="{'classa':Number(row.cdisk_reamin)<5?true:false}">{{ row.cdisk_reamin}}</span>
                 </template>
                 <template slot-scope="{ row}" slot="create_time">
                     <span >{{ row.create_time}}</span>
@@ -78,7 +78,7 @@
                         slot: 'dealer_code'
                     },
                     {
-                        title: 'C盘剩余空间',
+                        title: 'C盘剩余空间(G)',
                         key:'cdisk_reamin',
                         slot: 'cdisk_reamin'
                     },
@@ -110,7 +110,7 @@
                             group_code: item.group_code,
                             dealer_code:item.dealer_code,
                             dealer_name:item.dealer_name,
-                            cdisk_reamin:item.cdisk_reamin,
+                            cdisk_reamin:item.cdisk_reamin.split('G')[0],
                             create_time:item.create_time,
                         })
                     })
@@ -120,6 +120,14 @@
                 }).then(res => {
                     console.log(res.length)
                     this.compare(res)
+                    for (let i = 0; i < res.length; i++) {
+                        if (Number(res[i].cdisk_reamin) < 5) {
+                            res.unshift(res[i])
+                            res.splice(i + 1, 1);
+                        }
+                    }
+                    return res
+                }).then(res => {
                     for(let i = 0;i<res.length;i++) {
                         res[i].jxs_index = i+1
                     }
@@ -142,7 +150,9 @@
                         }
                     }
                     console.log(this.nowData)
-                }).catch(error => {
+                })
+
+                .catch(error => {
                     console.log(error)
                 })
 
@@ -194,7 +204,7 @@
                         group_code: item.group_code,
                         dealer_code:item.dealer_code,
                         dealer_name:item.dealer_name,
-                        cdisk_reamin:item.cdisk_reamin,
+                        cdisk_reamin:item.cdisk_reamin.split('G')[0],
                         create_time:item.create_time,
                     })
                 })
@@ -205,9 +215,19 @@
 
                 console.log(res.length)
                 this.compare(res)
+                console.log(res)
+                for (let i = 0; i < res.length; i++) {
+                    if (Number(res[i].cdisk_reamin) < 5) {
+                        res.unshift(res[i])
+                        res.splice(i+1, 1);
+                    }
+                }
+                return res
+            }).then(res => {
                 for(let i = 0;i<res.length;i++) {
                     res[i].jxs_index = i+1
                 }
+                console.log(res)
                 this.dataCount = res.length;
                 this.nowData = [];
                 if(this.pageSize<=res.length) {
@@ -220,7 +240,9 @@
                     }
                 }
                 console.log(this.nowData)
-            }).catch(error => {
+            })
+
+            .catch(error => {
                 console.log(error)
             })
         }

@@ -66,13 +66,13 @@ export default {
         if(this.formInline.user ==res.data.name &&this.formInline.password ==res.data.password){
           // alert('chenggpng')
           // this.$emit('ifshowlogin1',false)
-          //   window.sessionStorage.setItem("token",res.data.token);
-            window.sessionStorage.setItem('message',[JSON.stringify({
-                token:res.data.token,
-                username:res.data.name,
-                nicheng:res.data.nicheng,
-                xingbie:res.data.xingbie
-            })]);
+            window.sessionStorage.setItem("token",res.data.token);
+          //   window.sessionStorage.setItem('message',[JSON.stringify({
+          //       token:res.data.token,
+          //       username:res.data.name,
+          //       nicheng:res.data.nicheng,
+          //       xingbie:res.data.xingbie
+          //   })]);
           this.$router.replace({path:'/index', query:{username:res.data.name,zhujichangshow:res.data.zhujichang}})
             this.$Message.success('Success!');
 

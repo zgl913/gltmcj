@@ -14,22 +14,45 @@
       <div>{{devicetotal }}台</div>
       <div>设备总数</div>
     </div>
+    <div class="sum sum-2">
+      <div>{{devicetotal-onlinedevice1-lixianshu}}台</div>
+      <div>设备异常数</div>
+    </div>
     <div class="sum sum-3">
-      <div>{{onlinedevice}}台</div>
+      <div>{{onlinedevice1}}台</div>
       <div>在线设备数</div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
+  props:['onlinedevice1','devicetotal','onlinestore','abnormal','lixianshu'],
 name: "diamond",
   data () {
     return {
-      onlinestore:356,
-      devicetotal:3162,
+      // onlinestore:0,
+      // devicetotal:3162,
       onlinedevice:123,
+      group_code:'uni',
+      dealer_Name:'',
+      devicelist:[],
+      yichangshu:'',
     }
+  },
+  methods: {
+    // async fn() {
+    //   await getDealerList().then(data => {
+    //     console.log(data)
+    //   })
+    // }
+
+  },
+  mounted() {
+
+  },
+  watch:{
   }
 }
 </script>
@@ -38,7 +61,7 @@ name: "diamond",
   .diamond {
   width: 100%;
   display: flex;
-    height: 10%;
+    height: 13%;
   justify-content: space-around;
 }
   .sum {

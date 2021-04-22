@@ -88,7 +88,7 @@ export default {
   /*  width: 100%;*/
   /*}*/
   .select {
-    width: 70%;
+    width: 100%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;

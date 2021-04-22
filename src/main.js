@@ -5,8 +5,13 @@ import store from "./store";
 
 
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-
+// import echarts from 'echarts'
+// Vue.prototype.$echarts = echarts
 // import style (>= Swiper 6.x)
+import * as echarts from './assets/js/echarts.min';
+Vue.prototype.$echarts = echarts;
+import china from './assets/js/china'
+echarts.registerMap('china', china)
 import 'swiper/swiper-bundle.css'
 import './api/api'
 import './api/mock'

@@ -36,8 +36,8 @@ export default {
   data() {
     return {
       showModal: false,
-      // username:'1234567',
-      // usergender: '女1',
+      username:'1234567',
+      usergender: '女1',
       username1:this.username,
       usergender1: this.usergender,
     }
@@ -48,7 +48,11 @@ export default {
       this.usergender = usergender1;
       this.showModal=!this.showModal
     },
-  }
+  },
+    mounted() {
+        var usermsg = window.localStorage.getItem("token");
+        console.log(usermsg)
+    }
 }
 </script>
 

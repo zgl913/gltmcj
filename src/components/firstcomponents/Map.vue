@@ -5,247 +5,178 @@
   copyright Hangzhou QianNeng 2021.1.5
 -->
 <template>
-    <div style="justify-content: center; position: relative;pointer-events: none;" id="map">
-    </div>
-
+    <div id="china_map"> </div>
+<!--    style='width:1500px;height:600px;'-->
+<!--    pointer-events: none;-->
 </template>
-
+<script type="text/javascript" src="js/echarts.min.js" ></script>
+<script type="text/javascript" src="../../assets/js/china.js" ></script>
 <script>
-    import { Scene } from '@antv/l7';
-    import { CountryLayer } from '@antv/l7-district';
-    import { Mapbox } from '@antv/l7-maps';
+    // import echarts from '../../assets/js/echarts.min'
+    // import "../../assets/js/china"
+    // import { Scene } from '@antv/l7';
+    // import { CountryLayer } from '@antv/l7-district';
+    // import { Mapbox } from '@antv/l7-maps';
+    // import * as echarts from "../../assets/js/echarts.min";
+    // import '../../assets/js/china.js'
+    // echarts.registerMap('china', china)
+    import echarts from 'echarts'
+    require('../../assets/js/china')
 export default {
   name: "Map",
     data () {
       return {
-          mapgaodu:''
+          mapgaodu:'',
+          mapkuandu:''
       }
     },
   methods: {
 
     },
   mounted() {
-      this.mapgaodu= `${document.documentElement.offsetHeight*0.64}px`
-      let mapp = document.getElementById('map')
-      console.log(this.mapgaodu)
-      // console.log(this.inputName)
-      mapp.style.height=this.mapgaodu
-      const colors = [ '#B8E1FF', '#7DAAFF', '#3D76DD', '#0047A5', '#001D70' ];
-      const ProvinceData = [
-          {
-              name: '云南省',
-              code: 530000,
-              value: 17881.12
-          },
-          {
-              name: '黑龙江省',
-              code: 230000,
-              value: 16361.62
-          },
-          {
-              name: '贵州省',
-              code: 520000,
-              value: 14806.45
-          },
-          {
-              name: '北京市',
-              code: 110000,
-              value: 30319.98
-          },
-          {
-              name: '河北省',
-              code: 130000,
-              value: 36010.27
-          },
-          {
-              name: '山西省',
-              code: 140000,
-              value: 16818.11
-          },
-          {
-              name: '吉林省',
-              code: 220000,
-              value: 15074
-          },
-          {
-              name: '宁夏回族自治区',
-              code: 640000,
-              value: 3705.18
-          },
-          {
-              name: '辽宁省',
-              code: 210000,
-              value: 25315.35
-          },
-          {
-              name: '海南省',
-              code: 460000,
-              value: 4832.05
-          },
-          {
-              name: '内蒙古自治区',
-              code: 150000,
-              value: 17289.22
-          },
-          {
-              name: '天津市',
-              code: 120000,
-              value: 18809.64
-          },
-          {
-              name: '新疆维吾尔自治区',
-              code: 650000,
-              value: 12199.08
-          },
-          {
-              name: '上海市',
-              code: 310000,
-              value: 32679.87
-          },
-          {
-              name: '陕西省',
-              code: 610000,
-              value: 24438.32
-          },
-          {
-              name: '甘肃省',
-              code: 620000,
-              value: 8246.07
-          },
-          {
-              name: '安徽省',
-              code: 340000,
-              value: 30006.82
-          },
-          {
-              name: '香港特别行政区',
-              code: 810000,
-              value: 0
-          },
-          {
-              name: '广东省',
-              code: 440000,
-              value: 97277.77
-          },
-          {
-              name: '河南省',
-              code: 410000,
-              value: 48055.86
-          },
-          {
-              name: '湖南省',
-              code: 430000,
-              value: 36425.78
-          },
-          {
-              name: '江西省',
-              code: 360000,
-              value: 21984.78
-          },
-          {
-              name: '四川省',
-              code: 510000,
-              value: 40678.13
-          },
-          {
-              name: '广西壮族自治区',
-              code: 450000,
-              value: 20353.51
-          },
-          {
-              name: '江苏省',
-              code: 320000,
-              value: 92595.4
-          },
-          {
-              name: '澳门特别行政区',
-              code: 820000,
-              value: null
-          },
-          {
-              name: '浙江省',
-              code: 330000,
-              value: 56197.15
-          },
-          {
-              name: '山东省',
-              code: 370000,
-              value: 76469.67
-          },
-          {
-              name: '青海省',
-              code: 630000,
-              value: 2865.23
-          },
-          {
-              name: '重庆市',
-              code: 500000,
-              value: 20363.19
-          },
-          {
-              name: '福建省',
-              code: 350000,
-              value: 35804.04
-          },
-          {
-              name: '湖北省',
-              code: 420000,
-              value: 39366.55
-          },
-          {
-              name: '西藏自治区',
-              code: 540000,
-              value: 1477.63
-          },
-          {
-              name: '台湾省',
-              code: 710000,
-              value: null
-          }
-      ];
-      const scene = new Scene({
-          id: 'map',
-          map: new Mapbox({
-              center: [ 116.2825, 39.9 ],
-              pitch: 0,
-              style: 'blank',
-              zoom: 3,
-              minZoom: 2,
-              maxZoom: 10
-          })
-      });
-
-      scene.on('loaded', () => {
-          new CountryLayer(scene, {
-              data: ProvinceData,
-              joinBy: [ 'NAME_CHN', 'name' ],
-              depth: 1,
-              provinceStroke: '#fff',
-              cityStroke: '#EBCCB4',
-              cityStrokeWidth: 1,
-              fill: {
-                  color: {
-                      field: 'NAME_CHN',
-                      values: colors
+      this.mapgaodu= `${document.documentElement.clientHeight * 0.7}`;
+      this.mapkuandu= `${document.documentElement.clientWidth *0.7}`;
+      // console.log(this.mapgaodu)
+      document.getElementById('china_map').style.height = this.mapgaodu + 'px';
+      document.getElementById('china_map').style.width = this.mapkuandu + 'px';
+      // 初始化echarts实例
+      this.chinachart = echarts.init(document.getElementById('china_map'))
+      // 进行相关配置
+      this.chartOption = {
+          tooltip: { // 鼠标移到图里面的浮动提示框
+              // formatter详细配置： https://echarts.baidu.com/option.html#tooltip.formatter
+              formatter (params, ticket, callback) {
+                  // params.data 就是series配置项中的data数据遍历
+                  let localValue,
+                      perf,
+                      downloadSpeep,
+                      usability,
+                      point
+                  if (params.data) {
+                      localValue = params.data.value
+                      perf = params.data.perf
+                      downloadSpeep = params.data.downloadSpeep
+                      usability = params.data.usability
+                      point = params.data.point
+                  } else { // 为了防止没有定义数据的时候报错写的
+                      localValue = 0
+                      perf = 0
+                      downloadSpeep = 0
+                      usability = 0
+                      point = 0
                   }
-              },
+                  let htmlStr = `
+          <div style='font-size:18px;'> ${params.name}</div>
+          <p style='text-align:left;margin-top:-10px;'>
+	          区域对应数据value：${localValue}<br/>
+	          性能perf：${perf}<br/>
+	          下载速度downloadSpeep：${downloadSpeep}<br/>
+	          可用性usability：${usability}<br/>
+	          监测点数point：${point}<br/>
+          </p>
+        `
+                  return htmlStr
+              }
+              // backgroundColor:"#ff7f50",//提示标签背景颜色
+              // textStyle:{color:"#fff"} //提示标签字体颜色
+          },
+          // visualMap的详细配置解析：https://echarts.baidu.com/option.html#visualMap
+          visualMap: { // 左下角的颜色区域
+              type: 'piecewise', // 定义为分段型 visualMap
+              min: 0,
+              max: 1000,
+              itemWidth: 40,
+              bottom: 60,
+              left: 100,
+              pieces: [ // 自定义『分段式视觉映射组件（visualMapPiecewise）』的每一段的范围，以及每一段的文字，以及每一段的特别的样式
+                  {gt: 900, lte: 1000, label: '非常好', color: '#6ad86e'}, // (900, 1000]
+                  {gt: 500, lte: 900, label: '正常', color: '#9adcfa'}, // (500, 900]
+                  {gt: 310, lte: 500, label: '警告', color: '#ffeb3b'}, // (310, 500]
+                  {gt: 200, lte: 300, label: '较差', color: '#ff9800'}, // (200, 300]
+                  {gt: 10, lte: 200, label: '非常差', color: 'orangered'}, // (10, 200]
+                  {value: 0, label: '无数据', color: '#999'} // [0]
+              ]
+          },
+          // geo配置详解： https://echarts.baidu.com/option.html#geo
+          geo: { // 地理坐标系组件用于地图的绘制
+              map: 'china', // 表示中国地图
+              // roam: true, // 是否开启鼠标缩放和平移漫游
+              zoom: 1.2, // 当前视角的缩放比例（地图的放大比例）
               label: {
-                  size:17
+                  show: true
               },
-              popup: {
-                  enable: true,
-                  Html: props => {
-                      return `<span>${props.NAME_CHN}</span>`;
+              itemStyle: { // 地图区域的多边形 图形样式。
+                  borderColor: 'rgba(0, 0, 0, 0.2)',
+                  emphasis: { // 高亮状态下的多边形和标签样式
+                      shadowBlur: 20,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
                   }
               }
-          });
-      });
-
+          },
+          series: [
+              {
+                  name: '', // 浮动框的标题（上面的formatter自定义了提示框数据，所以这里可不写）
+                  type: 'map',
+                  geoIndex: 0,
+                  label: {
+                      show: true
+                  },
+                  // 这是需要配置地图上的某个地区的数据，根据后台的返回的数据进行拼接（下面是我定义的假数据）
+                  data: [{
+                      'name': '北京',
+                      'value': 599,
+                      'perf': '0.501s', // 性能
+                      'downloadSpeep': '1.221MB/s', // 下载速度
+                      'usability': '100%', // 可用性
+                      'point': '250' // 监测点
+                  }, {
+                      'name': '上海',
+                      'value': 142
+                  }, {
+                      'name': '黑龙江',
+                      'value': 44
+                  }, {
+                      'name': '新疆',
+                      'value': 999,
+                      'perf': '0.501s', // 性能
+                      'downloadSpeep': '1.221MB/s', // 下载速度
+                      'usability': '100%', // 可用性
+                      'point': '250' // 监测点
+                  }, {
+                      'name': '深圳',
+                      'value': 92
+                  }, {
+                      'name': '湖北',
+                      'value': 810
+                  }, {
+                      'name': '四川',
+                      'value': 453
+                  }]
+              }
+          ]
+      }
+      // 使用刚指定的配置项和数据显示地图数据
+      this.chinachart.setOption(this.chartOption)
   }
 }
 </script>
 
 <style>
-
+    /*.bbbj{*/
+    /*    outline: 0!important;*/
+    /*}*/
+    /*#map {*/
+    /*    outline: none;*/
+    /*}*/
+    /*:focus {*/
+    /*    outline: none;*/
+    /*}*/
+    /*.l7-bottom {*/
+    /*    bottom: 0;*/
+    /*    display: none;*/
+    /*}*/
+    /*#attach {*/
+    /*    bottom:20% !important;*/
+    /* }*/
 </style>
 

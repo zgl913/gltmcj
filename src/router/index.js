@@ -100,11 +100,6 @@ const routes = [
                 // }
             },
             {
-                path: '',
-                component: Home,
-            },
-
-            {
                 path: '/videocheck',
                 component: videocheck,
                 name: '视频巡店'
@@ -243,7 +238,7 @@ const router = new VueRouter({
 });
 router.beforeEach((to,from,next) => {
     if(to.path ==="/Login") {return next()}
-    const tokenstr = window.sessionStorage.getItem("message")
+    const tokenstr = window.sessionStorage.getItem("token")
     if(!tokenstr) {return next("/Login")}
     next()
 })

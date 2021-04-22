@@ -1,17 +1,20 @@
 <template>
-  <div>
+  <div style="height: 100%;width: 100%">
     <div class="videocheckmendian">
+      <Row>
+        <DatePicker :value="value1" format="yyyy/MM/dd" type="daterange" placement="bottom-end" placeholder="选择录播时间"></DatePicker>
+      </Row>
       <div class="selectservice videoselect">选择服务站</div>
-      <div style="width:100%;margin-top: 20px;"> <Input search placeholder="服务站名"  style="width: 100%"/></div>
-      <div class="videonow">当前：杭州领克旗舰店</div>
-      <div class="videonow">最近访问</div>
-      <div class="videomengdiantotal">
-        <div class="store selectservice1">杭州店一</div>
-        <div class="store selectservice1">上海店一</div>
-        <div class="store selectservice1">成都店一</div>
-      </div>
+      <div style="width:100%;margin-top: 10px;"> <Input search placeholder="输入关键字过滤"  style="width: 100%"/></div>
+<!--      <div class="videonow">当前：杭州领克旗舰店</div>-->
+<!--      <div class="videonow">最近访问</div>-->
+<!--      <div class="videomengdiantotal">-->
+<!--        <div class="store selectservice1">杭州店一</div>-->
+<!--        <div class="store selectservice1">上海店一</div>-->
+<!--        <div class="store selectservice1">成都店一</div>-->
+<!--      </div>-->
     </div>
-    <div style="clear: both;width: 20%">
+    <div style="clear: both;width: 20%;height: 30%;overflow-y: scroll;">
       <TreeOrigion></TreeOrigion>
     </div>
     <div style="float: left">
@@ -31,18 +34,13 @@
         </div>
       </div>
     </div>
-    <div style="position: absolute;top:20%;left:50%;">
-<!--      <Button>展厅环视</Button>-->
-      <Button>高清</Button>
-      <Button>标清</Button>
-    </div>
+<!--    <div style="position: absolute;top:20%;left:50%;">-->
+<!--&lt;!&ndash;      <Button>展厅环视</Button>&ndash;&gt;-->
+<!--      <Button>高清</Button>-->
+<!--      <Button>标清</Button>-->
+<!--    </div>-->
     <div class="videototal">
       <div class="videolayout">
-        <videocomponent></videocomponent>
-        <videocomponent></videocomponent>
-      </div>
-      <div class="videolayout">
-        <videocomponent></videocomponent>
         <videocomponent></videocomponent>
       </div>
     </div>
@@ -55,6 +53,11 @@ import TreeOrigion from "@/components/secondcomponents/TreeOrigion";
 import videocomponent from "../../components/secondcomponents/videocomponent";
 export default {
   name: "videocheck",
+  data() {
+    return {
+      value1:[]
+    }
+  },
   components: {
     TreeOrigion,
     videocomponent
@@ -89,6 +92,7 @@ export default {
     width:100%;
     height:30px;
     background-color: #D3D3D3;
+    margin-top: 10px;
   }
   .videonow {
     font-size: 20px;
@@ -115,7 +119,7 @@ export default {
   .videototal {
     margin-top: 0px;
     position: absolute;
-    top:30%;
-    left:40%;
+    top:17%;
+    left:33%;
   }
 </style>

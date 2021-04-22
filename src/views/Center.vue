@@ -9,7 +9,8 @@
               theme="light"
               width="auto"
               :open-names="['center']">
-          <router-link to="/home"><MenuItem name="1"><Icon type="md-home"/>首页</MenuItem></router-link>
+
+          <router-link :to="{path:'/home',query:{jxsmsg:jiejue1}}"><MenuItem name="1"><Icon type="md-home"/>首页</MenuItem></router-link>
           <router-link to="/videocheck"><MenuItem name="2"><Icon type="ios-videocam-outline" />视频巡店</MenuItem></router-link>
           <!--          <Submenu name="1">-->
           <!--              <template slot="title" >-->
@@ -47,7 +48,7 @@
 <!--              <router-link to="/offline"><MenuItem name="3-2-2">离线</MenuItem></router-link>-->
             </Submenu>
           </Submenu>
-          <Submenu name="4">
+          <Submenu name="4" v-if="usertoken">
             <template slot="title">
               <Icon type="ios-construct" />
               系统管理
@@ -115,12 +116,12 @@
             <!--            </Submenu>-->
           </Submenu>
           <router-link to="/personcenter"><MenuItem name="6"><Icon type="ios-person-outline" />个人中心</MenuItem></router-link>
-          <router-link to="/Map"><MenuItem name="4-1">用户管理</MenuItem></router-link>
+<!--          <router-link to="/Map"><MenuItem name="4-1">用户管理</MenuItem></router-link>-->
         </Menu>
       </Sider>
       <Layout :style="{padding: '0 24px 24px'}">
 
-        <Content :style="{padding: '24px', minHeight: '280px', background: '#f5f7f9',}">
+        <Content :style="{minHeight: '280px', background: '#f5f7f9'}">
           <div style="height: 5%">
             <Breadcrumb :style="{margin: '24px 0'}">
               <!--          <BreadcrumbItem>Home</BreadcrumbItem>-->
@@ -160,6 +161,7 @@ export default {
   name: "center",
   data() {
     return {
+      usertoken:true,
       list: [],
       hostgroup: [],
       hostid: '',
@@ -170,6 +172,7 @@ export default {
       programlist: [],
       sousuozhi:'',
       ifzjc: true,
+      jxsmsg:['1','2'],
     }
   },
   methods: {
@@ -220,13 +223,13 @@ export default {
         return jingxiaoshanglist
       }).then(msg => {
       console.log(msg)
+        this.jxsmsg = msg
         for(let j=0;j<msg.length;j++) {
           this.jiejue[i]=[];
           this.compare(msg)
           this.jiejue[i]=msg;
         }
         console.log(this.jiejue)
-
         this.jiejue1 = this.jiejue
       }).catch(error => {
             console.log(error)
@@ -247,6 +250,9 @@ export default {
   created() {
   },
   mounted() {
+    // this.usertoken = false
+    // this.usertoken = window.sessionStorage.getItem("token")
+    // console.log(this.usertoken)
     if(this.$route.query.zhujichangshow=='true') {
       this.ifzjc = true
       // console.log(typeof (this.ifzjc))
@@ -339,5 +345,8 @@ export default {
     z-index: 900;
     height: 400px;
     overflow: auto;
+  }
+  .ivu-layout.ivu-layout-has-sider>.ivu-layout, .ivu-layout.ivu-layout-has-sider>.ivu-layout-content {
+    overflow-x: visible!important;
   }
 </style>

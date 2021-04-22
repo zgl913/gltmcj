@@ -181,6 +181,9 @@
     </Layout>
   </div>
 </template>
+<script type="text/javascript" src="../../public/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../public/jsencrypt.min.js"></script>
+<script type="text/javascript" src="../../public/jsWebControl-1.0.0.min.js"></script>
 <script>
 // import Bar from "@/components/Bar";
 // import Pie from "@/components/Pie";

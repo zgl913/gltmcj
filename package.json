@@ -16,7 +16,7 @@
     "ant-design-vue": "^1.7.2",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "echarts": "^5.0.2",
+    "echarts": "^4.9.0",
     "iview": "^3.5.4",
     "swiper": "^6.4.5",
     "view-design": "^4.4.0",

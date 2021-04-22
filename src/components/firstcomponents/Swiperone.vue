@@ -1,224 +1,38 @@
 <template>
   <div>
+    <div style="position: absolute;left:0px;top:0px;">
+      <Input placeholder="请输入服务站" style="width: 50%"/>
+      <Button style="margin: 0 10px">查询</Button>
+      <div style="display: inline-block">查看全部</div>
+    </div>
     <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
-      <!-- slides -->
-<!--      <swiper-slide v-for="(item,index) in lunbo" :key="index">-->
-<!--        <div class="oneline">-->
-<!--          屏幕异常：{{item.pmyc}}<br>-->
-<!--          相机异常：{{item.xjyc}}-->
-<!--        </div>-->
-<!--        {{item.dianming}}-->
-<!--      </swiper-slide>-->
-      <swiper-slide>
-        <div>
-          <ul>
-            <div class="oneline">
-              <li>
-                <div>
-                  屏幕异常：1<br>
-                  相机异常：1
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：2<br>
-                  相机异常：2
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：3<br>
-                  相机异常：3
-                </div>
-                杭州领克旗舰店
-              </li>
-            </div>
-            <div class="oneline" style="margin-top: 20px">
-              <li>
-                <div>
-                  屏幕异常：4<br>
-                  相机异常：4
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：5<br>
-                  相机异常：5
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：6<br>
-                  相机异常：6
-                </div>
-                杭州领克旗舰店
-              </li>
-            </div>
-          </ul>
+      <swiper-slide style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content: center;margin-top: 5%;">
+        <div v-for="(item,index) in shuju" :key="index"  style="width: 20%;margin-left: 7%;">
+          <div class="sjanys">
+            屏幕异常：{{item.pmyc}}<br>
+            相机异常：{{item.xjyc}}
+          </div>
+          杭州领克旗舰店
         </div>
       </swiper-slide>
-      <swiper-slide>
-        <div>
-          <ul>
-            <div class="oneline">
-              <li>
-                <div>
-                  屏幕异常：7<br>
-                  相机异常：7
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：8<br>
-                  相机异常：8
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：9<br>
-                  相机异常：9
-                </div>
-                杭州领克旗舰店
-              </li>
-            </div>
-            <div class="oneline" style="margin-top: 20px">
-              <li>
-                <div>
-                  屏幕异常：10<br>
-                  相机异常：10
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：11<br>
-                  相机异常：11
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：12<br>
-                  相机异常：12
-                </div>
-                杭州领克旗舰店
-              </li>
-            </div>
-          </ul>
+      <swiper-slide style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content: center;margin-top: 5%;">
+        <div v-for="(item,index) in shuju" :key="index"  style="width: 20%;margin-left: 7%;">
+          <div class="sjanys">
+            屏幕异常：{{item.pmyc}}<br>
+            相机异常：{{item.xjyc}}
+          </div>
+          杭州领克旗舰店
         </div>
       </swiper-slide>
-      <swiper-slide>
-        <div>
-          <ul>
-            <div class="oneline">
-              <li>
-                <div>
-                  屏幕异常：13<br>
-                  相机异常：13
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：14<br>
-                  相机异常：14
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：15<br>
-                  相机异常：15
-                </div>
-                杭州领克旗舰店
-              </li>
-            </div>
-            <div class="oneline" style="margin-top: 20px">
-              <li>
-                <div>
-                  屏幕异常：16<br>
-                  相机异常：16
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：17<br>
-                  相机异常：17
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：18<br>
-                  相机异常：18
-                </div>
-                杭州领克旗舰店
-              </li>
-            </div>
-          </ul>
+      <swiper-slide style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content: center;margin-top: 5%;">
+        <div v-for="(item,index) in shuju" :key="index"  style="width: 20%;margin-left: 7%;">
+          <div class="sjanys">
+            屏幕异常：{{item.pmyc}}<br>
+            相机异常：{{item.xjyc}}
+          </div>
+          杭州领克旗舰店
         </div>
       </swiper-slide>
-      <swiper-slide>
-        <div>
-          <ul>
-            <div class="oneline">
-              <li>
-                <div>
-                  屏幕异常：19<br>
-                  相机异常：19
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：20<br>
-                  相机异常：20
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：21<br>
-                  相机异常：21
-                </div>
-                杭州领克旗舰店
-              </li>
-            </div>
-            <div class="oneline" style="margin-top: 20px">
-              <li>
-                <div>
-                  屏幕异常：22<br>
-                  相机异常：22
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：23<br>
-                  相机异常：23
-                </div>
-                杭州领克旗舰店
-              </li>
-              <li>
-                <div>
-                  屏幕异常：24<br>
-                  相机异常：24
-                </div>
-                杭州领克旗舰店
-              </li>
-            </div>
-          </ul>
-        </div>
-      </swiper-slide>
-      <!-- Optional controls -->
-<!--      <div class="swiper-pagination"  slot="pagination"></div>-->
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
 <!--      <div class="swiper-scrollbar"   slot="scrollbar"></div>-->
@@ -230,6 +44,32 @@
 export default {
   data() {
     return {
+      shuju:[
+        {
+          pmyc:'1',
+          xjyc:'1'
+        },
+        {
+          pmyc:'2',
+          xjyc:'2'
+        },
+        {
+          pmyc:'3',
+          xjyc:'3'
+        },
+        {
+          pmyc:'4',
+          xjyc:'4'
+        },
+        {
+          pmyc:'5',
+          xjyc:'5'
+        },
+        {
+          pmyc:'6',
+          xjyc:'6'
+        }
+      ],
       // lunbo:[
       //   {
       //     pmyc:'1',
@@ -330,6 +170,11 @@ export default {
 }
 </script>
 <style>
+  .sjanys {
+    border-radius: 10px;
+    background-color: #2d8cf0;
+    color:white;
+  }
   /*.oneline li {*/
   /*  list-style: none;*/
 
@@ -347,7 +192,16 @@ export default {
     list-style: none;
 
   }
+  .oneline1 li {
+    list-style: none;
+
+  }
   .oneline li div {
+    border-radius: 10px;
+    background-color: #2d8cf0;
+    color:white;
+  }
+  .oneline1 li div {
     border-radius: 10px;
     background-color: #2d8cf0;
     color:white;
@@ -355,6 +209,19 @@ export default {
   .oneline {
     display: flex;
     justify-content: space-around;
+    margin-top: 5%;
+  }
+  .oneline1 {
+    display: flex;
+    justify-content: space-around;
+  }
+  .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+    /*right: 5%;*/
+    left: auto;
+  }
+  .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+    left: 8%;
+    right: auto;
   }
 </style>
 
