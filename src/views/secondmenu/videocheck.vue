@@ -2,7 +2,8 @@
   <div style="height: 100%;width: 100%">
     <div class="videocheckmendian">
       <Row>
-        <DatePicker :value="value1" format="yyyy/MM/dd" type="daterange" placement="bottom-end" placeholder="选择录播时间"></DatePicker>
+          <DatePicker type="date" placeholder="Select date" style="width: 200px" v-model="time"></DatePicker>
+<!--        <DatePicker :value="value2" format="yyyy-MM-dd" type="daterange" placement="bottom-end" placeholder="选择录播时间" v-model="time"></DatePicker>-->
       </Row>
       <div class="selectservice videoselect">选择服务站</div>
       <div style="width:100%;margin-top: 10px;"> <Input search placeholder="输入关键字过滤"  style="width: 100%"/></div>
@@ -41,7 +42,7 @@
 <!--    </div>-->
     <div class="videototal">
       <div class="videolayout">
-        <videocomponent></videocomponent>
+        <videocomponent :playbacktime="time"></videocomponent>
       </div>
     </div>
 
@@ -55,8 +56,15 @@ export default {
   name: "videocheck",
   data() {
     return {
-      value1:[]
+      time:'',
+      value2: ['2016-01-01', '2016-02-15']
     }
+  },
+  methods: {
+    changetime() {
+      console.log(this.time)
+    }
+
   },
   components: {
     TreeOrigion,

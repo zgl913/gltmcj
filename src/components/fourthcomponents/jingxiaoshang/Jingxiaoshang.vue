@@ -209,10 +209,22 @@
         <Input type="text" v-model="editdealer_fullname" v-if="editIndex === index" />
         <span v-else>{{ row.dealer_fullname }}</span>
       </template>
-      <template slot-scope="{ row, index }" slot="address">
-        <Input type="text" v-model="editaddress" v-if="editIndex === index" />
-        <span v-else>{{ row.address }}</span>
-      </template>
+        <template slot-scope="{ row, index }" slot="provience">
+            <Input type="text" v-model="editprovience" v-if="editIndex === index" />
+            <span v-else>{{ row.provience}}</span>
+        </template>
+        <template slot-scope="{ row, index }" slot="city">
+            <Input type="text" v-model="editcity" v-if="editIndex === index" />
+            <span v-else>{{ row.city }}</span>
+        </template>
+        <template slot-scope="{ row, index }" slot="contactpeople">
+            <Input type="text" v-model="editcontactpeople" v-if="editIndex === index" />
+            <span v-else>{{ row.contactpeople }}</span>
+        </template>
+        <template slot-scope="{ row, index }" slot="contacttel">
+            <Input type="text" v-model="editcontacttel" v-if="editIndex === index" />
+            <span v-else>{{ row.contacttel}}</span>
+        </template>
       <template slot-scope="{ row, index }" slot="server_ip">
         <Input type="text" v-model="editserver_ip" v-if="editIndex === index" />
         <span v-else>{{ row.server_ip }}</span>
@@ -314,9 +326,21 @@ export default {
           slot: 'dealer_fullname'
         },
         {
-          title: '地址',
-          slot: 'address'
+          title: '省份',
+          slot: 'provience'
         },
+        {
+          title: '城市',
+          slot: 'city'
+         },
+         {
+           title: '联系人',
+           slot: 'contactpeople'
+         },
+         {
+            title: '联系电话',
+            slot: 'contacttel'
+         },
         {
           title: '店端服务器IP',
           slot: 'server_ip'
@@ -359,6 +383,10 @@ export default {
       editdealer_name: '',  // 第三列输入框
       editdealer_fullname: '',  // 第四列输入框
       editaddress: '',  // 第四列输入框
+        editprovience:'',
+        editcity:'',
+        editcontactpeople:'',
+        editcontacttel:'',
       editserver_ip: '',  // 第四列输入框
       edittv_number: '',  // 第四列输入框
       edittv_pwd: '',  // 第四列输入框
@@ -1952,71 +1980,6 @@ export default {
                 this.nowData.push(res.data.result_content[i]);
             }
         }
-        // if(res.data.result_content) {
-        //     res.data.result_content.forEach(item => {
-        //         getDealerItem(item.dealer_id).then(res => {
-        //             // var jingxiaoshanglist=[];
-        //             this.tabledata.push({
-        //                 group_code: res.data.result_content.group_code,
-        //                 dealer_id: res.data.result_content.dealer_id,
-        //                 dealer_code: res.data.result_content.dealer_code,
-        //                 dealer_name: res.data.result_content.dealer_name,
-        //                 dealer_fullname: res.data.result_content.dealer_fullname,
-        //                 address: res.data.result_content.address,
-        //                 server_ip: res.data.result_content.server_ip,
-        //                 tv_number: res.data.result_content.tv_number,
-        //                 tv_pwd: res.data.result_content.tv_pwd,
-        //                 work_start: res.data.result_content.work_start,
-        //                 work_end: res.data.result_content.work_end,
-        //                 dealer_level: res.data.result_content.dealer_level,
-        //                 project_code: res.data.result_content.project_code,
-        //             })
-        //             this.dataCount = this.tabledata.length
-        //             // this.compare(this.tabledata)
-        //             // jingxiaoshanglist.push(res.data.result_content.dealer_name)
-        //             // return jingxiaoshanglist
-        //             return this.tabledata
-        //         }).then(res => {
-        //             this.data = res
-        //             // this.changepage(1)
-        //             // this.compare(this.data)
-        //             // console.log(this.data)
-        //             // this.dataCount = res.length;
-        //             this.nowData = [];
-        //             if(this.pageSize<=res.length) {
-        //                 for (let i = 0; i < this.pageSize; i++) {
-        //                     this.nowData.push(res[i]);
-        //                 }
-        //             }else {
-        //                 for (let i = 0; i < res.length; i++) {
-        //                     this.nowData.push(res[i]);
-        //                 }
-        //             }
-        //             // this.data = this.tabledata
-        //             //   this.compare(this.data)
-        //             //   // console.log(this.data)
-        //             //   this.dataCount = this.data.length;
-        //             //   this.nowData = [];
-        //             //   if(this.pageSize<=this.data.length) {
-        //             //       for (let i = 0; i < this.pageSize; i++) {
-        //             //           this.nowData.push(this.data[i]);
-        //             //       }
-        //             //   }else {
-        //             //       for (let i = 0; i < this.data.length; i++) {
-        //             //           this.nowData.push(this.data[i]);
-        //             //       }
-        //             //   }
-        //
-        //             // res.forEach(item => {
-        //             //   this.jxsname.push(item)
-        //             // })
-        //         })
-        //         // this.dealerid.push(item.dealer_id)
-        //     })
-        // }else {
-        //     this.dealerid=[]
-        // }
-        // return this.dealerid
         }).catch(error=> {
       console.log(error)
     })

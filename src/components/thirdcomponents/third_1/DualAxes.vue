@@ -5,9 +5,7 @@
   copyright Hangzhou QianNeng 2021.1.5
 -->
 <template>
-  <div class="dualaxestotal">
-    <div id="container2">
-    </div>
+    <div id="container2" :style="{width: tuxingwidth+'px',height:tuxingheight+'px'}">
   </div>
 
 </template>
@@ -16,6 +14,12 @@
 import { DualAxes } from '@antv/g2plot';
 export default {
   name: "DualAxes",
+    data() {
+      return {
+          tuxingheight:'',
+          tuxingwidth:'',
+      }
+    },
   methods: {
     showdualaxes() {
       const data = [
@@ -28,10 +32,9 @@ export default {
 
       const dualAxes = new DualAxes('container2', {
         data: [data, data],
-        height: 300,
-        width:300,
         xField: 'time',
         yField: ['value', 'count'],
+        legend: false, // 关闭图例
         yAxis: [
           {},
           {
@@ -44,6 +47,9 @@ export default {
         geometryOptions: [
           {
             geometry: 'column',
+            label: {
+              position: 'middle',
+            },
           },
           {
             geometry: 'line',
@@ -55,18 +61,22 @@ export default {
       });
 
       dualAxes.render();
+      dualAxes.on('axis-label:click', (...args) => {
+        console.log('dianji');
+        console.log(...args);
+        this.$emit('showtable',true)
+      })
     },
   },
 
   mounted() {
+      this.tuxingheight = `${document.documentElement.clientHeight * 0.6}`
+      this.tuxingwidth = `${document.documentElement.clientWidth * 0.3}`
     this.showdualaxes()
   }
 }
 </script>
 
 <style scoped>
-  .dualaxestotal {
-    height: 10%;
-    width: 300px
-  }
+
 </style>

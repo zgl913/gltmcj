@@ -185,7 +185,6 @@
                      <Input type="text" v-model="editdevice_type" v-if="editIndex === index" />
                      <span v-else>{{ row.device_type }}</span>
                  </template>
-
                  <template slot-scope="{ row, index }" slot="device_type_ex">
                      <Input type="text" v-model="editdevice_type_ex" v-if="editIndex === index" />
                      <span v-else>{{ row.device_type_ex }}</span>

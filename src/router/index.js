@@ -10,11 +10,13 @@ const Shop = () => import("@/views/thirdmenu/third_two/Shop")
 const AdmitorManagement = () => import("@/components/fourthcomponents/admitor/AdmitorManagement")
 const DeviceManagement = () => import("@/components/fourthcomponents/shebei/DeviceManagement")
 const Stores = () => import("@/views/HostManagement/Stores")
-const DeviceNumber = () => import("@/components/thirdcomponents/third_1/DeviceNumber")
-const OfflineDevice = () => import("@/components/thirdcomponents/third_1/OfflineDevice")
-const OnlineDevice = () => import("@/components/thirdcomponents/third_1/OnlineDevice")
-const ShangXianMengDian = () => import("@/components/thirdcomponents/third_1/ShangXianMengDian")
-const SheBeiTongji = () => import("@/components/thirdcomponents/third_1/SheBeiTongji")
+// const DeviceNumber = () => import("@/components/thirdcomponents/third_1/DeviceNumber")
+// const OfflineDevice = () => import("@/components/thirdcomponents/third_1/OfflineDevice")
+// const OnlineDevice = () => import("@/components/thirdcomponents/third_1/OnlineDevice")
+const xitongshangxian = () => import("@/components/thirdcomponents/third_1/xitongshangxian")
+const shebeiyunxing = () => import("@/components/thirdcomponents/third_1/shebeiyunxing")
+const xitongyunxing = () => import("@/components/thirdcomponents/third_1/xitongyunxing")
+const cpanxinxi = () => import("@/components/thirdcomponents/third_1/cpanxinxi")
 const Login = () => import("@/views/firstmenu/Login")
 const index = () => import("@/views/index")
 const Jingxiaoshang = () => import("@/components/fourthcomponents/jingxiaoshang/Jingxiaoshang")
@@ -24,6 +26,7 @@ const JxsDevice = () => import("@/components/thirdcomponents/third_2/JxsDevice")
 const JxsMessage = () => import("@/components/thirdcomponents/third_2/JxsMessage")
 const JxsPromgram = () => import("@/components/thirdcomponents/third_2/JxsPromgram")
 const Map = () => import("@/components/firstcomponents/Map")
+
 
 
 // // import Home from "../views/firstmenu/Home.vue";
@@ -124,39 +127,54 @@ const routes = [
                 children: [
 
                     {
-                        path: "ShangXianMengDian",
-                        component: ShangXianMengDian,
-                        name: '上线门店'
+                        path: "xitongshangxian",
+                        component: xitongshangxian,
+                        name: '系统上线'
                     },
                     {
-                        path: "SheBeiTongji",
-                        component: SheBeiTongji,
-                        name: '设备统计',
-                        children: [
-                            {
-                                path: "DeviceNumber",
-                                component: DeviceNumber,
-                                name: '设备总数'
-                            },
-                            {
-                                path: "OfflineDevice",
-                                component: OfflineDevice,
-                                name: '在线设备'
-                            },
-                            {
-                                path: "OnlineDevice",
-                                component: OnlineDevice,
-                                name: '离线设备'
-                            },
-                            {
-                                path:"",
-                                component: DeviceNumber
-                            }
-                        ]
+                        path: "xitongyunxing",
+                        component: xitongyunxing,
+                        name: '系统运行'
                     },
+                    {
+                        path: "shebeiyunxing",
+                        component: shebeiyunxing,
+                        name: '设备运行'
+                    },
+                    {
+                        path: "cpanxinxi",
+                        component: cpanxinxi,
+                        name: 'c盘信息'
+                    },
+                    // {
+                    //     path: "SheBeiTongji",
+                    //     component: SheBeiTongji,
+                    //     name: '设备统计',
+                    //     children: [
+                    //         {
+                    //             path: "DeviceNumber",
+                    //             component: DeviceNumber,
+                    //             name: '设备总数'
+                    //         },
+                    //         {
+                    //             path: "OfflineDevice",
+                    //             component: OfflineDevice,
+                    //             name: '在线设备'
+                    //         },
+                    //         {
+                    //             path: "OnlineDevice",
+                    //             component: OnlineDevice,
+                    //             name: '离线设备'
+                    //         },
+                    //         {
+                    //             path:"",
+                    //             component: DeviceNumber
+                    //         }
+                    //     ]
+                    // },
                     {
                         path:"",
-                        component: ShangXianMengDian
+                        component: xitongshangxian
                     }
 
 
@@ -239,6 +257,9 @@ const router = new VueRouter({
 router.beforeEach((to,from,next) => {
     if(to.path ==="/Login") {return next()}
     const tokenstr = window.sessionStorage.getItem("token")
+    console.log(tokenstr) //[Object object]
+    // const tokenstr = JSON.stringify(window.sessionStorage.getItem("token"))
+    // console.log(tokenstr) //"[Object object]"
     if(!tokenstr) {return next("/Login")}
     next()
 })

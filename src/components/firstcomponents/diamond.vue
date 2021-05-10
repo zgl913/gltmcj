@@ -10,14 +10,14 @@
       <div>{{onlinestore}}家</div>
       <div>全国上线门店总数</div>
     </div>
-    <div class="sum sum-2">
-      <div>{{devicetotal }}台</div>
-      <div>设备总数</div>
-    </div>
-    <div class="sum sum-2">
-      <div>{{devicetotal-onlinedevice1-lixianshu}}台</div>
-      <div>设备异常数</div>
-    </div>
+<!--    <div class="sum sum-2">-->
+<!--      <div>{{devicetotal }}台</div>-->
+<!--      <div>设备总数</div>-->
+<!--    </div>-->
+<!--    <div class="sum sum-2">-->
+<!--      <div>{{devicetotal-onlinedevice1-lixianshu}}台</div>-->
+<!--      <div>设备异常数</div>-->
+<!--    </div>-->
     <div class="sum sum-3">
       <div>{{onlinedevice1}}台</div>
       <div>在线设备数</div>
@@ -28,7 +28,8 @@
 <script>
 
 export default {
-  props:['onlinedevice1','devicetotal','onlinestore','abnormal','lixianshu'],
+  props:['onlinedevice1',
+    'devicetotal','onlinestore','abnormal','lixianshu'],
 name: "diamond",
   data () {
     return {

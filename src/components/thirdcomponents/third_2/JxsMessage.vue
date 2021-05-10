@@ -91,7 +91,6 @@
             }
         },
         methods: {
-
             exportData() {
                 this.$refs.table.exportCsv({
                     filename: '经销商信息',

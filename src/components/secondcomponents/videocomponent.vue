@@ -1,5 +1,6 @@
 <template>
     <div>
+<!--        <div>{{huifangtime}}</div>-->
         <div id="playWnd" class="playWnd" :style="{width:swfWidth+'px',height:swfHeight+'px'}"></div>
     </div>
 </template>
@@ -8,6 +9,7 @@
 <script type="text/javascript" src="../../../public/jsWebControl-1.0.0.min.js"></script>
 <script>
     export default {
+        props: ['playbacktime'],
         name: "videocomponent",
         data() {
             return {
@@ -22,13 +24,75 @@
                     layout: "1x1"//这里是来控制你一开始初始化之后的分屏的
                 },
                 //监控点编号
-                pointCode: "32b982a66ffc4f2f90b8943f21a69c3e",
+                pointCode: "a24e18204cfc4a36ad94613d0d821bdc",
                 pubKey: "",
                 oWebControl: null,
-                WebControl: null
+                WebControl: null,
+                huifangtime: this.playbacktime,
+                starttime: "",
+                endtime: '',
+                yulan: '0',
+                playMode: 0,
             }
         },
         methods: {
+            //回放
+            backVideo() {
+                console.log(this.huifangtime)
+                this.starttime = new Date(this.huifangtime);
+                let h = this.starttime.getHours()
+                h = h < 10 ? ('0' + h) : h
+                let d = this.starttime.getMinutes()
+                d = d < 10 ? ('0' + d) : d
+                let s = this.starttime.getSeconds()
+                s = s < 10 ? ('0' + s) : s
+                this.starttime = this.starttime.getFullYear() + '-' + (this.starttime.getMonth() + 1) + '-' + this.starttime.getDate() + ' ' + h
+                    + ':' + d + ':' + s;
+
+                // this.endtime = new Date(this.huifangtime[1]);
+                // let h1 = this.endtime.getHours()
+                // h1 = h1 < 10 ? ('0' + h1) : h1
+                // let d1 = this.endtime.getMinutes()
+                // d1 = d1 < 10 ? ('0' + d1) : d1
+                // let s1 = this.endtime.getSeconds()
+                // s1= s1 < 10 ? ('0' + s1) : s1
+                // this.endtime=this.endtime.getFullYear() + '-' + (this.endtime.getMonth() + 1) + '-' + this.endtime.getDate() + ' ' + h1
+                //     + ':' + d1 + ':' + s1;
+                console.log(this.starttime)
+                console.log(this.endtime)
+                console.log(typeof (this.starttime))
+                console.log(typeof (this.endtime))
+                var cameraIndexCode = this.pointCode;         //获取输入的监控点编号值，必填
+                var startTimeStamp = new Date(this.starttime.replace('-', '/').replace('-', '/')).getTime();    //回放开始时间戳，必填
+                // var endTimeStamp = new Date(this.endtime.replace('-', '/').replace('-', '/')).getTime();        //回放结束时间戳，必填
+                var recordLocation = 1;                                     //录像存储位置：0-中心存储，1-设备存储
+                var transMode = 1;                                          //传输协议：0-UDP，1-TCP
+                var gpuMode = 0;                                            //是否启用GPU硬解，0-不启用，1-启用
+                var wndId = -1;                                             //播放窗口序号（在2x2以上布局下可指定播放窗口）
+                console.log(startTimeStamp)
+                console.log(startTimeStamp / 1000)
+                console.log(Math.floor(startTimeStamp / 1000).toString())
+                console.log(Math.floor(startTimeStamp / 1000 + 86400).toString())
+                // console.log(endTimeStamp)
+                // console.log(endTimeStamp / 1000)
+                this.oWebControl.JS_RequestInterface({
+                    funcName: "startPlayback",
+                    argument: JSON.stringify({
+                        cameraIndexCode: this.pointCode,                   //监控点编号
+                        startTimeStamp: Math.floor(startTimeStamp / 1000).toString(),  //录像查询开始时间戳，单位：秒
+                        // startTimeStamp: '1619211000',  //录像查询开始时间戳，单位：秒
+                        endTimeStamp: Math.floor(startTimeStamp / 1000 + 86400).toString(),      //录像结束开始时间戳，单位：秒
+                        // endTimeStamp: Math.floor(endTimeStamp / 1000).toString(),      //录像结束开始时间戳，单位：秒
+                        // endTimeStamp: '1619213600',      //录像结束开始时间戳，单位：秒
+                        recordLocation: recordLocation,                     //录像存储类型：0-中心存储，1-设备存储
+                        transMode: transMode,                               //传输协议：0-UDP，1-TCP
+                        gpuMode: gpuMode,                                   //是否启用GPU硬解，0-不启用，1-启用
+                        wndId: wndId                                         //可指定播放窗口
+                    })
+                }).then(res => {
+                    console.log(res)
+                })
+            },
             onSearch() {
                 this.oWebControl.JS_ShowWnd();
                 this.videoList = [];
@@ -47,12 +111,12 @@
 
             },
             //获取海康密钥
-            getInitParam() {
+            getInitParam(callback) {
                 // getInitParam('xxx').then(res => {
                 //     this.initparam = res;
                 //
                 // });
-                this.init()
+                this.init(callback)
             },
             //执行每监控点预览的操作 //获取监控点编号
             videoPreview(val, index) {
@@ -62,8 +126,9 @@
                 this.startpreview();
             },
             // 创建播放实例
-            initPlugin() {
+            initPlugin(callback) {
                 // console.log('2')
+                console.log('111')
                 this.oWebControl = new WebControl({
                     szPluginContainer: "playWnd", // 指定容器id
                     iServicePortStart: 15900, // 指定起止端口号，建议使用该值
@@ -90,7 +155,7 @@
                                         .then(() => {
                                             console.log('1')
                                             //JS_CreateWnd创建视频播放窗口，宽高可设定
-                                            this.getInitParam(); // 创建播放实例成功后初始化
+                                            this.getInitParam(callback); // 创建播放实例成功后初始化
                                         });
                                 },
                                 () => {
@@ -133,7 +198,7 @@
                 /* showCBInfo(JSON.stringify(oData.responseMsg)); */
             },
             //初始化
-            init() {
+            init(callback) {
                 this.getPubKey(() => {
                     // console.log('b')
                     // 请自行修改以下变量值
@@ -143,7 +208,7 @@
                     let port = this.initparam.apiPort; //综合安防管理平台端口，若启用HTTPS协议，默认443
                     port = parseInt(port);
                     let layout = this.initparam.layout;
-                    let playMode = 0; //初始播放模式：0-预览，1-回放
+                    let playMode = this.playMode; //初始播放模式：0-预览，1-回放
                     let snapDir = "D:\\SnapDir"; //抓图存储路径
                     let videoDir = "D:\\VideoDir"; //紧急录像或录像剪辑存储路径
                     let enableHTTPS = 1; //是否启用HTTPS协议与综合安防管理平台交互，是为1，否为0
@@ -174,6 +239,9 @@
                         })
                         .then(oData => {
                             this.oWebControl.JS_Resize(this.swfWidth, this.swfHeight); // 初始化后resize一次，规避firefox下首次显示窗口后插件窗口未与DIV窗口重合问题
+                            if (callback) {
+                                callback();
+                            }
                             this.startpreview();  //初始化之后开启预览
                         });
                     console.log('a')
@@ -226,12 +294,12 @@
                 iCoverRight = iCoverRight > this.swfWidth ? this.swfWidth : iCoverRight;
                 iCoverBottom =
                     iCoverBottom > this.swfHeight ? this.swfHeight : iCoverBottom;
-                this.oWebControl.JS_RepairPartWindow(0, 0, this.swfWidth+1, this.swfHeight); // 多1个像素点防止还原后边界缺失一个像素条
+                this.oWebControl.JS_RepairPartWindow(0, 0, this.swfWidth + 1, this.swfHeight); // 多1个像素点防止还原后边界缺失一个像素条
                 if (iCoverLeft != 0) {
                     this.oWebControl.JS_CuttingPartWindow(0, 0, iCoverLeft, this.swfHeight);
                 }
                 if (iCoverTop != 0) {
-                    this.oWebControl.JS_CuttingPartWindow(0, 0, this.swfWidth+1, iCoverTop); // 多剪掉一个像素条，防止出现剪掉一部分窗口后出现一个像素条
+                    this.oWebControl.JS_CuttingPartWindow(0, 0, this.swfWidth + 1, iCoverTop); // 多剪掉一个像素条，防止出现剪掉一部分窗口后出现一个像素条
                 }
                 if (iCoverRight != 0) {
                     this.oWebControl.JS_CuttingPartWindow(
@@ -301,9 +369,10 @@
 
 
         },
+
         beforeMount() {
             this.WebControl = WebControl;
-            },//调用电脑中的插件
+        },//调用电脑中的插件
         mounted() {
             this.swfHeight = `${document.documentElement.clientHeight * 0.8}`;
             this.swfWidth = `${document.documentElement.clientWidth * 0.65}`;
@@ -328,10 +397,54 @@
         },
         beforeDestroy() {
             this.closeWindow();//关闭插件
-        }
+        },
+        // watch: {
+        //     playbacktime: {
+        //         immediate: true,
+        //         handler(value) {
+        //             console.log(value)
+        //             this.huifangtime = value
+        //         }
+        //     }
+        // },
+        watch: {
+            playbacktime(newVal) {
+                if (newVal) {
+                    this.huifangtime = newVal;
+                    if (!this.oWebControl) {
+                        return;
+                    }
+                    // 如果是预览
+                    if (this.playMode === 0) {
+                        console.log('kaishi')
+                        this.playMode = 1;
+                        this.oWebControl.JS_HideWnd();
+                        this.initPlugin(() => {
+                            this.backVideo();
+                        });
+
+                    } else if (this.playMode === 1) {
+                        this.backVideo();
+                    }
+                } else {
+                    // 如果是回放，重新初始化
+                    if (this.playMode === 1) {
+                        this.playMode = 0;
+                        this.oWebControl.JS_HideWnd();
+                        this.initPlugin(() => {
+                            this.startpreview();
+                        });
+
+                    } else if (this.playMode === 0) {
+                        this.startpreview();
+                    }
+
+                }
+            }
 // ————————————————
 // 版权声明：本文为CSDN博主「lijinglianging」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 // 原文链接：https://blog.csdn.net/jinglianglove/article/details/102599229
+        }
     }
 </script>
 

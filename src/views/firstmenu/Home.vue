@@ -150,37 +150,7 @@ export default {
 //      randomData() {
 //     return Math.round(Math.random()*500);
 // }
-       fn() {
-           getGroupList().then(res => {
-              console.log(res)
-              return res
-          }).then(res => {
-              console.log(res)
-              this.onlinestore = 0
-              for(let i=0;i<res.data.result_content.length;i++) {
-                  getDealerList(res.data.result_content[i].group_code).then(data => {
-                      console.log(data)
-                      this.onlinestore +=data.data.result_content.length
-                      this.devicetotal = 0
-                      for(let j=0;j<data.data.result_content.length;j++) {
-                          getDeviceList(data.data.result_content[j].group_code,data.data.result_content[j].dealer_code).then(jieguo => {
-                              // this.devicetotal1 += jieguo.data.result_content.length
-                              for(let k=0;k<jieguo.data.result_content.length;k++) {
-                                  this.shebeitotal.push(jieguo.data.result_content[k])
-                                  // if(k==jieguo.data.result_content.length-1) {
-                                  //     this.showxiugai =true
-                                  // }
-                              }
-                          })
-                      }
-                  })
-              }
-          })
-      },
-      async fn1() {
-          await this.fn()
-          this.abnormal = this.devicetotal - this.onlinestore - this.offlinenum
-      }
+
 },
   mounted () {
       this.mapkuandu = `${document.documentElement.clientWidth * 0.6}`
@@ -221,7 +191,27 @@ export default {
           console.log(error)
       })
 
-        this.fn1()
+      // getGroupList().then(res => {
+      //     console.log(res)
+      //     return res
+      // }).then(res => {
+      //     console.log(res)
+      //     this.onlinestore = 0
+      //     for(let i=0;i<res.data.result_content.length;i++) {
+      //         getDealerList(res.data.result_content[i].group_code).then(data => {
+      //             console.log(data)
+      //             this.onlinestore +=data.data.result_content.length
+      //             this.devicetotal = 0
+      //             for(let j=0;j<data.data.result_content.length;j++) {
+      //                 getDeviceList(data.data.result_content[j].group_code,data.data.result_content[j].dealer_code).then(jieguo => {
+      //                     this.devicetotal += jieguo.data.result_content.length
+      //                 })
+      //             }
+      //
+      //         })
+      //     }
+      // })
+      // this.abnormal = this.devicetotal - this.onlinestore - this.offlinenum
   },
     watch: {
         '$route': function (to) {
@@ -232,13 +222,7 @@ export default {
                 this.devicetotal = this.shebeitotal.length
             })
         }
-    },
-    // beforeRouteEnter:(to,from,next)=>{
-    //     next(vm=>{
-    //         alert(vm.num)
-    //     })
-    // },
-
+    }
 };
 </script>
 <style scoped>
@@ -302,10 +286,4 @@ export default {
   .mapdjbj:focus {
       border-bottom: 1px solid black;
   }
-  .mapdjbj {
-      /*width: 80%;*/
-  }
-    .numbeibj {
-
-    }
 </style>

@@ -3,9 +3,9 @@
 
     <div class="information1">
       <div class="informationtotal">用户信息</div><Button @click="showModal=!showModal" class="makelayout">编辑</Button>
-      <span class="informationtotal">账号：<span>{{$store.state.username}}</span></span>
-      <span class="informationtotal">昵称：<span>{{$store.state.nicheng}}</span></span>
-      <span class="informationtotal">性别：<span>{{$store.state.xingbie}}</span></span>
+      <span class="informationtotal">账号：<span>{{usermsg.name}}</span></span>
+      <span class="informationtotal">昵称：<span>{{usermsg.nicheng}}</span></span>
+      <span class="informationtotal">性别：<span>{{usermsg.xingbie}}</span></span>
     </div>
 
     <div v-if="showModal" class="basicinformationshowmodal">
@@ -19,11 +19,11 @@
         <div v-html="'账号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;123456'" class="informationtotal"></div>
         <div>
           昵称
-          <input v-model="username1"/>
+          <input v-model="usermsg.nicheng"/>
         </div>
         <div class="xingbiehang">
           性别
-          <input v-model="usergender1"/>
+          <input v-model="usermsg.xingbie"/>
         </div>
       </div>
     </div>
@@ -36,22 +36,19 @@ export default {
   data() {
     return {
       showModal: false,
-      username:'1234567',
-      usergender: '女1',
-      username1:this.username,
-      usergender1: this.usergender,
+      usermsg:'',
     }
   },
   methods: {
-    savemessage(username1,usergender1) {
-      this.username = username1;
-      this.usergender = usergender1;
-      this.showModal=!this.showModal
-    },
+    // savemessage(username1,usergender1) {
+    //   this.username = username1;
+    //   this.usergender = usergender1;
+    //   this.showModal=!this.showModal
+    // },
   },
     mounted() {
-        var usermsg = window.localStorage.getItem("token");
-        console.log(usermsg)
+        this.usermsg = JSON.parse(window.sessionStorage.getItem("token"));
+        console.log(this.usermsg)
     }
 }
 </script>

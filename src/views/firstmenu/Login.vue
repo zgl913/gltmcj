@@ -66,7 +66,8 @@ export default {
         if(this.formInline.user ==res.data.name &&this.formInline.password ==res.data.password){
           // alert('chenggpng')
           // this.$emit('ifshowlogin1',false)
-            window.sessionStorage.setItem("token",res.data.token);
+          //   window.sessionStorage.setItem("token",res.data.token);
+            window.sessionStorage.setItem("token",JSON.stringify(res.data));
           //   window.sessionStorage.setItem('message',[JSON.stringify({
           //       token:res.data.token,
           //       username:res.data.name,

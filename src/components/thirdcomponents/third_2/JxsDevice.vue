@@ -38,7 +38,7 @@
                     <span >{{ row.device_ip}}</span>
                 </template>
                 <template slot-scope="{ row}" slot="device_pingmsg">
-                    <span >{{ row.device_pingmsg}}</span>
+                    <span :class="{'classa':row.device_pingmsg == '失败'?true:false}">{{ row.device_pingmsg}}</span>
                 </template>
                 <template slot-scope="{ row}" slot="create_time">
                     <span >{{ row.create_time}}</span>
@@ -57,6 +57,9 @@
         name: "JxsDevice",
         data() {
             return {
+                cglist:[],
+                shibailist:[],
+                jxsdevice:[],
                 group_code:'uni',
                 xiangmucode:["uni"],
                 dealer_Name:'',
@@ -103,7 +106,21 @@
                     {
                         title: 'ping结果',
                         key:'device_pingmsg',
-                        slot: 'device_pingmsg'
+                        slot: 'device_pingmsg',
+                        filters: [
+                            {
+                                label: '成功',
+                                value: 1
+                            },
+                            {
+                                label: '失败',
+                                value: 2
+                            }
+                        ],
+                        filterMultiple: false,
+                        filterRemote: function (value) {
+                            this.startQuery(value);
+                        }
                     },
                     {
                         title: '时间',
@@ -114,6 +131,29 @@
             }
         },
         methods: {
+            startQuery(value) {
+                console.log(this.cglist)
+                console.log(this.shibailist)
+                this.data = []
+                if(value == '1') {
+                    for(let i = 0;i<this.cglist.length;i++) {
+                        this.cglist[i].jxs_index = i+1
+                    }
+                    this.dataCount = this.cglist.length;
+                    this.data = this.cglist
+                }else if(value == '2') {
+                    for(let i = 0;i<this.shibailist.length;i++) {
+                        this.shibailist[i].jxs_index = i+1
+                    }
+                    this.dataCount = this.shibailist.length;
+                    this.data = this.shibailist
+                }else {
+                    this.dataCount = this.devicelist.length;
+                    this.data = this.devicelist
+                }
+                this.pageCurrent = 1
+                this._nowPageSize(this.pageSize)
+            },
             exportData() {
                 this.$refs.table.exportCsv({
                     filename: '经销商设备信息',
@@ -218,8 +258,30 @@
                 res.data.result_content.forEach(item => {
                     if(item.device_pingmsg =='ping成功') {
                         item.device_pingmsg = '成功'
+                        this.cglist.push({
+                            group_code: item.group_code,
+                            dealer_code:item.dealer_code,
+                            dealer_name:item.dealer_name,
+                            device_code:item.device_code,
+                            device_ip:item.device_ip,
+                            device_name:item.device_name,
+                            device_ping:item.device_ping,
+                            device_pingmsg:item.device_pingmsg,
+                            create_time:item.create_time,
+                        })
                     }else {
                         item.device_pingmsg = '失败'
+                        this.shibailist.push({
+                            group_code: item.group_code,
+                            dealer_code:item.dealer_code,
+                            dealer_name:item.dealer_name,
+                            device_code:item.device_code,
+                            device_ip:item.device_ip,
+                            device_name:item.device_name,
+                            device_ping:item.device_ping,
+                            device_pingmsg:item.device_pingmsg,
+                            create_time:item.create_time,
+                        })
                     }
                     this.devicelist.push({
                         group_code: item.group_code,
@@ -239,6 +301,13 @@
             }).then(res => {
                 console.log(res.length)
                 this.compare(res)
+                console.log(res)
+                // let obj = {};
+                // this.jxsdevice = res.reduce((cur,next) => {
+                //     obj[next.dealer_name] && obj[next.device_pingmsg] ? "" : obj[next.dealer_name] = true && obj[next.device_pingmsg]= true && cur.push(next);
+                //     return cur;
+                // },[]) //设置cur默认类型为数组，并且初始值为空的数组
+                console.log(this.jxsdevice)
                 for(let i = 0;i<res.length;i++) {
                     res[i].jxs_index = i+1
                 }
@@ -277,5 +346,8 @@
         white-space:nowrap;
         /*display: flex;*/
 
+    }
+    .classa {
+        color: red;
     }
 </style>

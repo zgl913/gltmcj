@@ -79,9 +79,10 @@
                 </router-link>
                                   </keep-alive>
               </template>
+
                 <MenuItem name="5-1-1" class="menubj">
-                    <Input  search v-model="sousuozhi" placeholder="请输入经销商" @on-search="sousuo(sousuozhi,i)"/>
-                    <div v-for="(ite,ind) in jiejue2" :key="ind">
+                  <Input  search v-model="sousuozhi" placeholder="搜索经销商" @on-search="sousuo(sousuozhi,i)"/>
+                    <div v-for="(ite,ind) in jiejue2" :key="ind" >
                       <router-link :to="{path:'/stores',query:{key_id:ite.dealer_id,group_code:item.group_code,key_code:ite.dealer_code,proname:ite.dealer_name}}">
                         <div class="lb4">{{ite.dealer_name}}</div>
                       </router-link>

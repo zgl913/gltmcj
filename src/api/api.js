@@ -13,7 +13,7 @@ import axios from 'axios'
 axios.interceptors.request.use(
     config => {
         if (window.sessionStorage.getItem("token")) {
-            config.headers.Authorization = window.sessionStorage.getItem("token");
+            config.headers.Authorization = window.sessionStorage.getItem("token").token;
         }
         // console.log(config)
         return config;
